@@ -24,8 +24,180 @@ export default function RootLayout({
 }>) {
   return (
     <html lang="en">
-      <body className={`${geistSans.variable} ${geistMono.variable}`}>
-        {children}
+      <head>
+        <link href="https://fonts.googleapis.com/css?family=Lato:300,400,400i,700|Poppins:300,400,500,600,700|PT+Serif:400,400i&display=swap" rel="stylesheet" type="text/css" />
+        <link rel="stylesheet" href="/canvas_theme/css/bootstrap.css" type="text/css" />
+        <link rel="stylesheet" href="/canvas_theme/css/style.css" type="text/css" />
+        <link rel="stylesheet" href="/canvas_theme/css/dark.css" type="text/css" />
+        <link rel="stylesheet" href="/canvas_theme/css/font-icons.css" type="text/css" />
+        <link rel="stylesheet" href="/canvas_theme/css/animate.css" type="text/css" />
+        <link rel="stylesheet" href="/canvas_theme/css/magnific-popup.css" type="text/css" />
+        <link rel="stylesheet" href="/canvas_theme/css/custom.css" type="text/css" />
+      </head>
+      <body className="stretched">
+        <div id="wrapper" className="clearfix">
+          <>
+            {/* Top Bar
+		============================================= */}
+            <div id="top-bar">
+              <div className="container clearfix">
+                <div className="row justify-content-between">
+                  <div className="col-12 col-md-auto">
+                    {/* Top Links
+						============================================= */}
+                    <div className="top-links on-click">
+                      <ul className="top-links-container">
+                        <li className="top-links-item">
+                          <a href="index.html">Home</a>
+                          <ul className="top-links-sub-menu">
+                            <li className="top-links-item">
+                              <a href="about.html">About</a>
+                            </li>
+                            <li className="top-links-item">
+                              <a href="faqs.html">FAQs</a>
+                            </li>
+                            <li className="top-links-item">
+                              <a href="contact.html">Contact</a>
+                            </li>
+                            <li className="top-links-item">
+                              <a href="sitemap.html">Sitemap</a>
+                            </li>
+                          </ul>
+                        </li>
+                        <li className="top-links-item">
+                          <a href="faqs.html">FAQs</a>
+                        </li>
+                        <li className="top-links-item">
+                          <a href="contact.html">Contact</a>
+                        </li>
+                        <li className="top-links-item">
+                          <a href="login-register.html">Login</a>
+                          <div className="top-links-section">
+                            <form id="top-login" autoComplete="off">
+                              <div className="form-group">
+                                <label>Username</label>
+                                <input
+                                  type="email"
+                                  className="form-control"
+                                  placeholder="Email address"
+                                />
+                              </div>
+                              <div className="form-group">
+                                <label>Password</label>
+                                <input
+                                  type="password"
+                                  className="form-control"
+                                  placeholder="Password"
+                                  required
+                                />
+                              </div>
+                              <div className="form-group form-check">
+                                <input
+                                  className="form-check-input"
+                                  type="checkbox"
+                                  defaultValue=""
+                                  id="top-login-checkbox"
+                                />
+                                <label
+                                  className="form-check-label"
+                                  htmlFor="top-login-checkbox"
+                                >
+                                  Remember Me
+                                </label>
+                              </div>
+                              <button className="btn btn-danger w-100" type="submit">
+                                Sign in
+                              </button>
+                            </form>
+                          </div>
+                        </li>
+                      </ul>
+                    </div>
+                    {/* .top-links end */}
+                  </div>
+                  <div className="col-12 col-md-auto">
+                    {/* Top Social
+						============================================= */}
+                    <ul id="top-social">
+                      <li>
+                        <a href="#" className="si-facebook">
+                          <span className="ts-icon">
+                            <i className="icon-facebook" />
+                          </span>
+                          <span className="ts-text">Facebook</span>
+                        </a>
+                      </li>
+                      <li>
+                        <a href="#" className="si-twitter">
+                          <span className="ts-icon">
+                            <i className="icon-twitter" />
+                          </span>
+                          <span className="ts-text">Twitter</span>
+                        </a>
+                      </li>
+                      <li className="d-none d-sm-flex">
+                        <a href="#" className="si-dribbble">
+                          <span className="ts-icon">
+                            <i className="icon-dribbble" />
+                          </span>
+                          <span className="ts-text">Dribbble</span>
+                        </a>
+                      </li>
+                      <li>
+                        <a href="#" className="si-github">
+                          <span className="ts-icon">
+                            <i className="icon-github-circled" />
+                          </span>
+                          <span className="ts-text">Github</span>
+                        </a>
+                      </li>
+                      <li className="d-none d-sm-flex">
+                        <a href="#" className="si-pinterest">
+                          <span className="ts-icon">
+                            <i className="icon-pinterest" />
+                          </span>
+                          <span className="ts-text">Pinterest</span>
+                        </a>
+                      </li>
+                      <li>
+                        <a href="#" className="si-instagram">
+                          <span className="ts-icon">
+                            <i className="icon-instagram2" />
+                          </span>
+                          <span className="ts-text">Instagram</span>
+                        </a>
+                      </li>
+                      <li>
+                        <a href="tel:+1.11.85412542" className="si-call">
+                          <span className="ts-icon">
+                            <i className="icon-call" />
+                          </span>
+                          <span className="ts-text">+1.11.85412542</span>
+                        </a>
+                      </li>
+                      <li>
+                        <a href="mailto:info@canvas.com" className="si-email3">
+                          <span className="ts-icon">
+                            <i className="icon-email3" />
+                          </span>
+                          <span className="ts-text">info@canvas.com</span>
+                        </a>
+                      </li>
+                    </ul>
+                    {/* #top-social end */}
+                  </div>
+                </div>
+              </div>
+            </div>
+            {/* #top-bar end */}
+          </>
+
+          {children}
+        </div>
+
+        <script src="/canvas_theme/js/jquery.js"></script>
+        <script src="/canvas_theme/js/plugins.min.js"></script>
+        <script src="/canvas_theme/js/functions.js"></script>
       </body>
     </html>
   );
