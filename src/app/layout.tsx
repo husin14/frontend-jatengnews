@@ -1,6 +1,7 @@
 import type { Metadata } from "next";
 import { Geist, Geist_Mono } from "next/font/google";
 import "./globals.css";
+import Script from 'next/script';
 
 const geistSans = Geist({
   variable: "--font-geist-sans",
@@ -27,12 +28,16 @@ export default function RootLayout({
       <head>
         <link href="https://fonts.googleapis.com/css?family=Lato:300,400,400i,700|Poppins:300,400,500,600,700|PT+Serif:400,400i&display=swap" rel="stylesheet" type="text/css" />
         <link rel="stylesheet" href="/canvas_theme/css/bootstrap.css" type="text/css" />
-        <link rel="stylesheet" href="/canvas_theme/css/style.css" type="text/css" />
+        <link rel="stylesheet" href="/canvas_theme/style.css" type="text/css" />
         <link rel="stylesheet" href="/canvas_theme/css/dark.css" type="text/css" />
         <link rel="stylesheet" href="/canvas_theme/css/font-icons.css" type="text/css" />
+        <link rel="stylesheet" href="/canvas_theme/one-page/css/et-line.css" type="text/css" />
         <link rel="stylesheet" href="/canvas_theme/css/animate.css" type="text/css" />
         <link rel="stylesheet" href="/canvas_theme/css/magnific-popup.css" type="text/css" />
         <link rel="stylesheet" href="/canvas_theme/css/custom.css" type="text/css" />
+
+        <link rel="stylesheet" href="/canvas_theme/demos/news/css/fonts.css" type="text/css" />
+        <link rel="stylesheet" href="/canvas_theme/demos/news/news.css" type="text/css" />
       </head>
       <body className="stretched">
         <div id="wrapper" className="clearfix">
@@ -195,9 +200,57 @@ export default function RootLayout({
           {children}
         </div>
 
-        <script src="/canvas_theme/js/jquery.js"></script>
+        {/* <script src="/canvas_theme/js/jquery.js"></script>
         <script src="/canvas_theme/js/plugins.min.js"></script>
-        <script src="/canvas_theme/js/functions.js"></script>
+        <script src="/canvas_theme/js/plugins.infinitescroll.js"></script>
+
+        <script src="/canvas_theme/js/functions.js"></script> */}
+        <Script src="/canvas_theme/js/jquery.js" strategy="beforeInteractive" />
+        <Script src="/canvas_theme/js/plugins.min.js" strategy="beforeInteractive" />
+        <Script src="/canvas_theme/js/plugins.infinitescroll.js" strategy="beforeInteractive" />
+        <Script src="/canvas_theme/js/functions.js" strategy="afterInteractive" />
+
+        <Script id="init-owl-carousel" strategy="afterInteractive">
+          {`
+            var $ = jQuery.noConflict();
+            $(window).on('pluginCarouselReady', function() {
+              $('#oc-news').owlCarousel({
+                items: 1,
+                margin: 20,
+                dots: false,
+                nav: true,
+                navText: ['<i class="icon-angle-left"></i>', '<i class="icon-angle-right"></i>'],
+                responsive: {
+                  0: { items: 1, dots: true },
+                  576: { items: 1, dots: true },
+                  768: { items: 2, dots: true },
+                  992: { items: 2 },
+                  1200: { items: 3 }
+                }
+              });
+            });
+          `}
+        </Script>
+
+        {/* <script>
+          var $ = jQuery.noConflict();
+          $(window).on( 'pluginCarouselReady', function(){
+            $('#oc-news').owlCarousel({
+              items: 1,
+              margin: 20,
+              dots: false,
+              nav: true,
+              navText: ['<i class="icon-angle-left"></i>', '<i class="icon-angle-right"></i>'],
+              responsive: {
+                0: { items: 1, dots: true, },
+                576: { items: 1, dots: true },
+                768: { items: 2, dots: true },
+                992: { items: 2 },
+                1200: { items: 3 }
+              }
+            });
+		      });
+        </script> */}
       </body>
     </html>
   );
