@@ -205,6 +205,8 @@ export default function RootLayout({
         <script src="/canvas_theme/js/plugins.infinitescroll.js"></script>
 
         <script src="/canvas_theme/js/functions.js"></script> */}
+
+        
         <Script src="/canvas_theme/js/jquery.js" strategy="beforeInteractive" />
         <Script src="/canvas_theme/js/plugins.min.js" strategy="beforeInteractive" />
         <Script src="/canvas_theme/js/plugins.infinitescroll.js" strategy="beforeInteractive" />
