@@ -72,6 +72,249 @@ export default function Page() {
 
   return (
     <>
+      <div className="row col-mb-50 mb-0">
+        <div className="col-lg-8">
+          <div className="posts-md">
+            <div className="entry">
+              <div className="entry-image">
+                <a href="#">
+                  <img src="images/magazine/7.jpg" alt="Image" />
+                </a>
+              </div>
+              <div className="entry-title title-sm">
+                <h3>
+                  <a href="blog-single.html">
+                    Toyota's next minivan will let you shout at your kids
+                    without turning around
+                  </a>
+                </h3>
+              </div>
+              <div className="entry-meta">
+                <ul>
+                  <li>
+                    <i className="icon-calendar3" /> 17th Jan 2021
+                  </li>
+                  <li>
+                    <a href="blog-single.html#comments">
+                      <i className="icon-comments" /> 31
+                    </a>
+                  </li>
+                  <li>
+                    <a href="#">
+                      <i className="icon-camera-retro" />
+                    </a>
+                  </li>
+                </ul>
+              </div>
+              <div className="entry-content">
+                <p className="mb-0">
+                  Asperiores, tenetur, blanditiis, quaerat odit ex
+                  exercitationem pariatur quibusdam veritatis quisquam
+                  laboriosam esse beatae hic perferendis. Lorem ipsum dolor sit
+                  amet, consectetur adipisicing elit. Beatae, repudiandae.
+                </p>
+              </div>
+            </div>
+          </div>
+        </div>
+        <div className="col-lg-4">
+          <div className="posts-sm row col-mb-30">
+            <div className="entry col-12">
+              <div className="grid-inner row g-0">
+                <div className="col-auto">
+                  <div className="entry-image">
+                    <a href="#">
+                      <img src="images/magazine/small/1.jpg" alt="Image" />
+                    </a>
+                  </div>
+                </div>
+                <div className="col ps-3">
+                  <div className="entry-title">
+                    <h4>
+                      <a href="#">
+                        UK government weighs Tesla's Model S for its 5 million
+                        electric vehicle fleet
+                      </a>
+                    </h4>
+                  </div>
+                  <div className="entry-meta">
+                    <ul>
+                      <li>
+                        <i className="icon-calendar3" /> 1st Aug 2021
+                      </li>
+                      <li>
+                        <a href="#">
+                          <i className="icon-comments" /> 32
+                        </a>
+                      </li>
+                    </ul>
+                  </div>
+                </div>
+              </div>
+            </div>
+            <div className="entry col-12">
+              <div className="grid-inner row g-0">
+                <div className="col-auto">
+                  <div className="entry-image">
+                    <a href="#">
+                      <img src="images/magazine/small/2.jpg" alt="Image" />
+                    </a>
+                  </div>
+                </div>
+                <div className="col ps-3">
+                  <div className="entry-title">
+                    <h4>
+                      <a href="#">
+                        MIT's new robot glove can give you extra fingers
+                      </a>
+                    </h4>
+                  </div>
+                  <div className="entry-meta">
+                    <ul>
+                      <li>
+                        <i className="icon-calendar3" /> 13th Sep 2021
+                      </li>
+                      <li>
+                        <a href="#">
+                          <i className="icon-comments" /> 11
+                        </a>
+                      </li>
+                    </ul>
+                  </div>
+                </div>
+              </div>
+            </div>
+            <div className="entry col-12">
+              <div className="grid-inner row g-0">
+                <div className="col-auto">
+                  <div className="entry-image">
+                    <a href="#">
+                      <img src="images/magazine/small/3.jpg" alt="Image" />
+                    </a>
+                  </div>
+                </div>
+                <div className="col ps-3">
+                  <div className="entry-title">
+                    <h4>
+                      <a href="#">
+                        You can now listen to headphones through your hoodie
+                      </a>
+                    </h4>
+                  </div>
+                  <div className="entry-meta">
+                    <ul>
+                      <li>
+                        <i className="icon-calendar3" /> 27th July 2021
+                      </li>
+                      <li>
+                        <a href="#">
+                          <i className="icon-comments" /> 13
+                        </a>
+                      </li>
+                    </ul>
+                  </div>
+                </div>
+              </div>
+            </div>
+            <div className="entry col-12">
+              <div className="grid-inner row g-0">
+                <div className="col-auto">
+                  <div className="entry-image">
+                    <a href="#">
+                      <img src="images/magazine/small/4.jpg" alt="Image" />
+                    </a>
+                  </div>
+                </div>
+                <div className="col ps-3">
+                  <div className="entry-title">
+                    <h4>
+                      <a href="#">
+                        How would you change Kobo's Aura HD e-reader?
+                      </a>
+                    </h4>
+                  </div>
+                  <div className="entry-meta">
+                    <ul>
+                      <li>
+                        <i className="icon-calendar3" /> 31st Jan 2021
+                      </li>
+                      <li>
+                        <a href="#">
+                          <i className="icon-comments" /> 7
+                        </a>
+                      </li>
+                    </ul>
+                  </div>
+                </div>
+              </div>
+            </div>
+            <div className="entry col-12">
+              <div className="grid-inner row g-0">
+                <div className="col-auto">
+                  <div className="entry-image">
+                    <a href="#">
+                      <img src="images/magazine/small/5.jpg" alt="Image" />
+                    </a>
+                  </div>
+                </div>
+                <div className="col ps-3">
+                  <div className="entry-title">
+                    <h4>
+                      <a href="#">
+                        Combat malaria solve, disruption advancement
+                        socio-economic
+                      </a>
+                    </h4>
+                  </div>
+                  <div className="entry-meta">
+                    <ul>
+                      <li>
+                        <i className="icon-calendar3" /> 22nd Jan 2021
+                      </li>
+                      <li>
+                        <a href="#">
+                          <i className="icon-comments" /> 55
+                        </a>
+                      </li>
+                    </ul>
+                  </div>
+                </div>
+              </div>
+            </div>
+            <div className="entry col-12">
+              <div className="grid-inner row g-0">
+                <div className="col-auto">
+                  <div className="entry-image">
+                    <a href="#">
+                      <img src="images/magazine/small/6.jpg" alt="Image" />
+                    </a>
+                  </div>
+                </div>
+                <div className="col ps-3">
+                  <div className="entry-title">
+                    <h4>
+                      <a href="#">Interconnectivity raise awareness fighting</a>
+                    </h4>
+                  </div>
+                  <div className="entry-meta">
+                    <ul>
+                      <li>
+                        <i className="icon-calendar3" /> 15th Feb 2021
+                      </li>
+                      <li>
+                        <a href="#">
+                          <i className="icon-comments" /> 55
+                        </a>
+                      </li>
+                    </ul>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+
       <div className="row clearfix">
         <div className="col-lg-8">
           <nav
@@ -407,4 +650,4 @@ export default function Page() {
       </div>
     </>
   );
-};
+}
