@@ -200,59 +200,13 @@ export default function RootLayout({
           {children}
         </div>
 
-        {/* <script src="/canvas_theme/js/jquery.js"></script>
-        <script src="/canvas_theme/js/plugins.min.js"></script>
-        <script src="/canvas_theme/js/plugins.infinitescroll.js"></script>
-
-        <script src="/canvas_theme/js/functions.js"></script> */}
-
-        
+        {/* Load jQuery and plugins first */}
         <Script src="/canvas_theme/js/jquery.js" strategy="beforeInteractive" />
         <Script src="/canvas_theme/js/plugins.min.js" strategy="beforeInteractive" />
         <Script src="/canvas_theme/js/plugins.infinitescroll.js" strategy="beforeInteractive" />
         <Script src="/canvas_theme/js/functions.js" strategy="afterInteractive" />
 
-        <Script id="init-owl-carousel" strategy="afterInteractive">
-          {`
-            var $ = jQuery.noConflict();
-            $(window).on('pluginCarouselReady', function() {
-              $('#oc-news').owlCarousel({
-                items: 1,
-                margin: 20,
-                dots: false,
-                nav: true,
-                navText: ['<i class="icon-angle-left"></i>', '<i class="icon-angle-right"></i>'],
-                responsive: {
-                  0: { items: 1, dots: true },
-                  576: { items: 1, dots: true },
-                  768: { items: 2, dots: true },
-                  992: { items: 2 },
-                  1200: { items: 3 }
-                }
-              });
-            });
-          `}
-        </Script>
-
-        {/* <script>
-          var $ = jQuery.noConflict();
-          $(window).on( 'pluginCarouselReady', function(){
-            $('#oc-news').owlCarousel({
-              items: 1,
-              margin: 20,
-              dots: false,
-              nav: true,
-              navText: ['<i class="icon-angle-left"></i>', '<i class="icon-angle-right"></i>'],
-              responsive: {
-                0: { items: 1, dots: true, },
-                576: { items: 1, dots: true },
-                768: { items: 2, dots: true },
-                992: { items: 2 },
-                1200: { items: 3 }
-              }
-            });
-		      });
-        </script> */}
+        {/* Remove the automatic carousel initialization script since we'll handle it in the component */}
       </body>
     </html>
   );

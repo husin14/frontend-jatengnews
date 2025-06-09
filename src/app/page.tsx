@@ -1,14 +1,25 @@
 "use client";
 
 import { berita } from "./types";
-import { useEffect, useState } from "react";
+import { useEffect, useState, useRef } from "react";
 import axios from "axios";
 
 export default function Home() {
   const baseurl = process.env.NEXT_PUBLIC_BASE_URL;
-  const [berita, setBerita] = useState([]);
+  const [berita, setBerita] = useState<berita[]>([]);
+  const [mounted, setMounted] = useState(false);
+  const carouselRef = useRef<HTMLDivElement>(null);
+  const carouselInitialized = useRef(false);
 
+  // Handle mounting
   useEffect(() => {
+    setMounted(true);
+  }, []);
+
+  // Fetch data
+  useEffect(() => {
+    if (!mounted) return;
+
     const fetchBerita = async () => {
       try {
         const res = await axios.get(`${baseurl}/berita`);
@@ -18,25 +29,109 @@ export default function Home() {
         console.error("Error fetching berita:", error);
       }
     };
+
     fetchBerita();
-  }, []);
+  }, [mounted, baseurl]);
+
+  // Initialize carousel only after everything is ready
+  useEffect(() => {
+    if (!mounted || !carouselRef.current || carouselInitialized.current) return;
+
+    const initCarousel = () => {
+      if (typeof window === 'undefined' || !window.jQuery) {
+        console.log('jQuery not loaded yet');
+        return;
+      }
+
+      const $ = window.jQuery;
+      const $carousel = $(carouselRef.current);
+
+      if (!$carousel.length) {
+        console.log('Carousel element not found');
+        return;
+      }
+
+      try {
+        // Destroy any existing carousel
+        if ($carousel.hasClass('owl-loaded')) {
+          $carousel.trigger('destroy.owl.carousel');
+          $carousel.removeClass('owl-loaded owl-carousel');
+        }
+
+        // Clean up any owl-related classes and elements
+        $carousel.find('.owl-stage-outer').contents().unwrap();
+        $carousel.find('.owl-nav, .owl-dots').remove();
+        $carousel.removeClass('owl-loaded owl-drag owl-grab');
+
+        // Re-add necessary classes
+        $carousel.addClass('owl-carousel');
+
+        // Initialize carousel
+        $carousel.owlCarousel({
+          items: 1,
+          margin: 20,
+          dots: false,
+          nav: true,
+          navText: ['<i class="icon-angle-left"></i>', '<i class="icon-angle-right"></i>'],
+          responsive: {
+            0: { items: 1, dots: true },
+            576: { items: 1, dots: true },
+            768: { items: 2, dots: true },
+            992: { items: 2 },
+            1200: { items: 3 }
+          },
+          onInitialized: function () {
+            console.log('Owl Carousel initialized successfully');
+            carouselInitialized.current = true;
+          }
+        });
+
+      } catch (error) {
+        console.error('Error initializing carousel:', error);
+      }
+    };
+
+    // Delay initialization to ensure DOM is fully ready
+    const timer = setTimeout(initCarousel, 500);
+
+    return () => {
+      clearTimeout(timer);
+      // Cleanup on unmount
+      if (typeof window !== 'undefined' && window.jQuery && carouselRef.current) {
+        const $ = window.jQuery;
+        const $carousel = $(carouselRef.current);
+        if ($carousel.hasClass('owl-loaded')) {
+          $carousel.trigger('destroy.owl.carousel');
+        }
+      }
+    };
+  }, [mounted, berita.length]); // Re-run when berita data changes
+
+  // Don't render anything until mounted (prevents hydration mismatch)
+  if (!mounted) {
+    return null;
+  }
 
   return (
-    <>
-      <section id="content">
-        <div className="content-wrap">
-          <div className="section bg-transparent m-0">
-            <div className="container clearfix">
-              <h4 className="mb-3 ls1 text-uppercase fw-bold">Popular News</h4>
-              {/* Owl Carousel
-						============================================= */}
+    <section id="content">
+      <div className="content-wrap">
+        <div className="section bg-transparent m-0">
+          <div className="container clearfix">
+            <h4 className="mb-3 ls1 text-uppercase fw-bold">Popular News</h4>
+
+            {berita.length === 0 ? (
+              <div className="text-center py-5">
+                <p>Loading news...</p>
+              </div>
+            ) : (
               <div
+                ref={carouselRef}
+                className="owl-carousel fixed-nav top-nav carousel-widget posts-md"
                 id="oc-news"
-                className="owl-carousel fixed-nav top-nav carousel-widget posts-md customjs"
               >
                 {berita.map((item, index) => (
                   <div
-                    key={index}
+                    key={`berita-${item.judul}-${index}`}
                     className="entry mb-0"
                     style={{
                       background:
@@ -50,27 +145,29 @@ export default function Home() {
                         <div className="position-relative w-100">
                           <div className="entry-categories">
                             <a
-                              href="demo-news-category.html"
+                              href="#"
                               className="bg-fashion"
                             >
-                              Fashion
+                              {item.judul}
                             </a>
                           </div>
                           <div className="entry-title nott">
                             <h3 className="fw-semibold mb-2">
                               <a href="#" className="text-light">
-                                The Ultimate Guide To Fashion
+                                {item.judul}
                               </a>
                             </h3>
                           </div>
                           <div className="entry-meta no-separator">
                             <ul>
                               <li>
-                                <span>by</span> <a href="#">John Doe</a>
+                                <span>by</span> <a href="#">Admin</a>
                               </li>
                               <li>
                                 <i className="icon-time" />
-                                <a href="#">11 Mar 2021</a>
+                                <a href="#">
+                                  {new Date().toLocaleDateString()}
+                                </a>
                               </li>
                             </ul>
                           </div>
@@ -79,9 +176,9 @@ export default function Home() {
                     </div>
                   </div>
                 ))}
-                {[1,2,3,4].map((_,index) => (
+
+                {/* Static fallback item */}
                 <div
-                  key={index}
                   className="entry mb-0"
                   style={{
                     background:
@@ -95,7 +192,7 @@ export default function Home() {
                       <div className="position-relative w-100">
                         <div className="entry-categories">
                           <a
-                            href="demo-news-category.html"
+                            href="#"
                             className="bg-fashion"
                           >
                             Fashion
@@ -123,14 +220,11 @@ export default function Home() {
                     </div>
                   </div>
                 </div>
-                ))}
-                
               </div>
-              {/* Carousel End */}
-            </div>
+            )}
           </div>
         </div>
-      </section>
-    </>
+      </div>
+    </section>
   );
 }
