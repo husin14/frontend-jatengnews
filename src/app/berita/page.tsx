@@ -107,11 +107,11 @@ export default function Page() {
                   <div className="col-auto">
                     <div className="entry-image">
                       <a href="#">
-                        <Image 
-                        src={item.cover} 
-                        alt={item.judul} 
-                        width={400}
-                        height={200}
+                        <Image
+                          src={item.cover}
+                          alt={item.judul}
+                          width={400}
+                          height={200}
                         />
                       </a>
                     </div>
@@ -119,9 +119,7 @@ export default function Page() {
                   <div className="col ps-3">
                     <div className="entry-title">
                       <h4>
-                        <a href="#">
-                         {item.judul}
-                        </a>
+                        <a href="#">{item.judul}</a>
                       </h4>
                     </div>
                   </div>
@@ -328,11 +326,7 @@ export default function Page() {
             </div>
           </div>
         </div>
-        <div className="col-lg-4 sticky-sidebar-wrap">
-          <div className="sticky-sidebar">
-            <SideBar />
-          </div>
-        </div>
+        <SideBar />
       </div>
 
       <Carousel />

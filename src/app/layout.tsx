@@ -5,7 +5,6 @@ import Script from 'next/script';
 import Header from "./components/header";
 import Navbar from "./components/navbar";
 import Footer from "./components/footer";
-
 // const geistSans = Geist({
 //   variable: "--font-geist-sans",
 //   subsets: ["latin"],
@@ -56,6 +55,7 @@ export default function RootLayout({
             <div className="content-wrap pt-3">
               <div className="container clearfix">
                 <div className="row mt-5 clearfix">{children}</div>
+
               </div>
             </div>
           </section>
