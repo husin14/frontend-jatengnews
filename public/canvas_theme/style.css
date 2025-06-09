@@ -12617,7 +12617,7 @@ blockquote.float-end {
 .owl-carousel.owl-loaded { display:block }
 
 .owl-carousel.owl-loading {
-	display:block;
+	display: none;
 	min-height: 100px;
 	background: no-repeat center center;
 }

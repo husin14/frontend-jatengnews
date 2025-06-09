@@ -1,0 +1,55 @@
+export interface kategori {
+  id_kategori: number;
+  nama: string;
+  slug: string;
+}
+
+export interface recentPostFooter {
+  id: number;
+  judul: string;
+  cover: string;
+  deskripsi: string;
+  waktu_publish: string;
+}
+
+export interface berita {
+  id: number;
+  judul: string;
+  cover: string;
+  deskripsi: string;
+  waktu_publish: string; 
+  kategori: kategori;
+  kategori_slug: string;
+  path_media: string;
+  filename?: string;
+  link?: string; 
+  author?: string;
+  views?: number;
+  status?: string;
+}
+
+export interface BeritaDetailResponse {
+  success: boolean;
+  data: berita;
+  message?: string;
+}
+
+export interface PrerollConfig {
+  video: string;
+  url: string;
+}
+
+export interface paginationProps {
+  currentPage: number; 
+  lastPage: number;
+  baseUrl: string; 
+} 
+export interface apiResponse {
+  current_page: number;
+  per_page: number;
+  total: number;
+  last_page: number;
+  next_page_url: string | null;
+  prev_page_url: string | null;
+  data: berita[];
+}
