@@ -1,17 +1,20 @@
 import type { Metadata } from "next";
-import { Geist, Geist_Mono } from "next/font/google";
+// import { Geist, Geist_Mono } from "next/font/google";
 import "./globals.css";
 import Script from 'next/script';
+import Header from "./components/header";
+import Navbar from "./components/navbar";
+import Footer from "./components/footer";
 
-const geistSans = Geist({
-  variable: "--font-geist-sans",
-  subsets: ["latin"],
-});
+// const geistSans = Geist({
+//   variable: "--font-geist-sans",
+//   subsets: ["latin"],
+// });
 
-const geistMono = Geist_Mono({
-  variable: "--font-geist-mono",
-  subsets: ["latin"],
-});
+// const geistMono = Geist_Mono({
+//   variable: "--font-geist-mono",
+//   subsets: ["latin"],
+// });
 
 export const metadata: Metadata = {
   title: "Create Next App",
@@ -36,168 +39,27 @@ export default function RootLayout({
         <link rel="stylesheet" href="/canvas_theme/css/magnific-popup.css" type="text/css" />
         <link rel="stylesheet" href="/canvas_theme/css/custom.css" type="text/css" />
 
-        <link rel="stylesheet" href="/canvas_theme/demos/news/css/fonts.css" type="text/css" />
+        {/* <link rel="stylesheet" href="/canvas_theme/demos/news/css/fonts.css" type="text/css" /> */}
         <link rel="stylesheet" href="/canvas_theme/demos/news/news.css" type="text/css" />
       </head>
       <body className="stretched">
-        <div id="wrapper" className="clearfix">
-          <>
-            {/* Top Bar
-		============================================= */}
-            <div id="top-bar">
+         <div id="wrapper" className="clearfix">
+          <header
+            id="header"
+            className="header-size-sm"
+            data-sticky-shrink="false"
+          >
+            <Header />
+            <Navbar />
+          </header>
+          <section id="content">
+            <div className="content-wrap pt-3">
               <div className="container clearfix">
-                <div className="row justify-content-between">
-                  <div className="col-12 col-md-auto">
-                    {/* Top Links
-						============================================= */}
-                    <div className="top-links on-click">
-                      <ul className="top-links-container">
-                        <li className="top-links-item">
-                          <a href="index.html">Home</a>
-                          <ul className="top-links-sub-menu">
-                            <li className="top-links-item">
-                              <a href="about.html">About</a>
-                            </li>
-                            <li className="top-links-item">
-                              <a href="faqs.html">FAQs</a>
-                            </li>
-                            <li className="top-links-item">
-                              <a href="contact.html">Contact</a>
-                            </li>
-                            <li className="top-links-item">
-                              <a href="sitemap.html">Sitemap</a>
-                            </li>
-                          </ul>
-                        </li>
-                        <li className="top-links-item">
-                          <a href="faqs.html">FAQs</a>
-                        </li>
-                        <li className="top-links-item">
-                          <a href="contact.html">Contact</a>
-                        </li>
-                        <li className="top-links-item">
-                          <a href="login-register.html">Login</a>
-                          <div className="top-links-section">
-                            <form id="top-login" autoComplete="off">
-                              <div className="form-group">
-                                <label>Username</label>
-                                <input
-                                  type="email"
-                                  className="form-control"
-                                  placeholder="Email address"
-                                />
-                              </div>
-                              <div className="form-group">
-                                <label>Password</label>
-                                <input
-                                  type="password"
-                                  className="form-control"
-                                  placeholder="Password"
-                                  required
-                                />
-                              </div>
-                              <div className="form-group form-check">
-                                <input
-                                  className="form-check-input"
-                                  type="checkbox"
-                                  defaultValue=""
-                                  id="top-login-checkbox"
-                                />
-                                <label
-                                  className="form-check-label"
-                                  htmlFor="top-login-checkbox"
-                                >
-                                  Remember Me
-                                </label>
-                              </div>
-                              <button className="btn btn-danger w-100" type="submit">
-                                Sign in
-                              </button>
-                            </form>
-                          </div>
-                        </li>
-                      </ul>
-                    </div>
-                    {/* .top-links end */}
-                  </div>
-                  <div className="col-12 col-md-auto">
-                    {/* Top Social
-						============================================= */}
-                    <ul id="top-social">
-                      <li>
-                        <a href="#" className="si-facebook">
-                          <span className="ts-icon">
-                            <i className="icon-facebook" />
-                          </span>
-                          <span className="ts-text">Facebook</span>
-                        </a>
-                      </li>
-                      <li>
-                        <a href="#" className="si-twitter">
-                          <span className="ts-icon">
-                            <i className="icon-twitter" />
-                          </span>
-                          <span className="ts-text">Twitter</span>
-                        </a>
-                      </li>
-                      <li className="d-none d-sm-flex">
-                        <a href="#" className="si-dribbble">
-                          <span className="ts-icon">
-                            <i className="icon-dribbble" />
-                          </span>
-                          <span className="ts-text">Dribbble</span>
-                        </a>
-                      </li>
-                      <li>
-                        <a href="#" className="si-github">
-                          <span className="ts-icon">
-                            <i className="icon-github-circled" />
-                          </span>
-                          <span className="ts-text">Github</span>
-                        </a>
-                      </li>
-                      <li className="d-none d-sm-flex">
-                        <a href="#" className="si-pinterest">
-                          <span className="ts-icon">
-                            <i className="icon-pinterest" />
-                          </span>
-                          <span className="ts-text">Pinterest</span>
-                        </a>
-                      </li>
-                      <li>
-                        <a href="#" className="si-instagram">
-                          <span className="ts-icon">
-                            <i className="icon-instagram2" />
-                          </span>
-                          <span className="ts-text">Instagram</span>
-                        </a>
-                      </li>
-                      <li>
-                        <a href="tel:+1.11.85412542" className="si-call">
-                          <span className="ts-icon">
-                            <i className="icon-call" />
-                          </span>
-                          <span className="ts-text">+1.11.85412542</span>
-                        </a>
-                      </li>
-                      <li>
-                        <a href="mailto:info@canvas.com" className="si-email3">
-                          <span className="ts-icon">
-                            <i className="icon-email3" />
-                          </span>
-                          <span className="ts-text">info@canvas.com</span>
-                        </a>
-                      </li>
-                    </ul>
-                    {/* #top-social end */}
-                  </div>
-                </div>
+                <div className="row mt-5 clearfix">{children}</div>
               </div>
             </div>
-            {/* #top-bar end */}
-          </>
-
-          {children}
+          </section>
+          <Footer />
         </div>
 
         {/* Load jQuery and plugins first */}
