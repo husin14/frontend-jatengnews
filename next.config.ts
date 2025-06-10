@@ -1,6 +1,15 @@
 import type { NextConfig } from "next";
 
 const nextConfig: NextConfig = {
+  async redirects() {
+    return [
+      {
+        source: '/',
+        destination: '/berita',
+        permanent: true, // Menggunakan 301 redirect (permanen)
+      },
+    ];
+  },
   images: {
     remotePatterns: [
       {
@@ -18,7 +27,7 @@ const nextConfig: NextConfig = {
         search: '',
       },
     ],
-  },
+  }
 };
 
 
