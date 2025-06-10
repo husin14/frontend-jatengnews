@@ -2,7 +2,6 @@
 
 import axios from "axios";
 import { useEffect, useState } from "react";
-import { useSearchParams } from "next/navigation";
 import Link from "next/link";
 import Image from "next/image";
 import { htmlToText } from "html-to-text";
@@ -11,7 +10,6 @@ import { berita, apiResponse } from "@/app/types";
 import SideBar from "@/app/components/sideBar";
 
 export default function Page() {
-  const searchParams = useSearchParams();
 
   const baseurl = process.env.NEXT_PUBLIC_BASE_URL;
 
@@ -20,8 +18,7 @@ export default function Page() {
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState<string | null>(null);
 
-  const currentPage = parseInt(searchParams.get("page") || "1", 10);
-
+  const [currentPage, setCurrentPage] = useState(1);
 
   useEffect(() => {
     const getBerita = async () => {
@@ -48,7 +45,7 @@ export default function Page() {
       }
     };
     getBerita();
-  }, [baseurl, currentPage]);
+  }, [baseurl, currentPage]); 
 
   const getPageRange = () => {
     const pages: (number | string)[] = [];
@@ -99,7 +96,6 @@ export default function Page() {
     );
 
   const total_no_of_pages = beritaApiResponse.last_page;
-  const baseUrlLink = `/berita/beritaterbaru/`;
   const displayedPages = getPageRange();
 
   const firstpage_class = currentPage > 1 ? "" : "disabled";
@@ -175,29 +171,27 @@ export default function Page() {
                   <ul className="pagination pagination-rounded flex-wrap justify-center">
                     {/* First Page */}
                     <li className={`page-item ${firstpage_class}`}>
-                      <Link
+                      <button
                         className="page-link"
-                        href={`${baseUrlLink}?page=1`}
+                        onClick={() => setCurrentPage(1)}
                         aria-label="First"
-                        tabIndex={currentPage === 1 ? -1 : undefined}
+                        disabled={currentPage === 1}
                       >
                         <span aria-hidden="true">&laquo;</span>
-                      </Link>
+                      </button>
                     </li>
 
-                    {/* Previous Page */}
                     <li className={`page-item ${previouspage_class}`}>
-                      <Link
+                      <button
                         className="page-link"
-                        href={`${baseUrlLink}?page=${previous_page}`}
+                        onClick={() => setCurrentPage(previous_page)}
                         aria-label="Previous"
-                        tabIndex={currentPage <= 1 ? -1 : undefined}
+                        disabled={currentPage <= 1}
                       >
                         <span aria-hidden="true">&lsaquo;</span>
-                      </Link>
+                      </button>
                     </li>
 
-                    {/* Nomor Halaman Dinamis */}
                     {displayedPages.map((pageNumber, index) => (
                       <li
                         key={index}
@@ -206,8 +200,8 @@ export default function Page() {
                         } ${typeof pageNumber === "string" ? "disabled" : ""}`}
                       >
                         {typeof pageNumber === "number" ? (
-                          <Link
-                            href={`${baseUrlLink}?page=${pageNumber}`}
+                          <button
+                            onClick={() => setCurrentPage(pageNumber)}
                             className={`page-link px-3 py-2 border rounded-md ${
                               pageNumber === currentPage
                                 ? "bg-blue-500 text-white"
@@ -215,7 +209,7 @@ export default function Page() {
                             }`}
                           >
                             {pageNumber}
-                          </Link>
+                          </button>
                         ) : (
                           <span className="page-link px-3 py-2 border rounded-md text-gray-700">
                             {pageNumber}
@@ -224,32 +218,26 @@ export default function Page() {
                       </li>
                     ))}
 
-                    {/* Next Page */}
                     <li className={`page-item ${nextpage_class}`}>
-                      <Link
+                      <button
                         className="page-link"
-                        href={`${baseUrlLink}?page=${next_page}`}
+                        onClick={() => setCurrentPage(next_page)}
                         aria-label="Next"
-                        tabIndex={
-                          currentPage >= total_no_of_pages ? -1 : undefined
-                        }
+                        disabled={currentPage >= total_no_of_pages}
                       >
                         <span aria-hidden="true">&rsaquo;</span>
-                      </Link>
+                      </button>
                     </li>
 
-                    {/* Last Page */}
                     <li className={`page-item ${lastpage_class}`}>
-                      <Link
+                      <button
                         className="page-link"
-                        href={`${baseUrlLink}?page=${total_no_of_pages}`}
+                        onClick={() => setCurrentPage(total_no_of_pages)}
                         aria-label="Last"
-                        tabIndex={
-                          currentPage >= total_no_of_pages ? -1 : undefined
-                        }
+                        disabled={currentPage >= total_no_of_pages}
                       >
                         <span aria-hidden="true">&raquo;</span>
-                      </Link>
+                      </button>
                     </li>
                   </ul>
                 </div>
