@@ -139,7 +139,7 @@ export default function Page() {
             <h4 className="mb-0 pe-2 ls1 text-uppercase fw-bold">
               Berita Terbaru
             </h4>
-            | <a href="">more..</a>
+            | <Link href="/berita/beritaterbaru">more..</Link>
             <button
               className="navbar-toggler"
               style={{ visibility: "hidden" }}
