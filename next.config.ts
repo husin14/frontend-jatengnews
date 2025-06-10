@@ -6,7 +6,7 @@ const nextConfig: NextConfig = {
       {
         source: '/',
         destination: '/berita',
-        permanent: true, // Menggunakan 301 redirect (permanen)
+        permanent: true,
       },
     ];
   },

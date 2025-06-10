@@ -192,7 +192,6 @@ export default function Page({
                 ))}
               </div>
             </div>
-            {/* --- Pagination Langsung di Sini (Sesuai Referensi PHP) --- */}
             {total_no_of_pages > 0 && (
               <div className="row col-md-12 mt-5">
                 <div className="text-center">
