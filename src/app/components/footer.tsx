@@ -71,7 +71,7 @@ function Footer() {
                         <div className="entry-title">
                           <h4 className="fw-semibold">
                             <a href="" className="text-white">
-                              {item.deskripsi}
+                              {item.judul}
                             </a>
                           </h4>
                         </div>

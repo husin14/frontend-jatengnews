@@ -8,6 +8,7 @@ import { berita, kategori } from "../types";
 import SideBar from "../components/sideBar";
 import Link from "next/link";
 import Carousel from "../components/carousel";
+import { convert } from "html-to-text"; // Import the convert function
 
 export default function Page() {
   const baseurl = process.env.NEXT_PUBLIC_BASE_URL;
@@ -22,7 +23,13 @@ export default function Page() {
     const getBerita = async () => {
       try {
         const res = await axios.get(`${baseurl}/berita`);
-        setBeritaTerbaru(res.data.data);
+        const processedBerita = res.data.data.map((item: berita) => ({
+          ...item,
+          deskripsi: convert(item.deskripsi, {
+            selectors: [{ selector: "img", format: "skip" }],
+          }),
+        }));
+        setBeritaTerbaru(processedBerita);
         setError(null);
       } catch (error) {
         console.error("Error fetching category:", error);
@@ -39,7 +46,14 @@ export default function Page() {
     const getFeature = async () => {
       try {
         const res = await axios.get(`${baseurl}/berita?id_kategori=19`);
-        setFeatureData(res.data.data);
+        // Process deskripsi to remove HTML tags for all featureData items
+        const processedFeature = res.data.data.map((item: berita) => ({
+          ...item,
+          deskripsi: convert(item.deskripsi, {
+            selectors: [{ selector: "img", format: "skip" }],
+          }),
+        }));
+        setFeatureData(processedFeature);
         setError(null);
       } catch (error) {
         console.error("Error fetching category:", error);
@@ -64,9 +78,10 @@ export default function Page() {
   }, [baseurl]);
 
   if (loading) return <div className="text-center p-5">Loading...</div>;
-  if (error) return <div className="text-center p-5 text-red-500">{error}</div>;
+  if (error)
+    return <div className="text-center p-5 text-red-500">{error}</div>;
   if (!beritaTerbaru)
-    return <div className="text-center p-5">tidak ada berita</div>;
+    return <div className="text-center p-5">Tidak ada berita</div>;
 
   const data = beritaTerbaru[0];
 
@@ -93,7 +108,7 @@ export default function Page() {
                   </h3>
                 </div>
                 <div className="entry-content">
-                  <p className="mb-0">{beritaTerbaru[0].deskripsi}</p>
+                  <p className="line-clamp-2 mb-0">{beritaTerbaru[0].deskripsi}</p>
                 </div>
               </div>
             )}
@@ -195,8 +210,8 @@ export default function Page() {
                           </li>
                         </ul>
                       </div>
-                      <div className="entry-content clearfix">
-                        <p>{data.deskripsi}</p>
+                      <div className="entry-content clearfix line-clamp-1">
+                        <p className="line-clamp-2">{data.deskripsi}</p>
                       </div>
                     </div>
                   </div>
@@ -244,7 +259,7 @@ export default function Page() {
                       <div className="posts-md">
                         <div className="entry">
                           <div className="entry-image">
-                            <a href="<?php echo base_url() . 'show/' . $data->id; ?>">
+                            <a href="">
                               <Image
                                 src={item.cover}
                                 alt={item.judul}
@@ -254,19 +269,14 @@ export default function Page() {
                               />
                             </a>
                             <div className="entry-categories">
-                              <a
-                                href="demo-news-category.html"
-                                className="bg-lifestyle"
-                              >
+                              <a href="" className="bg-lifestyle">
                                 {item.kategori.nama}
                               </a>
                             </div>
                           </div>
                           <div className="entry-title title-sm nott">
                             <h3 className="mb-2">
-                              <a href="<?php echo base_url() . 'show/' . $data->id; ?>">
-                                {item.judul}
-                              </a>
+                              <a href="">{item.judul}</a>
                             </h3>
                           </div>
                           <div className="entry-meta">
@@ -278,7 +288,7 @@ export default function Page() {
                             </ul>
                           </div>
                           <div className="entry-content clearfix">
-                            <p className="mb-0">{item.deskripsi}</p>
+                            <p className="line-clamp-2 mb-0">{item.deskripsi}</p>
                           </div>
                         </div>
                       </div>
@@ -304,9 +314,7 @@ export default function Page() {
                         <div className="col ps-3">
                           <div className="entry-title">
                             <h4 className="fw-medium">
-                              <a href="<?php echo base_url() . 'show/' . $data->id; ?>">
-                                {item.judul}
-                              </a>
+                              <a href="">{item.judul}</a>
                             </h4>
                           </div>
                           <div className="entry-meta">
@@ -333,7 +341,7 @@ export default function Page() {
 
       <div className="container clearfix">
         <div className="row clearfix">
-          {/* <!-- Second Posts Area============================================= --> */}
+          {/* */}
           <div className="col-lg-8">
             <div className="mt-0">
               <h4 className="mb-2 ls1 text-uppercase fw-bold">Feature</h4>
@@ -380,6 +388,7 @@ export default function Page() {
                           </ul>
                         </div>
                         <div className="entry-content">
+                          {/* Use dangerouslySetInnerHTML if you still want to render some parsed HTML, or just text */}
                           <p className="mb-0 line-clamp-3">{item.deskripsi}</p>
                         </div>
                       </div>
