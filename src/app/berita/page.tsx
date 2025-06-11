@@ -93,7 +93,7 @@ export default function Page() {
             {beritaTerbaru.length > 0 && (
               <div className="entry">
                 <div className="entry-image">
-                  <a href="#">
+                  <a href={`/berita/show/${beritaTerbaru[0].id}`}>
                     <Image
                       src={beritaTerbaru[0].cover}
                       alt={beritaTerbaru[0].judul}
@@ -104,7 +104,7 @@ export default function Page() {
                 </div>
                 <div className="entry-title title-sm">
                   <h3>
-                    <a href="blog-single.html">{beritaTerbaru[0].judul}</a>
+                    <a href={`/berita/show/${beritaTerbaru[0].id}`}>{beritaTerbaru[0].judul}</a>
                   </h3>
                 </div>
                 <div className="entry-content">
@@ -116,12 +116,12 @@ export default function Page() {
         </div>
         <div className="col-lg-4">
           <div className="posts-sm row col-mb-30">
-            {beritaTerbaru.slice(1, 6).map((item, index) => (
-              <div key={index} className="entry col-12">
+            {beritaTerbaru.slice(1, 6).map((item) => (
+              <div key={item.id} className="entry col-12">
                 <div className="grid-inner row g-0">
                   <div className="col-auto">
                     <div className="entry-image">
-                      <a href="#">
+                      <a href={`/berita/show/${item.id}`}>
                         <Image
                           src={item.cover}
                           alt={item.judul}
@@ -134,7 +134,7 @@ export default function Page() {
                   <div className="col ps-3">
                     <div className="entry-title">
                       <h4>
-                        <a href="#">{item.judul}</a>
+                        <a href={`/berita/show/${item.id}`}>{item.judul}</a>
                       </h4>
                     </div>
                   </div>
@@ -182,7 +182,7 @@ export default function Page() {
                   <div className="posts-md">
                     <div className="entry">
                       <div className="entry-image">
-                        <a href="">
+                        <a href={`/berita/show/${data.id}`}>
                           <Image
                             src={data.cover}
                             alt={data.judul}
@@ -192,14 +192,14 @@ export default function Page() {
                           />
                         </a>
                         <div className="entry-categories">
-                          <a href="" className="bg-travel">
+                          <a href={`/berita/show/${data.id}`} className="bg-travel">
                             {data.kategori.nama}
                           </a>
                         </div>
                       </div>
                       <div className="entry-title nott">
                         <h3 className="mb-2">
-                          <a href="">{data.judul}</a>
+                          <a href={`berita/show/${data.id}`}>{data.judul}</a>
                         </h3>
                       </div>
                       <div className="entry-meta">
@@ -223,7 +223,7 @@ export default function Page() {
                         <div className="grid-inner row align-items-center g-0">
                           <div className="col-auto">
                             <div className="entry-image">
-                              <a href="">
+                              <a href={`/berita/show/${item.id}`}>
                                 <Image
                                   src={item.cover}
                                   alt={item.judul}
@@ -236,7 +236,7 @@ export default function Page() {
                           <div className="col ps-3">
                             <div className="entry-title">
                               <h4>
-                                <a href="">{item.judul}</a>
+                                <a href={`berita/show/${item.id}`}>{item.judul}</a>
                               </h4>
                             </div>
                             <div className="entry-meta">
@@ -259,7 +259,7 @@ export default function Page() {
                       <div className="posts-md">
                         <div className="entry">
                           <div className="entry-image">
-                            <a href="">
+                            <a href={`/berita/show/${item.id}`}>
                               <Image
                                 src={item.cover}
                                 alt={item.judul}
@@ -269,14 +269,14 @@ export default function Page() {
                               />
                             </a>
                             <div className="entry-categories">
-                              <a href="" className="bg-lifestyle">
+                              <a href={`/berita/show/${item.id}`} className="bg-lifestyle">
                                 {item.kategori.nama}
                               </a>
                             </div>
                           </div>
                           <div className="entry-title title-sm nott">
                             <h3 className="mb-2">
-                              <a href="">{item.judul}</a>
+                              <a href={`/berita/show/${item.id}`}>{item.judul}</a>
                             </h3>
                           </div>
                           <div className="entry-meta">
@@ -301,7 +301,7 @@ export default function Page() {
                       <div className="grid-inner row align-items-center no-gutter">
                         <div className="col-auto">
                           <div className="entry-image">
-                            <a href="">
+                            <a href={`/berita/show/${item.id}`}>
                               <Image
                                 src={item.cover}
                                 alt={item.judul}
@@ -314,7 +314,7 @@ export default function Page() {
                         <div className="col ps-3">
                           <div className="entry-title">
                             <h4 className="fw-medium">
-                              <a href="">{item.judul}</a>
+                              <a href={`/berita/show/${item.id}`}>{item.judul}</a>
                             </h4>
                           </div>
                           <div className="entry-meta">
@@ -353,7 +353,7 @@ export default function Page() {
                     <div className="entry row mb-5">
                       <div className="col-md-6">
                         <div className="entry-image">
-                          <Link href={`/berita/${item.id}`}>
+                          <Link href={`/berita/show/${item.id}`}>
                             <Image
                               src={item.cover}
                               alt={item.judul}
@@ -367,7 +367,7 @@ export default function Page() {
                       <div className="col-md-6 mt-3 mt-md-0">
                         <div className="entry-title title-sm nott">
                           <h3>
-                            <Link href={`/berita/${item.id}`}>
+                            <Link href={`/berita/show/${item.id}`}>
                               {item.judul}
                             </Link>
                           </h3>
@@ -413,7 +413,7 @@ export default function Page() {
                       className="d-flex align-items-center"
                     >
                       <a
-                        href={`/berita/${item.id_kategori}`}
+                        href={`/berita/show/${item.id_kategori}`}
                         className="flex-fill"
                       >
                         {item.nama}
@@ -434,7 +434,7 @@ export default function Page() {
                       <div className="grid-inner row align-items-center g-0">
                         <div className="col-auto">
                           <div className="entry-image">
-                            <a href={``}>
+                            <a href={`/berita/show/${item.id}`}>
                               <Image
                                 src={item.cover}
                                 alt={item.judul}
@@ -447,14 +447,14 @@ export default function Page() {
                         <div className="col ps-3">
                           <div className="entry-title">
                             <h4 className="fw-semibold">
-                              <a href={``}>{item.judul}</a>
+                              <a href={`/berita/show/${item.id}`}>{item.judul}</a>
                             </h4>
                           </div>
                           <div className="entry-meta">
                             <ul>
                               <li>
                                 <i className="icon-time"></i>
-                                <a href="#">{item.waktu_publish}</a>
+                                <a href={`/berita/show/${item.id}`}>{item.waktu_publish}</a>
                               </li>
                             </ul>
                           </div>

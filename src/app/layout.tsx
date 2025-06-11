@@ -67,9 +67,23 @@ export default function RootLayout({
         <Script src="/canvas_theme/js/plugins.min.js" strategy="beforeInteractive" />
         <Script src="/canvas_theme/js/plugins.infinitescroll.js" strategy="beforeInteractive" />
         <Script src="/canvas_theme/js/functions.js" strategy="afterInteractive" />
+        <Script id="disqus-script" strategy="afterInteractive">
+          {`
+            (function() {
+              var d = document, s = d.createElement('script');
+              s.src = 'https://tvkutv.disqus.com/embed.js';
+              s.setAttribute('data-timestamp', +new Date());
+              (d.head || d.body).appendChild(s);
+            })();
+          `}
+        </Script>
 
-        {/* Remove the automatic carousel initialization script since we'll handle it in the component */}
-      </body>
+        {/* Disqus noscript fallback */}
+        <noscript>
+          Please enable JavaScript to view the{" "}
+          <a href="https://disqus.com/?ref_noscript">comments powered by Disqus.</a>
+        </noscript>
+        </body>
     </html>
   );
 }
