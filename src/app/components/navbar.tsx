@@ -139,7 +139,7 @@ const Navbar = () => {
                                     <div className="col-4" key={item.id}>
                                       <div className="entry">
                                         <div className="entry-image mb-3">
-                                          <Link href={`/berita/${item.id}`}>
+                                          <Link href={`/berita/show/${item.id}`}>
                                             <Image
                                               src={item.cover}
                                               alt={item.judul}
@@ -159,7 +159,7 @@ const Navbar = () => {
                                         </div>
                                         <div className="entry-title title-xs nott">
                                           <h3 className="mb-1">
-                                            <Link href={`/berita/${item.id}`}>
+                                            <Link href={`/berita/show/${item.id}`}>
                                               {item.judul}
                                             </Link>
                                           </h3>

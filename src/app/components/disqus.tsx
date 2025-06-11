@@ -8,13 +8,6 @@ interface DisqusProps {
     shortname: string;
 }
 
-interface DisqusConfig {
-    page: {
-        url: string;
-        identifier: string;
-    };
-}
-
 declare global {
     interface Window {
         DISQUS?: any; // eslint-disable-line
@@ -23,7 +16,8 @@ declare global {
 
 const DisqusComment = ({ url, identifier, shortname }: DisqusProps) => {
     useEffect(() => {
-        const disqus_config = function (this: DisqusConfig) {
+        // eslint-disable-next-line @typescript-eslint/no-explicit-any
+        const disqus_config = function (this: any) {
             this.page.url = url;
             this.page.identifier = identifier;
         };

@@ -2,11 +2,11 @@
 
 import { useEffect, useState } from 'react'
 import { useParams } from 'next/navigation'
-import { Berita } from '@/types/berita'
+import { berita } from '../types'
 
 const BeritaDetail = () => {
   const { id } = useParams<{ id: string }>()
-  const [berita, setBerita] = useState<Berita | null>(null)
+  const [berita, setBerita] = useState<berita | null>(null)
   const [loading, setLoading] = useState(true)
 
   const formatTanggal = (dateString: string) => {
@@ -46,7 +46,7 @@ const BeritaDetail = () => {
               <div className="flex flex-col gap-2">
                 <h1 className="text-lg font-semibold">{berita.judul}</h1>
                 <span className="text-muted-foreground text-xs">
-                  {formatTanggal(berita.created_at)}
+                  {formatTanggal(berita.waktu_publish)}
                 </span>
               </div>
 
@@ -62,7 +62,7 @@ const BeritaDetail = () => {
 
               <div
                 className="prose max-w-none prose-sm"
-                dangerouslySetInnerHTML={{ __html: berita.isi }}
+                dangerouslySetInnerHTML={{ __html: berita.deskripsi }}
               />
 
               {berita.filename && (
