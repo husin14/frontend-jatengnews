@@ -10,7 +10,6 @@ import { berita, apiResponse } from "@/app/types";
 import SideBar from "@/app/components/sideBar";
 
 export default function Page() {
-
   const baseurl = process.env.NEXT_PUBLIC_BASE_URL;
 
   const [beritaApiResponse, setBeritaApiResponse] =
@@ -45,7 +44,7 @@ export default function Page() {
       }
     };
     getBerita();
-  }, [baseurl, currentPage]); 
+  }, [baseurl, currentPage]);
 
   const getPageRange = () => {
     const pages: (number | string)[] = [];
@@ -122,7 +121,7 @@ export default function Page() {
                     <div className="entry row mb-5">
                       <div className="col-md-6">
                         <div className="entry-image">
-                          <Link href={`/berita/${item.id}`}>
+                          <Link href={`/berita/show/${item.id}`}>
                             <Image
                               src={item.cover}
                               alt={item.judul}
@@ -136,7 +135,7 @@ export default function Page() {
                       <div className="col-md-6 mt-3 mt-md-0">
                         <div className="entry-title title-sm nott">
                           <h3>
-                            <Link href={`/berita/${item.id}`}>
+                            <Link href={`/berita/show/${item.id}`}>
                               {item.judul}
                             </Link>
                           </h3>
