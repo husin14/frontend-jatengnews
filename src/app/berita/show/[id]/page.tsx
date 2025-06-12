@@ -6,11 +6,21 @@ import { berita } from "@/app/types";
 import SideBar from "@/app/components/sideBar";
 import Image from "next/image";
 import DisqusComment from "@/app/components/disqus";
+import PopupIklan from "@/app/components/popupIklan";
 
 const DetailBeritaPage = () => {
   const { id } = useParams<{ id: string }>();
   const [berita, setBerita] = useState<berita | null>(null);
   const [loading, setLoading] = useState(true);
+  const [showIklan, setShowIklan] = useState(false);
+
+  useEffect(() => {
+    setShowIklan(true);
+  }, []);
+
+  const handleClose = () => {
+    setShowIklan(false);
+  };
 
   useEffect(() => {
     const fetchData = async () => {
@@ -39,6 +49,8 @@ const DetailBeritaPage = () => {
 
   return (
     <>
+    { showIklan && <PopupIklan onClose={handleClose}/>}
+    
       {berita.link && (
         <div className="mb-3" style={{ marginTop: "8px" }}>
           <div className="ratio ratio-16x9">
