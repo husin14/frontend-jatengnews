@@ -1,14 +1,6 @@
-"use client";
-
 import React from "react";
-import { useState, useEffect } from "react";
-import { homeSlider } from "../types";
 import axios from "axios";
-
-const carousels = [
-  { judul: "Judul 1", sub_judul: "Sub Judul 1", gambar: "img-1.jpg" },
-  { judul: "Judul 2", sub_judul: "Sub Judul 2", gambar: "img-1.jpg" },
-];
+import SliderSection from "./SliderSection";
 
 const enamberitaterbaru = [
   { id: 1, judul: "Berita 1", cover: "cover1.jpg" },
@@ -94,80 +86,13 @@ const TVKU_BERITA_SINGLE = "/berita/";
 const TVKU_BERITA = "/berita";
 const base_url = (path = "") => (path ? `/${path}` : "/");
 
-export default function Home() {
-  const baseurl = process.env.NEXT_PUBLIC_BASE_URL;
+export default async function Home() {
 
-  const [carousel, serCarousel] = useState<homeSlider[]>([]);
+  const { data } = await axios.get(`${process.env.NEXT_PUBLIC_BASE_URL}/home/slider`);
 
-  useEffect(() => {
-    const fetchCarousels = async () => {
-      try {
-        const response = await axios.get(`${baseurl}/home/slider`);
-        serCarousel(response.data.data);
-      } catch (error) {
-        console.error("Error fetching carousels:", error);
-      }
-    };
-
-    fetchCarousels();
-  }, [baseurl]);
   return (
     <div>
-      {/* Slider Section */}
-      {carousel.length > 0 ? ( 
-        <section
-          id="slider"
-          className="slider-element slider-parallax swiper_wrapper min-vh-60 min-vh-md-100 include-header"
-          data-autoplay="3000"
-          data-speed="650"
-          data-loop="true"
-        >
-          <div className="slider-inner">
-            <div className="swiper-container swiper-parent">
-              <div className="swiper-wrapper">
-                {carousel.map((data, idx) => (
-                  <div className="swiper-slide dark" key={idx}>
-                    <div className="container">
-                      <div className="slider-caption slider-caption-center">
-                        <h2 data-animate="fadeInUp">{data.judul}</h2>
-                        <p
-                          className="d-none d-sm-block"
-                          data-animate="fadeInUp"
-                          data-delay="200"
-                        >
-                          {data.sub_judul}
-                        </p>
-                      </div>
-                    </div>
-                    <div
-                      className="swiper-slide-bg"
-                      style={{
-                        backgroundImage: `url('${data.gambar}')`,
-                      }}
-                    ></div>
-                  </div>
-                ))}
-              </div>
-              <div className="slider-arrow-left">
-                <i className="icon-angle-left"></i>
-              </div>
-              <div className="slider-arrow-right">
-                <i className="icon-angle-right"></i>
-              </div>
-            </div>
-            <a
-              href="#"
-              data-scrollto="#content"
-              data-offset="100"
-              className="one-page-arrow dark"
-            >
-              <i className="icon-angle-down infinite animated fadeInDown"></i>
-            </a>
-          </div>
-        </section>
-      ) : (
-        <div>Loading Slider...</div> // Tampilkan loading state jika data belum ada
-      )}
+      <SliderSection carousels={data.data}/>
 
       {/* Content Section */}
       <section id="content">
