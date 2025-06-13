@@ -1,4 +1,9 @@
+"use client";
+
 import React from "react";
+import { useState, useEffect } from "react";
+import { homeSlider } from "../types";
+import axios from "axios";
 
 const carousels = [
   { judul: "Judul 1", sub_judul: "Sub Judul 1", gambar: "img-1.jpg" },
@@ -16,15 +21,48 @@ const jadwal = [
 ];
 
 const list_program = [
-  "1.webp", "2.webp", "11.webp", "3.webp", "4.webp", "5.webp", "6.webp", "7.webp", "8.webp", "9.webp", "10.webp", "12.webp"
+  "1.webp",
+  "2.webp",
+  "11.webp",
+  "3.webp",
+  "4.webp",
+  "5.webp",
+  "6.webp",
+  "7.webp",
+  "8.webp",
+  "9.webp",
+  "10.webp",
+  "12.webp",
 ];
 
 const images = [
-  'bjateng.png', 'bnn.png', 'esport.png', 'halal.png', 'kominfo.png', 'kemenkumham.png', 'komnasanak.png', 'komnasham.png', 'majt.png', 'perhimpunandokter.png', 'uin.png', 'ypkpi_mrb.png'
+  "bjateng.png",
+  "bnn.png",
+  "esport.png",
+  "halal.png",
+  "kominfo.png",
+  "kemenkumham.png",
+  "komnasanak.png",
+  "komnasham.png",
+  "majt.png",
+  "perhimpunandokter.png",
+  "uin.png",
+  "ypkpi_mrb.png",
 ];
 
 const captions = [
-  'Bank Jateng', 'BNN', 'PBESI', 'Majelis Ulama Indonesia', 'Kominfo', 'Kemenkumham', 'Komnas Anak', 'Komnas HAM', 'MAJT', 'Perhimpunan Dokter', 'UIN WS', 'YPKPI MRB'
+  "Bank Jateng",
+  "BNN",
+  "PBESI",
+  "Majelis Ulama Indonesia",
+  "Kominfo",
+  "Kemenkumham",
+  "Komnas Anak",
+  "Komnas HAM",
+  "MAJT",
+  "Perhimpunan Dokter",
+  "UIN WS",
+  "YPKPI MRB",
 ];
 
 const whoweare = {
@@ -42,12 +80,8 @@ const whoweare = {
 const ourexpertise1 = [
   { judul: "Expertise 1", deskripsi: "Deskripsi 1", thumbnail: "exp1.jpg" },
 ];
-const ourexpertise2_1 = [
-  { judul: "Expertise 2.1", thumbnail: "exp2_1.jpg" },
-];
-const ourexpertise2_2 = [
-  { judul: "Expertise 2.2", thumbnail: "exp2_2.jpg" },
-];
+const ourexpertise2_1 = [{ judul: "Expertise 2.1", thumbnail: "exp2_1.jpg" }];
+const ourexpertise2_2 = [{ judul: "Expertise 2.2", thumbnail: "exp2_2.jpg" }];
 
 const hari = "Senin";
 const tanggal = "1 Januari 2024";
@@ -58,58 +92,82 @@ const PATH_DIR = "/beranda_assets/";
 const PATH_COVER = "/beranda_assets/covers/";
 const TVKU_BERITA_SINGLE = "/berita/";
 const TVKU_BERITA = "/berita";
-const base_url = (path = "") => path ? `/${path}` : "/";
+const base_url = (path = "") => (path ? `/${path}` : "/");
 
 export default function Home() {
+  const baseurl = process.env.NEXT_PUBLIC_BASE_URL;
+
+  const [carousel, serCarousel] = useState<homeSlider[]>([]);
+
+  useEffect(() => {
+    const fetchCarousels = async () => {
+      try {
+        const response = await axios.get(`${baseurl}/home/slider`);
+        serCarousel(response.data.data);
+      } catch (error) {
+        console.error("Error fetching carousels:", error);
+      }
+    };
+
+    fetchCarousels();
+  }, [baseurl]);
   return (
     <div>
       {/* Slider Section */}
-      <section
-        id="slider"
-        className="slider-element slider-parallax swiper_wrapper min-vh-60 min-vh-md-100 include-header"
-        data-autoplay="3000"
-        data-speed="650"
-        data-loop="true"
-      >
-        <div className="slider-inner">
-          <div className="swiper-container swiper-parent">
-            <div className="swiper-wrapper">
-              {carousels.map((data, idx) => (
-                <div className="swiper-slide dark" key={idx}>
-                  <div className="container">
-                    <div className="slider-caption slider-caption-center">
-                      <h2 data-animate="fadeInUp">{data.judul}</h2>
-                      <p className="d-none d-sm-block" data-animate="fadeInUp" data-delay="200">
-                        {data.sub_judul}
-                      </p>
+      {carousel.length > 0 ? ( 
+        <section
+          id="slider"
+          className="slider-element slider-parallax swiper_wrapper min-vh-60 min-vh-md-100 include-header"
+          data-autoplay="3000"
+          data-speed="650"
+          data-loop="true"
+        >
+          <div className="slider-inner">
+            <div className="swiper-container swiper-parent">
+              <div className="swiper-wrapper">
+                {carousel.map((data, idx) => (
+                  <div className="swiper-slide dark" key={idx}>
+                    <div className="container">
+                      <div className="slider-caption slider-caption-center">
+                        <h2 data-animate="fadeInUp">{data.judul}</h2>
+                        <p
+                          className="d-none d-sm-block"
+                          data-animate="fadeInUp"
+                          data-delay="200"
+                        >
+                          {data.sub_judul}
+                        </p>
+                      </div>
                     </div>
+                    <div
+                      className="swiper-slide-bg"
+                      style={{
+                        backgroundImage: `url('${data.gambar}')`,
+                      }}
+                    ></div>
                   </div>
-                  <div
-                    className="swiper-slide-bg"
-                    style={{
-                      backgroundImage: `url('${PATH_DIR}images/${data.gambar}')`,
-                    }}
-                  ></div>
-                </div>
-              ))}
+                ))}
+              </div>
+              <div className="slider-arrow-left">
+                <i className="icon-angle-left"></i>
+              </div>
+              <div className="slider-arrow-right">
+                <i className="icon-angle-right"></i>
+              </div>
             </div>
-            <div className="slider-arrow-left">
-              <i className="icon-angle-left"></i>
-            </div>
-            <div className="slider-arrow-right">
-              <i className="icon-angle-right"></i>
-            </div>
+            <a
+              href="#"
+              data-scrollto="#content"
+              data-offset="100"
+              className="one-page-arrow dark"
+            >
+              <i className="icon-angle-down infinite animated fadeInDown"></i>
+            </a>
           </div>
-          <a
-            href="#"
-            data-scrollto="#content"
-            data-offset="100"
-            className="one-page-arrow dark"
-          >
-            <i className="icon-angle-down infinite animated fadeInDown"></i>
-          </a>
-        </div>
-      </section>
+        </section>
+      ) : (
+        <div>Loading Slider...</div> // Tampilkan loading state jika data belum ada
+      )}
 
       {/* Content Section */}
       <section id="content">
@@ -300,7 +358,9 @@ export default function Home() {
                       <div>
                         <img
                           className="kerjasamaterjalin-item-img"
-                          src={base_url("assets") + "/kerjasamaygterjalin/" + img}
+                          src={
+                            base_url("assets") + "/kerjasamaygterjalin/" + img
+                          }
                           alt={captions[i]}
                         />
                         <div className="kerjasamaterjalin-item-caption">
@@ -344,8 +404,12 @@ export default function Home() {
                         </a>
                       </div>
                       <div className="fbox-content">
-                        <h3>{whoweare[`motto${num}` as keyof typeof whoweare]}</h3>
-                        <p>{whoweare[`motto${num}sub` as keyof typeof whoweare]}</p>
+                        <h3>
+                          {whoweare[`motto${num}` as keyof typeof whoweare]}
+                        </h3>
+                        <p>
+                          {whoweare[`motto${num}sub` as keyof typeof whoweare]}
+                        </p>
                       </div>
                     </div>
                   </div>
@@ -365,8 +429,16 @@ export default function Home() {
                   <div className="grid-inner row g-0" key={idx}>
                     <div className="col-md-4">
                       <div className="entry-image">
-                        <a href={base_url() + "assets/canvas/images/blog/full/17.jpg"} data-lightbox="image">
-                          <img src={PATH_DIR + "ourexpertise/" + data.thumbnail} alt="Standard Post with Image" />
+                        <a
+                          href={
+                            base_url() + "assets/canvas/images/blog/full/17.jpg"
+                          }
+                          data-lightbox="image"
+                        >
+                          <img
+                            src={PATH_DIR + "ourexpertise/" + data.thumbnail}
+                            alt="Standard Post with Image"
+                          />
                         </a>
                       </div>
                     </div>
@@ -383,12 +455,19 @@ export default function Home() {
               </div>
               <div className="col-lg-3 col-12">
                 {ourexpertise2_1.map((data, idx) => (
-                  <div id="portfolio" className="portfolio row g-0 portfolio-reveal grid-container portfolio-home" key={idx}>
+                  <div
+                    id="portfolio"
+                    className="portfolio row g-0 portfolio-reveal grid-container portfolio-home"
+                    key={idx}
+                  >
                     <article className="portfolio-item pf-media pf-icons">
                       <div className="grid-inner">
                         <div className="portfolio-image">
                           <a href="portfolio-single.html">
-                            <img src={PATH_DIR + "ourexpertise/" + data.thumbnail} alt="Open Imagination" />
+                            <img
+                              src={PATH_DIR + "ourexpertise/" + data.thumbnail}
+                              alt="Open Imagination"
+                            />
                           </a>
                         </div>
                         <div className="portfolio-desc">
@@ -403,12 +482,19 @@ export default function Home() {
               </div>
               <div className="col-lg-3 col-12 move-to-bottom">
                 {ourexpertise2_2.map((data, idx) => (
-                  <div id="portfolio" className="portfolio row g-0 portfolio-reveal grid-container portfolio-home" key={idx}>
+                  <div
+                    id="portfolio"
+                    className="portfolio row g-0 portfolio-reveal grid-container portfolio-home"
+                    key={idx}
+                  >
                     <article className="portfolio-item pf-media pf-icons">
                       <div className="grid-inner">
                         <div className="portfolio-image">
                           <a href="portfolio-single.html">
-                            <img src={PATH_DIR + "ourexpertise/" + data.thumbnail} alt="Open Imagination" />
+                            <img
+                              src={PATH_DIR + "ourexpertise/" + data.thumbnail}
+                              alt="Open Imagination"
+                            />
                           </a>
                         </div>
                         <div className="portfolio-desc">

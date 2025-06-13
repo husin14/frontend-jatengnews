@@ -116,9 +116,8 @@ const Carousel = () => {
         }
       }
     };
-  }, [mounted, berita.length]); // Re-run when berita data changes
+  }, [mounted, berita.length]);
 
-  // Don't render anything until mounted (prevents hydration mismatch)
   if (!mounted) {
     return null;
   }

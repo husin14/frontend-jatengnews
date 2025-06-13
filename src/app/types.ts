@@ -54,3 +54,14 @@ export interface apiResponse {
   prev_page_url: string | null;
   data: berita[];
 }
+
+
+// beranda
+export interface homeSlider {
+  id: number;
+  judul: string;
+  sub_judul: string;
+  gambar: string;
+  urutan: string;
+  url: null;
+}

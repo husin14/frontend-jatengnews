@@ -27,23 +27,64 @@ export default function RootLayout({
   return (
     <html lang="en">
       <head>
-
-
-
         {/* link for beranda */}
-        <link href="https://fonts.googleapis.com/css?family=Lato:300,400,400i,700|Poppins:300,400,500,600,700|PT+Serif:400,400i&display=swap" rel="stylesheet" type="text/css" />
-        <link rel="stylesheet" href="beranda_assets/canvas/css/bootstrap.css" type="text/css" />
-        <link rel="stylesheet" href="beranda_assets/canvas/css/style.css" type="text/css" />
-        <link rel="stylesheet" href="beranda_assets/canvas/css/swiper.css" type="text/css" />
-        <link rel="stylesheet" href="beranda_assets/canvas/css/dark.css" type="text/css" />
-        <link rel="stylesheet" href="beranda_assets/canvas/css/font-icons.css" type="text/css" />
-        <link rel="stylesheet" href="beranda_assets/canvas/css/animate.css" type="text/css" />
-        <link rel="stylesheet" href="beranda_assets/canvas/css/magnific-popup.css" type="text/css" />
+        <link
+          href="https://fonts.googleapis.com/css?family=Lato:300,400,400i,700|Poppins:300,400,500,600,700|PT+Serif:400,400i&display=swap"
+          rel="stylesheet"
+          type="text/css"
+        />
+        <link
+          rel="stylesheet"
+          href="beranda_assets/canvas/css/bootstrap.css"
+          type="text/css"
+        />
+        <link
+          rel="stylesheet"
+          href="beranda_assets/canvas/css/style.css"
+          type="text/css"
+        />
+        <link
+          rel="stylesheet"
+          href="beranda_assets/canvas/css/swiper.css"
+          type="text/css"
+        />
+        <link
+          rel="stylesheet"
+          href="beranda_assets/canvas/css/dark.css"
+          type="text/css"
+        />
+        <link
+          rel="stylesheet"
+          href="beranda_assets/canvas/css/font-icons.css"
+          type="text/css"
+        />
+        <link
+          rel="stylesheet"
+          href="beranda_assets/canvas/css/animate.css"
+          type="text/css"
+        />
+        <link
+          rel="stylesheet"
+          href="beranda_assets/canvas/css/magnific-popup.css"
+          type="text/css"
+        />
 
-        <link rel="stylesheet" href="beranda_assets/canvas/css/custom.css" type="text/css" />
+        <link
+          rel="stylesheet"
+          href="beranda_assets/canvas/css/custom.css"
+          type="text/css"
+        />
 
-        <link rel="stylesheet" type="text/css" href="https://cdn.jsdelivr.net/npm/slick-carousel@1.8.1/slick/slick.css" />
-        <link rel="stylesheet" href="beranda_assets/css/myslickstyle.css" type="text/css" />
+        <link
+          rel="stylesheet"
+          type="text/css"
+          href="https://cdn.jsdelivr.net/npm/slick-carousel@1.8.1/slick/slick.css"
+        />
+        <link
+          rel="stylesheet"
+          href="beranda_assets/css/myslickstyle.css"
+          type="text/css"
+        />
       </head>
       <body className="stretched">
         <div id="wrapper" className="clearfix">
@@ -51,22 +92,34 @@ export default function RootLayout({
 
           {children}
           <Footer />
-
         </div>
 
-
-
-
         {/* jQuery and plugins */}
-        <Script src="/beranda_assets/canvas/js/jquery.js" strategy="beforeInteractive" />
-        <Script src="/beranda_assets/canvas/js/plugins.min.js" strategy="beforeInteractive" />
-        <Script src="https://cdnjs.cloudflare.com/ajax/libs/waypoints/2.0.5/waypoints.min.js" strategy="beforeInteractive" />
-        <Script src="/beranda_assets/canvas/js/functions.js" strategy="afterInteractive" />
-        <Script src="https://cdn.jsdelivr.net/npm/slick-carousel@1.8.1/slick/slick.min.js" strategy="afterInteractive" />
+        <Script
+          src="/beranda_assets/canvas/js/jquery.js"
+          strategy="beforeInteractive"
+        />
+        <Script
+          src="/beranda_assets/canvas/js/plugins.min.js"
+          strategy="beforeInteractive"
+        />
+        <Script
+          src="https://cdnjs.cloudflare.com/ajax/libs/waypoints/2.0.5/waypoints.min.js"
+          strategy="beforeInteractive"
+        />
+        <Script
+          src="/beranda_assets/canvas/js/functions.js"
+          strategy="afterInteractive"
+        />
+        <Script
+          src="https://cdn.jsdelivr.net/npm/slick-carousel@1.8.1/slick/slick.min.js"
+          strategy="afterInteractive"
+        />
 
         {/* Inline slick initialization */}
-        <Script id="slick-init" strategy="afterInteractive">{`
-          $('.myslick').slick({
+        <Script id="slick-init" strategy="beforeInteractive">{`
+        Query(document).ready(function() {
+          jQuery('.myslick').slick({
             infinite: true,
             slidesToScroll: 1,
             variableWidth: true,
@@ -78,7 +131,7 @@ export default function RootLayout({
             nextArrow: "<button  class='slick-next slick-arrow' type='button'><i class='icon-angle-right'></i></button>",
           });
 
-          $('.kerjasamaterjalin').slick({
+          jQuery('.kerjasamaterjalin').slick({
             infinite: true,
             autoplay: true,
             autoplaySpeed: 2000,
@@ -96,7 +149,7 @@ export default function RootLayout({
             ]
           });
 
-          $('.our-program-beranda-slick').slick({
+          jQuery('.our-program-beranda-slick').slick({
             infinite: true,
             slidesToScroll: 1,
             variableWidth: false,
@@ -117,6 +170,7 @@ export default function RootLayout({
           if(imge1) {
             console.log(imge1.parentElement.parentElement.parentElement.parentElement.parentElement.offsetTop);
           }
+            });
         `}</Script>
       </body>
     </html>
