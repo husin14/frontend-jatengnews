@@ -1,16 +1,8 @@
 import React from "react";
 import axios from "axios";
 import SliderSection from "./SliderSection";
-
-const enamberitaterbaru = [
-  { id: 1, judul: "Berita 1", cover: "cover1.jpg" },
-  { id: 2, judul: "Berita 2", cover: "cover2.jpg" },
-];
-
-const jadwal = [
-  { acara: "Acara 1", jam_awal: "08:00", jam_akhir: "09:00" },
-  { acara: "Acara 2", jam_awal: "09:00", jam_akhir: "10:00" },
-];
+import { BeritaTerbaruSection } from "./BeritaTerbaruSection";
+import { jadwalAcara } from "../types";
 
 const list_program = [
   "1.webp",
@@ -75,29 +67,85 @@ const ourexpertise1 = [
 const ourexpertise2_1 = [{ judul: "Expertise 2.1", thumbnail: "exp2_1.jpg" }];
 const ourexpertise2_2 = [{ judul: "Expertise 2.2", thumbnail: "exp2_2.jpg" }];
 
-const hari = "Senin";
-const tanggal = "1 Januari 2024";
-const jam = "08:30";
-const onair = { acara: "Acara On Air" };
-
 const PATH_DIR = "/beranda_assets/";
-const PATH_COVER = "/beranda_assets/covers/";
-const TVKU_BERITA_SINGLE = "/berita/";
-const TVKU_BERITA = "/berita";
 const base_url = (path = "") => (path ? `/${path}` : "/");
 
 export default async function Home() {
+  const { data: slider } = await axios.get(
+    `${process.env.NEXT_PUBLIC_BASE_URL}/home/slider`
+  );
+  const { data: beritaTerbaru } = await axios.get(
+    `${process.env.NEXT_PUBLIC_BASE_URL}/berita`
+  );
+  const { data: jadwalTayang } = await axios.get(
+    `${process.env.NEXT_PUBLIC_BASE_URL}/jadwal-acara`
+  );
 
-  const { data } = await axios.get(`${process.env.NEXT_PUBLIC_BASE_URL}/home/slider`);
+  console.log("Slider Data:", slider);
+  console.log("Berita Terbaru Data:", beritaTerbaru);
+
+  const now = new Date();
+  const days = ["Minggu", "Senin", "Selasa", "Rabu", "Kamis", "Jumat", "Sabtu"];
+  const months = [
+    "Januari",
+    "Februari",
+    "Maret",
+    "April",
+    "Mei",
+    "Juni",
+    "Juli",
+    "Agustus",
+    "September",
+    "Oktober",
+    "November",
+    "Desember",
+  ];
+
+  const hari = days[now.getDay()];
+  const tanggal = `${now.getDate()} ${
+    months[now.getMonth()]
+  } ${now.getFullYear()}`;
+
+  const jam = now.getHours() + now.getMinutes() / 60;
+
+  let onair = null;
+  if (jadwalTayang?.data) {
+    const currentProgram = jadwalTayang.data.find((program: jadwalAcara) => {
+      const jamAwal = parseFloat(program.jam_awal);
+      const jamAkhir = parseFloat(program.jam_akhir);
+      console.log(
+        `Program ${
+          program.acara
+        }: ${jamAwal} - ${jamAkhir}, current time: ${jam}, match: ${
+          jam >= jamAwal && jam <= jamAkhir
+        }`
+      );
+
+      return jam >= jamAwal && jam <= jamAkhir;
+    });
+
+    if (currentProgram) {
+      onair = { acara: currentProgram.acara };
+    }
+  }
 
   return (
     <div>
-      <SliderSection carousels={data.data}/>
+      <SliderSection carousels={slider.data} />
 
       {/* Content Section */}
       <section id="content">
         <div className="content-wrap">
-          <div className="container">
+          <BeritaTerbaruSection
+            Berita={beritaTerbaru?.data}
+            jadwalAcara={jadwalTayang?.data}
+            hari={hari}
+            tanggal={tanggal}
+            jam={jam}
+            onair={onair}
+          />
+
+          {/* <div className="container">
             <div className="row rowjadwalsiar">
               <div className="col-12 col-lg-6">
                 <div
@@ -219,7 +267,7 @@ export default async function Home() {
                 </div>
               </div>
             </div>
-          </div>
+          </div> */}
 
           {/* Our Program */}
           <div

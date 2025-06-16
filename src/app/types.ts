@@ -62,3 +62,18 @@ export interface homeSlider {
   sub_judul: string;
   gambar: string;
 }
+
+export interface jadwalAcara{
+  iid: number;
+  id_hari: number;
+  jam_awal: string;
+  jam_akhir: string;
+  acara: string;
+  link: string;
+  uploader: number;
+  waktu: string;
+  hari: {
+    id: number;
+    hari: string;
+  };
+}
