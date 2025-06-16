@@ -77,3 +77,11 @@ export interface jadwalAcara{
     hari: string;
   };
 }
+
+export interface OurProgram {
+  id: number;
+  thumbnail: string;
+  judul: string;
+  deskripsi: string;
+}
+

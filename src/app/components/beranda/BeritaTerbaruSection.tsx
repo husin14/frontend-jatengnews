@@ -1,14 +1,14 @@
 import React from "react";
-import { berita, jadwalAcara } from "../types";
+import { berita, jadwalAcara } from "../../types";
 import Image from "next/image";
 
 type BeritaTerbaruSectionProps = {
   Berita: berita[];
   jadwalAcara: jadwalAcara[];
-  hari: string; 
-  tanggal: string; 
-  jam: number; 
-  onair: { acara: string } | null; 
+  hari: string;
+  tanggal: string;
+  jam: number;
+  onair: { acara: string } | null;
 };
 
 export const BeritaTerbaruSection: React.FC<BeritaTerbaruSectionProps> = ({
@@ -34,10 +34,10 @@ export const BeritaTerbaruSection: React.FC<BeritaTerbaruSectionProps> = ({
               <div className="slider-wrap">
                 {Berita.map((item, idx) => (
                   <div className="slide" data-thumb={item.cover} key={idx}>
-                    <a href="#"> 
+                    <a href="#">
                       <Image
                         src={item.cover}
-                        alt={item.judul} 
+                        alt={item.judul}
                         width={100}
                         height={100}
                       />
@@ -60,14 +60,12 @@ export const BeritaTerbaruSection: React.FC<BeritaTerbaruSectionProps> = ({
             <div className="row rowjadwalsiar">
               <div className="col-12 col-md-7">
                 <div className="posts-sm row col-mb-30">
-                  {Berita && 
+                  {Berita &&
                     Berita.map((item, idx) => (
                       <div className="entry col-12 entry-siar" key={idx}>
                         <div className="entry-title">
                           <h4>
-                            <a href="#"> 
-                              {item.judul}
-                            </a>
+                            <a href="#">{item.judul}</a>
                           </h4>
                         </div>
                         <hr style={{ borderTop: "dashed 1px black" }} />
@@ -75,7 +73,7 @@ export const BeritaTerbaruSection: React.FC<BeritaTerbaruSectionProps> = ({
                     ))}
                   <div className="entry col-12 entry-siar">
                     <div className="entry-title">
-                      <a href="#" style={{ color: "black" }}> 
+                      <a href="#" style={{ color: "black" }}>
                         <div
                           style={{
                             fontSize: 17,

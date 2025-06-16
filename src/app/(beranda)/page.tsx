@@ -1,53 +1,55 @@
 import React from "react";
 import axios from "axios";
-import SliderSection from "./SliderSection";
-import { BeritaTerbaruSection } from "./BeritaTerbaruSection";
+import SliderSection from "../components/beranda/SliderSection";
+import { BeritaTerbaruSection } from "../components/beranda/BeritaTerbaruSection";
 import { jadwalAcara } from "../types";
+import { OurProgramSection } from "../components/beranda/OurProgramSection";
+import { KerjasamaSection } from "../components/beranda/KerjasamaSection";
 
-const list_program = [
-  "1.webp",
-  "2.webp",
-  "11.webp",
-  "3.webp",
-  "4.webp",
-  "5.webp",
-  "6.webp",
-  "7.webp",
-  "8.webp",
-  "9.webp",
-  "10.webp",
-  "12.webp",
-];
+// const list_program = [
+//   "1.webp",
+//   "2.webp",
+//   "11.webp",
+//   "3.webp",
+//   "4.webp",
+//   "5.webp",
+//   "6.webp",
+//   "7.webp",
+//   "8.webp",
+//   "9.webp",
+//   "10.webp",
+//   "12.webp",
+// ];
 
-const images = [
-  "bjateng.png",
-  "bnn.png",
-  "esport.png",
-  "halal.png",
-  "kominfo.png",
-  "kemenkumham.png",
-  "komnasanak.png",
-  "komnasham.png",
-  "majt.png",
-  "perhimpunandokter.png",
-  "uin.png",
-  "ypkpi_mrb.png",
-];
+// const images = [
+//   "bjateng.png",
+//   "bnn.png",
+//   "esport.png",
+//   "halal.png",
+//   "kominfo.png",
+//   "kemenkumham.png",
+//   "komnasanak.png",
+//   "komnasham.png",
+//   "majt.png",
+//   "perhimpunandokter.png",
+//   "uin.png",
+//   "ypkpi_mrb.png",
+// ];
 
-const captions = [
-  "Bank Jateng",
-  "BNN",
-  "PBESI",
-  "Majelis Ulama Indonesia",
-  "Kominfo",
-  "Kemenkumham",
-  "Komnas Anak",
-  "Komnas HAM",
-  "MAJT",
-  "Perhimpunan Dokter",
-  "UIN WS",
-  "YPKPI MRB",
-];
+// const captions = [
+//   "Bank Jateng",
+//   "BNN",
+//   "PBESI",
+//   "Majelis Ulama Indonesia",
+//   "Kominfo",
+//   "Kemenkumham",
+//   "Komnas Anak",
+//   "Komnas HAM",
+//   "MAJT",
+//   "Perhimpunan Dokter",
+//   "UIN WS",
+//   "YPKPI MRB",
+// ];
 
 const whoweare = {
   gambar: "whoweare.jpg",
@@ -80,9 +82,14 @@ export default async function Home() {
   const { data: jadwalTayang } = await axios.get(
     `${process.env.NEXT_PUBLIC_BASE_URL}/jadwal-acara`
   );
+  const { data: ourProgram } = await axios.get(
+    `${process.env.NEXT_PUBLIC_BASE_URL}/our-programs`
+  );
 
   console.log("Slider Data:", slider);
   console.log("Berita Terbaru Data:", beritaTerbaru);
+  console.log("jadwal terbaru", jadwalTayang);
+  console.log("our program", ourProgram);
 
   const now = new Date();
   const days = ["Minggu", "Senin", "Selasa", "Rabu", "Kamis", "Jumat", "Sabtu"];
@@ -145,132 +152,9 @@ export default async function Home() {
             onair={onair}
           />
 
-          {/* <div className="container">
-            <div className="row rowjadwalsiar">
-              <div className="col-12 col-lg-6">
-                <div
-                  className="fslider flex-thumb-grid grid-6"
-                  data-speed="400"
-                  data-arrows="true"
-                  data-thumbs="true"
-                  data-easing="easeOutQuad"
-                >
-                  <div className="flexslider">
-                    <div className="slider-wrap">
-                      {enamberitaterbaru.map((item, idx) => (
-                        <div
-                          className="slide"
-                          data-thumb={PATH_COVER + item.cover}
-                          key={idx}
-                        >
-                          <a href={TVKU_BERITA_SINGLE + item.id}>
-                            <img src={PATH_COVER + item.cover} alt="Image" />
-                            <div className="bg-overlay">
-                              <div className="bg-overlay-content text-overlay-mask desc-sm dark desc-sm align-items-end justify-content-start p-4">
-                                <div className="portfolio-desc py-0">
-                                  <h3>{item.judul}</h3>
-                                </div>
-                              </div>
-                            </div>
-                          </a>
-                        </div>
-                      ))}
-                    </div>
-                  </div>
-                </div>
-              </div>
-              <div className="col-12 col-lg-6">
-                <div className="container-fluid">
-                  <div className="row rowjadwalsiar">
-                    <div className="col-12 col-md-7">
-                      <div className="posts-sm row col-mb-30">
-                        {enamberitaterbaru.map((item, idx) => (
-                          <div className="entry col-12 entry-siar" key={idx}>
-                            <div className="entry-title">
-                              <h4>
-                                <a href={TVKU_BERITA_SINGLE + item.id}>
-                                  {item.judul}
-                                </a>
-                              </h4>
-                            </div>
-                            <hr style={{ borderTop: "dashed 1px black" }} />
-                          </div>
-                        ))}
-                        <div className="entry col-12 entry-siar">
-                          <div className="entry-title">
-                            <a href={TVKU_BERITA} style={{ color: "black" }}>
-                              <div
-                                style={{
-                                  fontSize: 17,
-                                  textAlign: "center",
-                                  backgroundColor: "#f1f1f1",
-                                  paddingLeft: 0,
-                                  paddingRight: 0,
-                                }}
-                              >
-                                Selengkapnya
-                              </div>
-                            </a>
-                          </div>
-                        </div>
-                      </div>
-                    </div>
-                    <div className="col-12 col-md-5">
-                      <div className="widget widget-siaran">
-                        <div className="list-type4">
-                          <h4>
-                            Siaran Hari ini : <br />
-                            {hari}, {tanggal}
-                          </h4>
-                        </div>
-                        <div
-                          style={{ backgroundColor: "#DB0031" }}
-                          className="list-type4"
-                        >
-                          <h5 style={{ color: "white", paddingLeft: 10 }}>
-                            ON AIR :<br /> {onair?.acara ?? "--"}
-                          </h5>
-                        </div>
-                        <div
-                          className="list-type4"
-                          style={{
-                            overflow: "scroll",
-                            overflowX: "hidden",
-                            height: 250,
-                          }}
-                        >
-                          <ol>
-                            {jadwal.map((j, idx) => {
-                              const isNow =
-                                jam >= j.jam_awal && jam <= j.jam_akhir;
-                              return (
-                                <li key={idx}>
-                                  {j.acara}
-                                  {isNow ? (
-                                    <span className="badge">Now</span>
-                                  ) : (
-                                    <>
-                                      <br />
-                                      <div style={{ fontSize: "0.8em" }}>
-                                        {j.jam_awal} - {j.jam_akhir} WIB
-                                      </div>
-                                    </>
-                                  )}
-                                </li>
-                              );
-                            })}
-                          </ol>
-                        </div>
-                      </div>
-                    </div>
-                  </div>
-                </div>
-              </div>
-            </div>
-          </div> */}
-
           {/* Our Program */}
-          <div
+          <OurProgramSection list_program={ourProgram?.data} />
+          {/* <div
             className="container-fluid clearfix"
             style={{
               marginTop: 80,
@@ -314,10 +198,11 @@ export default async function Home() {
                 </a>
               </div>
             </div>
-          </div>
+          </div> */}
 
           {/* Kerjasama */}
-          <div className="section nobottommargin" style={{ paddingTop: 0 }}>
+          <KerjasamaSection />
+          {/* <div className="section nobottommargin" style={{ paddingTop: 0 }}>
             <div className="container clear-bottommargin clearfix">
               <div className="row topmargin-sm clearfix">
                 <div className="heading-block center">
@@ -345,7 +230,7 @@ export default async function Home() {
                 </div>
               </div>
             </div>
-          </div>
+          </div> */}
 
           {/* Who We Are */}
           <div className="container clearfix">
