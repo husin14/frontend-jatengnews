@@ -5,6 +5,7 @@ import { BeritaTerbaruSection } from "../components/beranda/BeritaTerbaruSection
 import { jadwalAcara } from "../types";
 import { OurProgramSection } from "../components/beranda/OurProgramSection";
 import { KerjasamaSection } from "../components/beranda/KerjasamaSection";
+import { WhoWeAre } from "../components/beranda/WhoWeAre";
 
 // const list_program = [
 //   "1.webp",
@@ -51,17 +52,17 @@ import { KerjasamaSection } from "../components/beranda/KerjasamaSection";
 //   "YPKPI MRB",
 // ];
 
-const whoweare = {
-  gambar: "whoweare.jpg",
-  judul: "Who We Are",
-  deskripsi: "Deskripsi tentang siapa kami.",
-  motto1: "Motto 1",
-  motto1sub: "Sub Motto 1",
-  motto2: "Motto 2",
-  motto2sub: "Sub Motto 2",
-  motto3: "Motto 3",
-  motto3sub: "Sub Motto 3",
-};
+// const whoweare = {
+//   gambar: "whoweare.jpg",
+//   judul: "Who We Are",
+//   deskripsi: "Deskripsi tentang siapa kami.",
+//   motto1: "Motto 1",
+//   motto1sub: "Sub Motto 1",
+//   motto2: "Motto 2",
+//   motto2sub: "Sub Motto 2",
+//   motto3: "Motto 3",
+//   motto3sub: "Sub Motto 3",
+// };
 
 const ourexpertise1 = [
   { judul: "Expertise 1", deskripsi: "Deskripsi 1", thumbnail: "exp1.jpg" },
@@ -85,11 +86,15 @@ export default async function Home() {
   const { data: ourProgram } = await axios.get(
     `${process.env.NEXT_PUBLIC_BASE_URL}/our-programs`
   );
+  const { data: whoweare } = await axios.get(
+    `${process.env.NEXT_PUBLIC_BASE_URL}/home/who-we-are`
+  );
 
   console.log("Slider Data:", slider);
   console.log("Berita Terbaru Data:", beritaTerbaru);
   console.log("jadwal terbaru", jadwalTayang);
   console.log("our program", ourProgram);
+  console.log("Who We Are Data:", whoweare);
 
   const now = new Date();
   const days = ["Minggu", "Senin", "Selasa", "Rabu", "Kamis", "Jumat", "Sabtu"];
@@ -233,7 +238,12 @@ export default async function Home() {
           </div> */}
 
           {/* Who We Are */}
-          <div className="container clearfix">
+          {whoweare?.data && whoweare.data.length > 0 && (
+            <WhoWeAre data={whoweare.data[0]} />
+          )}
+
+          {/* Uncomment the following section if you want to display the Who We Are section */}
+          {/* <div className="container clearfix">
             <div className="row align-items-center col-mb-50">
               <div className="col-md-12 col-lg-6 order-lg-2 center">
                 <img
@@ -274,7 +284,7 @@ export default async function Home() {
                 ))}
               </div>
             </div>
-          </div>
+          </div> */}
 
           {/* Expertise */}
           <div className="container clearfix mb-5">

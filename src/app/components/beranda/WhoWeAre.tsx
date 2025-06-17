@@ -1,22 +1,33 @@
 import React from "react";
+import { HomeWhoWeAre } from "../../types";
+import Image from "next/image";
 
-export const WhoWeAre = () => {
+
+type WhoWeAreProps = {
+    data: HomeWhoWeAre;
+}
+
+export const WhoWeAre : React.FC<WhoWeAreProps>= ({ data }) => {
   return (
     <>
       <div className="container clearfix">
         <div className="row align-items-center col-mb-50">
           <div className="col-md-12 col-lg-6 order-lg-2 center">
-            <img
-              data-animate="fadeInLeft"
-              src={PATH_DIR + "whoweare/" + whoweare.gambar}
-              alt="Iphone"
-            />
+            {data?.gambar ? (
+              <Image
+                src={data.gambar}
+                data-animate="fadeInLeft"
+                alt="Who We Are"
+                width={500}
+                height={300}
+              />
+            ) : null}
           </div>
           <div className="col-md-12 col-lg-6 order-lg-1 text-center text-md-start">
             <div className="heading-block">
-              <h2>{whoweare.judul}</h2>
+              <h2>{data.judul || "who we are"}</h2>
             </div>
-            {whoweare.deskripsi}
+            {data.deskripsi}
           </div>
         </div>
       </div>
@@ -32,8 +43,8 @@ export const WhoWeAre = () => {
                     </a>
                   </div>
                   <div className="fbox-content">
-                    <h3>{whoweare[`motto${num}` as keyof typeof whoweare]}</h3>
-                    <p>{whoweare[`motto${num}sub` as keyof typeof whoweare]}</p>
+                    <h3>{data[`motto${num}` as keyof typeof data]}</h3>
+                    <p>{data[`motto${num}sub` as keyof typeof data]}</p>
                   </div>
                 </div>
               </div>

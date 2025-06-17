@@ -85,3 +85,15 @@ export interface OurProgram {
   deskripsi: string;
 }
 
+export interface HomeWhoWeAre {
+  id: number;
+  judul: string;
+  deskripsi: string;
+  gambar: string;
+  motto1: string;
+  motto2: string;
+  motto3: string;
+  motto1sub: string;
+  motto2sub: string;
+  motto3sub: string;
+}
