@@ -97,3 +97,16 @@ export interface HomeWhoWeAre {
   motto2sub: string;
   motto3sub: string;
 }
+
+export interface expertise1 {
+  id: number;
+  thumbnail: string;
+  judul: string;
+  deskripsi: string;
+}
+
+export interface expertise2 {
+  id: number;
+  thumbnail: string;
+  judul: string;
+}
