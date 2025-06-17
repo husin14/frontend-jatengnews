@@ -54,6 +54,9 @@ const DetailBeritaPage = () => {
       {showIklan && <PopupIklan onClose={handleClose} />}
       <YtPreview link={berita.link} />
 
+
+      <div className="row clearfix" style={{ marginTop: "8px" }}>
+        <div className="col-lg-8">
       <h2 className="fw-bold lh-sm mb-3" style={{ fontSize: "2.5rem" }}>
         <Link
           href={`/berita/${berita.id}`}
@@ -84,9 +87,6 @@ const DetailBeritaPage = () => {
           {berita.waktu_publish}
         </div>
       </div>
-
-      <div className="row clearfix" style={{ marginTop: "8px" }}>
-        <div className="col-lg-8">
           <div className="tab-content" id="nav-tabContent">
             <div
               className="tab-pane fade show active"
