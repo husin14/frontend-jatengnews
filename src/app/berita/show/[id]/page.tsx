@@ -7,6 +7,8 @@ import SideBar from "@/app/components/sideBar";
 import Image from "next/image";
 import DisqusComment from "@/app/components/disqus";
 import PopupIklan from "@/app/components/popupIklan";
+import YtPreview from "@/app/components/yt-preview";
+import Link from "next/link";
 
 const DetailBeritaPage = () => {
   const { id } = useParams<{ id: string }>();
@@ -49,31 +51,40 @@ const DetailBeritaPage = () => {
 
   return (
     <>
-    { showIklan && <PopupIklan onClose={handleClose}/>}
-    
-      {berita.link && (
-        <div className="mb-3" style={{ marginTop: "8px" }}>
-          <div className="ratio ratio-16x9">
-            <iframe
-              src={berita.link.replace("watch?v=", "embed/")}
-              title="YouTube video preview"
-              allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
-              allowFullScreen
-              style={{ border: 0, width: "100%", height: "100%" }}
-            />
-          </div>
+      {showIklan && <PopupIklan onClose={handleClose} />}
+      <YtPreview link={berita.link} />
+
+      <h2 className="fw-bold lh-sm mb-3" style={{ fontSize: "2.5rem" }}>
+        <Link
+          href={`/berita/${berita.id}`}
+          className="text-dark text-decoration-none"
+        >
+          {/* {berita.judul} */}
+          Delegasi Yayasan Sosial Jepang Kunjungi Yayasan Vajrayana Nusantara
+        </Link>
+      </h2>
+
+      <div className="d-flex align-items-center text-muted mb-3 ms-2 small">
+        <div className="me-2 d-flex flex-column justify-content-center align-items-center">
+          <div
+            className="rounded-circle bg-secondary"
+            style={{ width: "2px", height: "2px", margin: "1px 0" }}
+          ></div>
+          <div
+            className="rounded-circle bg-secondary"
+            style={{ width: "2px", height: "2px", margin: "1px 0" }}
+          ></div>
+          <div
+            className="rounded-circle bg-secondary"
+            style={{ width: "2px", height: "2px", margin: "1px 0" }}
+          ></div>
         </div>
-      )}
-      <div className="entry-title nott mt-3">
-        <h3 className="mb-2">{berita.judul}</h3>
+        <div className="d-flex align-items-center">
+          <i className="icon-time me-2"></i>
+          {berita.waktu_publish}
+        </div>
       </div>
-      <div className="entry-meta">
-        <ul>
-          <li>
-            <i className="icon-time"></i> {berita.waktu_publish}
-          </li>
-        </ul>
-      </div>
+
       <div className="row clearfix" style={{ marginTop: "8px" }}>
         <div className="col-lg-8">
           <div className="tab-content" id="nav-tabContent">

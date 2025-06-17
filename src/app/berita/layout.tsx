@@ -51,11 +51,10 @@ export default function RootLayout({
                         <Header />
                         <Navbar />
                     </header>
-                    <section id="content">
-                        <div className="content-wrap pt-3">
+                    <section id="content" style={{ marginTop: "20px" }}>
+                        <div className="content-wrap pt-0">
                             <div className="container clearfix">
-                                <div className="row mt-5 clearfix">{children}</div>
-
+                                <div className="row mt-0 clearfix">{children}</div>
                             </div>
                         </div>
                     </section>
