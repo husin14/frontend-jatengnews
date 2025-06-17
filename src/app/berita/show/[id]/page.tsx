@@ -62,8 +62,7 @@ const DetailBeritaPage = () => {
           href={`/berita/${berita.id}`}
           className="text-dark text-decoration-none"
         >
-          {/* {berita.judul} */}
-          Delegasi Yayasan Sosial Jepang Kunjungi Yayasan Vajrayana Nusantara
+          {berita.judul}
         </Link>
       </h2>
 

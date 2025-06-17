@@ -6,6 +6,7 @@ import { jadwalAcara } from "../types";
 import { OurProgramSection } from "../components/beranda/OurProgramSection";
 import { KerjasamaSection } from "../components/beranda/KerjasamaSection";
 import { WhoWeAre } from "../components/beranda/WhoWeAre";
+import { ExpertiseSection } from "../components/beranda/ExpertiseSection";
 
 // const list_program = [
 //   "1.webp",
@@ -89,12 +90,30 @@ export default async function Home() {
   const { data: whoweare } = await axios.get(
     `${process.env.NEXT_PUBLIC_BASE_URL}/home/who-we-are`
   );
+  const { data: ourExpertise1 } = await axios.get(
+    `${process.env.NEXT_PUBLIC_BASE_URL}/home/our-expertise1`
+  );
+  const { data: ourExpertise2 } = await axios.get(
+    `${process.env.NEXT_PUBLIC_BASE_URL}/home/our-expertise2`
+  );
 
   console.log("Slider Data:", slider);
   console.log("Berita Terbaru Data:", beritaTerbaru);
   console.log("jadwal terbaru", jadwalTayang);
   console.log("our program", ourProgram);
   console.log("Who We Are Data:", whoweare);
+  console.log("Our Expertise 1 Data:", ourExpertise1);
+  console.log("Our Expertise 2 Data:", ourExpertise2);
+
+  const expertiseData = {
+    expertise1: ourExpertise1?.data || [],
+    expertise2_1:
+      ourExpertise2?.data?.slice(0, Math.ceil(ourExpertise2.data.length / 2)) ||
+      [],
+    expertise2_2:
+      ourExpertise2?.data?.slice(Math.ceil(ourExpertise2.data.length / 2)) ||
+      [],
+  };
 
   const now = new Date();
   const days = ["Minggu", "Senin", "Selasa", "Rabu", "Kamis", "Jumat", "Sabtu"];
@@ -159,135 +178,18 @@ export default async function Home() {
 
           {/* Our Program */}
           <OurProgramSection list_program={ourProgram?.data} />
-          {/* <div
-            className="container-fluid clearfix"
-            style={{
-              marginTop: 80,
-              backgroundColor: "#f1f2f3",
-              paddingTop: 40,
-              paddingBottom: 40,
-            }}
-          >
-            <div className="heading-block center">
-              <h2>Our Programs</h2>
-            </div>
-            <div className="container">
-              <div className="row">
-                <div className="our-program-beranda-slick">
-                  {list_program.map((img, idx) => (
-                    <a href="" key={idx}>
-                      <div
-                        style={{
-                          backgroundImage: `url('http://tvku.tv/beranda/assets/images/MATERIAL_PROGRAM_WEB_TVKU/${img}')`,
-                        }}
-                      >
-                        <img
-                          style={{ visibility: "hidden" }}
-                          src={`http://tvku.tv/beranda/assets/images/MATERIAL_PROGRAM_WEB_TVKU/${img}`}
-                          alt=""
-                        />
-                      </div>
-                    </a>
-                  ))}
-                </div>
-              </div>
-              <div className="myslick-divider"></div>
-            </div>
-            <div className="container my-3 mt-0">
-              <div className="col-md-12 text-center">
-                <a
-                  href={base_url("program")}
-                  className="button button-border button-dark button-rounded button-large ms-0 topmargin-sm"
-                >
-                  More Programs
-                </a>
-              </div>
-            </div>
-          </div> */}
 
           {/* Kerjasama */}
           <KerjasamaSection />
-          {/* <div className="section nobottommargin" style={{ paddingTop: 0 }}>
-            <div className="container clear-bottommargin clearfix">
-              <div className="row topmargin-sm clearfix">
-                <div className="heading-block center">
-                  <h2>Kerjasama yang Terjalin dengan TVKU</h2>
-                </div>
-              </div>
-              <div className="row">
-                <div className="kerjasamaterjalin">
-                  {images.map((img, i) => (
-                    <a href="" key={i}>
-                      <div>
-                        <img
-                          className="kerjasamaterjalin-item-img"
-                          src={
-                            base_url("assets") + "/kerjasamaygterjalin/" + img
-                          }
-                          alt={captions[i]}
-                        />
-                        <div className="kerjasamaterjalin-item-caption">
-                          {captions[i]}
-                        </div>
-                      </div>
-                    </a>
-                  ))}
-                </div>
-              </div>
-            </div>
-          </div> */}
 
           {/* Who We Are */}
           {whoweare?.data && whoweare.data.length > 0 && (
             <WhoWeAre data={whoweare.data[0]} />
           )}
 
-          {/* Uncomment the following section if you want to display the Who We Are section */}
-          {/* <div className="container clearfix">
-            <div className="row align-items-center col-mb-50">
-              <div className="col-md-12 col-lg-6 order-lg-2 center">
-                <img
-                  data-animate="fadeInLeft"
-                  src={PATH_DIR + "whoweare/" + whoweare.gambar}
-                  alt="Iphone"
-                />
-              </div>
-              <div className="col-md-12 col-lg-6 order-lg-1 text-center text-md-start">
-                <div className="heading-block">
-                  <h2>{whoweare.judul}</h2>
-                </div>
-                {whoweare.deskripsi}
-              </div>
-            </div>
-          </div>
-          <div className="section my-0">
-            <div className="container">
-              <div className="row mt-4 col-mb-50">
-                {[1, 2, 3].map((num) => (
-                  <div className="col-md-12 col-lg-4" key={num}>
-                    <div className="feature-box fbox-plain">
-                      <div className="fbox-icon">
-                        <a href="#">
-                          <i className="i-alt">{num}.</i>
-                        </a>
-                      </div>
-                      <div className="fbox-content">
-                        <h3>
-                          {whoweare[`motto${num}` as keyof typeof whoweare]}
-                        </h3>
-                        <p>
-                          {whoweare[`motto${num}sub` as keyof typeof whoweare]}
-                        </p>
-                      </div>
-                    </div>
-                  </div>
-                ))}
-              </div>
-            </div>
-          </div> */}
-
           {/* Expertise */}
-          <div className="container clearfix mb-5">
+          <ExpertiseSection data={expertiseData} />
+          {/* <div className="container clearfix mb-5">
             <div className="heading-block topmargin-lg center">
               <h2>Here Are Some of Our Expertise</h2>
             </div>
@@ -376,7 +278,7 @@ export default async function Home() {
                 ))}
               </div>
             </div>
-          </div>
+          </div> */}
         </div>
       </section>
     </div>
