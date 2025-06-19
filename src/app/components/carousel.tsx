@@ -125,7 +125,7 @@ const Carousel = () => {
   return (
     <div className="section bg-transparent m-0">
       <div className="container clearfix">
-        <h4 className="mb-3 ls1 text-uppercase fw-bold">Popular News</h4>
+        <h4 className="mb-3 ls1 text-uppercase fw-bold">Berita Populer</h4>
 
         {berita.length === 0 ? (
           <div className="text-center py-5">
@@ -151,13 +151,13 @@ const Carousel = () => {
                   <div className="bg-overlay-content text-overlay-mask dark desc-sm align-items-end justify-content-start p-4">
                     <div className="position-relative w-100">
                       <div className="entry-categories">
-                        <a href="#" className="bg-fashion">
+                        <a href={`/berita/show/${item.id}`} className="bg-fashion">
                           {item.kategori.nama}
                         </a>
                       </div>
                       <div className="entry-title nott">
                         <h3 className="fw-semibold mb-2">
-                          <a href="#" className="text-light">
+                          <a href={`/berita/show/${item.id}`} className="text-light">
                             {item.judul}
                           </a>
                         </h3>
@@ -166,7 +166,7 @@ const Carousel = () => {
                         <ul>
                           <li>
                             <i className="icon-time" />
-                            <a href="#">{new Date().toLocaleDateString()}</a>
+                            <a href={`/berita/show/${item.id}`}>{new Date().toLocaleDateString()}</a>
                           </li>
                         </ul>
                       </div>

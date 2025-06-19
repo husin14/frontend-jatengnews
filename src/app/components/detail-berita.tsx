@@ -3,6 +3,7 @@
 import { useEffect, useState } from 'react'
 import { useParams } from 'next/navigation'
 import { berita } from '../types'
+import Image from 'next/image'
 
 const BeritaDetail = () => {
   const { id } = useParams<{ id: string }>()
@@ -52,10 +53,12 @@ const BeritaDetail = () => {
 
               {berita.cover && (
                 <div className="overflow-hidden rounded-lg">
-                  <img
+                  <Image
                     src={berita.cover}
                     alt={berita.judul}
                     className="w-full h-auto rounded-md"
+                    width={800}
+                    height={450}
                   />
                 </div>
               )}
