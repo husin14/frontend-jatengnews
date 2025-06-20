@@ -116,6 +116,64 @@ export default function RootLayout({
           strategy="afterInteractive"
         />
 
+        <Script id="slick" dangerouslySetInnerHTML={{
+          __html: `
+              $(document).ready(function() {
+                $('.myslick').slick({
+                  infinite: true,
+                  slidesToScroll: 1,
+                  variableWidth: true,
+                  autoplay: false,
+                  autoplaySpeed: 5000,
+                  slidesToShow: 4,
+                  slidesToScroll: 1,
+                  prevArrow: "<button class='slick-prev slick-arrow' type='button'><i class='icon-angle-left'></i></button>",
+                  nextArrow: "<button class='slick-next slick-arrow' type='button'><i class='icon-angle-right'></i></button>",
+                });
+                
+                $('.kerjasamaterjalin').slick({
+                  infinite: true,
+                  autoplay: true,
+                  autoplaySpeed: 2000,
+                  slidesToShow: 6,
+                  slidesToScroll: 1,
+                  prevArrow: "",
+                  nextArrow: "",
+                  responsive: [
+                    { breakpoint: 1600, settings: { slidesToShow: 6, slidesToScroll: 1 } },
+                    { breakpoint: 1400, settings: { slidesToShow: 5, slidesToScroll: 1 } },
+                    { breakpoint: 1200, settings: { slidesToShow: 4, slidesToScroll: 1 } },
+                    { breakpoint: 992, settings: { slidesToShow: 3, slidesToScroll: 3 } },
+                    { breakpoint: 768, settings: { slidesToShow: 2, slidesToScroll: 2 } },
+                    { breakpoint: 576, settings: { slidesToShow: 1, slidesToScroll: 1 } }
+                  ]
+                });
+                
+                $('.our-program-beranda-slick').slick({
+                  infinite: true,
+                  slidesToScroll: 1,
+                  variableWidth: false,
+                  autoplay: true,
+                  autoplaySpeed: 5000,
+                  slidesToShow: 4,
+                  prevArrow: "<button class='slick-prev slick-arrow' type='button'><i class='icon-angle-left'></i></button>",
+                  nextArrow: "<button class='slick-next slick-arrow' type='button'><i class='icon-angle-right'></i></button>",
+                  responsive: [
+                    { breakpoint: 576, settings: { slidesToShow: 1, slidesToScroll: 1, prevArrow: "", nextArrow: "" } },
+                    { breakpoint: 768, settings: { slidesToShow: 2, slidesToScroll: 1, prevArrow: "", nextArrow: "" } },
+                    { breakpoint: 992, settings: { slidesToShow: 3, slidesToScroll: 1, prevArrow: "", nextArrow: "" } }
+                  ]
+                });
+                
+                var imge1 = document.getElementById("imge1");
+                console.log("imge1");
+                if(imge1) {
+                  console.log(imge1.parentElement.parentElement.parentElement.parentElement.parentElement.offsetTop);
+                }
+              });
+            `
+        }} />
+
         {/* Inline slick initialization */}
         <Script id="slick-init" strategy="beforeInteractive">{`
         Query(document).ready(function() {
