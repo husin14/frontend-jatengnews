@@ -14,7 +14,7 @@ export default async function Home() {
     `${process.env.NEXT_PUBLIC_BASE_URL}/home/slider`
   );
   const { data: beritaTerbaru } = await axios.get(
-    `${process.env.NEXT_PUBLIC_BASE_URL}/berita`
+    `${process.env.NEXT_PUBLIC_BASE_URL}/berita?per_page=6`
   );
   const { data: jadwalTayang } = await axios.get(
     `${process.env.NEXT_PUBLIC_BASE_URL}/jadwal-acara`

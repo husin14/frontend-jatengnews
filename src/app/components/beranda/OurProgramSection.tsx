@@ -24,7 +24,7 @@ export const OurProgramSection: React.FC<OurProgramSectionProps> = ({
       </div>
       <div className="container">
         <div className="row">
-          <div className="our-program-beranda-slick slick-initialized slick-slider">
+          <div className="our-program-beranda-slick">
             {list_program.map((item) => (
               <a href="" key={item.id}>
                 <div

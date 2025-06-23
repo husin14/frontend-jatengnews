@@ -21,7 +21,7 @@ export const ExpertiseSection: React.FC<Expertiseprops> = ({ data }) => {
         <h2>Here Are Some of Our Expertise</h2>
       </div>
       <div className="row">
-        <div className="col-lg-6 col-12">x
+        <div className="col-lg-6 col-12">
           {expertise1Data.map((item, idx) => (
             <div className="grid-inner row g-0" key={idx}>
               <div className="col-md-4">
