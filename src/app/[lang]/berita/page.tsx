@@ -1,67 +1,82 @@
 "use client";
 
-import React from "react";
-import axios from "axios";
-import { useEffect, useState } from "react";
-import Image from "next/image";
-import { berita, kategori } from "../types";
-import SideBar from "../components/sideBar";
+import React, { useEffect, useState } from "react";
+import { useParams } from "next/navigation";
 import Link from "next/link";
-import Carousel from "../components/carousel";
-import { convert } from "html-to-text"; // Import the convert function
+import Image from "next/image";
+import axios from "axios";
+import { convert } from "html-to-text";
+import { berita, kategori } from "@/app/types";
+import Sidebar from "@/app/components/sideBar";
+import Carousel from "@/app/components/carousel";
 
-export default function Page() {
-  const baseurl = process.env.NEXT_PUBLIC_BASE_URL;
+export default function BeritaPage() {
+  const params = useParams();
+  const lang = params.lang as "id" | "en";
 
   const [kategori, setKategori] = useState<kategori[]>([]);
+  const [beritaTerbaru, setBeritaTerbaru] = useState<berita[]>([]);
   const [featureData, setFeatureData] = useState<berita[]>([]);
-  const [beritaTerbaru, setBeritaTerbaru] = useState<berita[]>();
-  const [error, setError] = useState<string | null>(null);
+  const [dictionary, setDictionary] = useState<any>(null); //eslint-disable-line 
   const [loading, setLoading] = useState(true);
+  const [error, setError] = useState<string | null>(null);
+
+  const baseurl = process.env.NEXT_PUBLIC_BASE_URL;
 
   useEffect(() => {
-    const getBerita = async () => {
+    if (!lang) return;
+
+    const fetchData = async () => {
+      setLoading(true);
+      setError(null);
+
       try {
-        const res = await axios.get(`${baseurl}/berita`);
-        const processedBerita = res.data.data.map((item: berita) => ({
+        const beritaUrl =
+          lang === "en"
+            ? `https://apidev.tvku.tv/api/berita-translations?language_code=en`
+            : `${baseurl}/berita`;
+
+        const featureUrl =
+          lang === "en"
+            ? `https://apidev.tvku.tv/api/berita-translations?language_code=en&id_kategori=19`
+            : `${baseurl}/berita?id_kategori=19`;
+
+        const dictionaryUrl = `/dictionaries/${lang}.json`;
+
+        const [beritaResponse, featureResponse, dictionaryResponse] =
+          await Promise.all([
+            axios.get(beritaUrl),
+            axios.get(featureUrl),
+            axios.get(dictionaryUrl),
+          ]);
+
+        const processedBerita = beritaResponse.data.data.map((item: berita) => ({
           ...item,
           deskripsi: convert(item.deskripsi, {
             selectors: [{ selector: "img", format: "skip" }],
           }),
         }));
         setBeritaTerbaru(processedBerita);
-        setError(null);
-      } catch (error) {
-        console.error("Error fetching category:", error);
-        setError("Failed to load category");
-        setBeritaTerbaru([]);
-      } finally {
-        setLoading(false);
-      }
-    };
-    getBerita();
-  }, [baseurl]);
 
-  useEffect(() => {
-    const getFeature = async () => {
-      try {
-        const res = await axios.get(`${baseurl}/berita?id_kategori=19`);
-        // Process deskripsi to remove HTML tags for all featureData items
-        const processedFeature = res.data.data.map((item: berita) => ({
+        const processedFeature = featureResponse.data.data.map((item: berita) => ({
           ...item,
           deskripsi: convert(item.deskripsi, {
             selectors: [{ selector: "img", format: "skip" }],
           }),
         }));
         setFeatureData(processedFeature);
-        setError(null);
-      } catch (error) {
-        console.error("Error fetching category:", error);
-        setError("Failed to load category");
+
+        setDictionary(dictionaryResponse.data);
+      } catch (err) {
+        console.error("Failed to fetch data:", err);
+        setError("Gagal memuat data. Silakan coba lagi nanti.");
+      } finally {
+        setLoading(false);
       }
     };
-    getFeature();
-  }, [baseurl]);
+
+    fetchData();
+  }, [lang, baseurl]);
 
   useEffect(() => {
     const getKategori = async () => {
@@ -77,11 +92,21 @@ export default function Page() {
     getKategori();
   }, [baseurl]);
 
-  if (loading) return <div className="text-center p-5">Loading...</div>;
-  if (error)
+  if (loading || !dictionary) {
+    return <div className="text-center p-5">Loading...</div>;
+  }
+
+  if (error) {
     return <div className="text-center p-5 text-red-500">{error}</div>;
-  if (!beritaTerbaru)
-    return <div className="text-center p-5">Tidak ada berita</div>;
+  }
+
+  if (!beritaTerbaru || beritaTerbaru.length === 0) {
+    return (
+      <div className="text-center p-5">
+        {dictionary?.berita_page?.no_news || "Tidak ada berita"}
+      </div>
+    );
+  }
 
   const data = beritaTerbaru[0];
 
@@ -93,22 +118,38 @@ export default function Page() {
             {beritaTerbaru.length > 0 && (
               <div className="entry">
                 <div className="entry-image">
-                  <a href={`/berita/show/${beritaTerbaru[0].id}`}>
+                  <Link
+                    href={`/${lang}/berita/show/${
+                      beritaTerbaru[0].id || beritaTerbaru[0].id
+                    }`}
+                  >
                     <Image
-                      src={beritaTerbaru[0].cover}
+                      src={
+                        beritaTerbaru[0].cover ||
+                        `https://apidev.tvku.tv/storage/${beritaTerbaru[0].cover}`
+                      }
                       alt={beritaTerbaru[0].judul}
                       width={600}
                       height={300}
+                      priority
                     />
-                  </a>
+                  </Link>
                 </div>
                 <div className="entry-title title-sm">
                   <h3>
-                    <a href={`/berita/show/${beritaTerbaru[0].id}`}>{beritaTerbaru[0].judul}</a>
+                    <Link
+                      href={`/${lang}/berita/show/${
+                        beritaTerbaru[0].id || beritaTerbaru[0].id
+                      }`}
+                    >
+                      {beritaTerbaru[0].judul}
+                    </Link>
                   </h3>
                 </div>
                 <div className="entry-content">
-                  <p className="line-clamp-2 mb-0">{beritaTerbaru[0].deskripsi}</p>
+                  <p className="line-clamp-2 mb-0">
+                    {beritaTerbaru[0].deskripsi}
+                  </p>
                 </div>
               </div>
             )}
@@ -121,20 +162,27 @@ export default function Page() {
                 <div className="grid-inner row g-0">
                   <div className="col-auto">
                     <div className="entry-image">
-                      <a href={`/berita/show/${item.id}`}>
+                      <Link href={`/${lang}/berita/show/${item.id || item.id}`}>
                         <Image
-                          src={item.cover}
+                          src={
+                            item.cover ||
+                            `https://apidev.tvku.tv/storage/${item.cover}`
+                          }
                           alt={item.judul}
-                          width={400}
-                          height={200}
+                          width={100}
+                          height={100}
                         />
-                      </a>
+                      </Link>
                     </div>
                   </div>
                   <div className="col ps-3">
                     <div className="entry-title">
                       <h4>
-                        <a href={`/berita/show/${item.id}`}>{item.judul}</a>
+                        <Link
+                          href={`/${lang}/berita/show/${item.id || item.id}`}
+                        >
+                          {item.judul}
+                        </Link>
                       </h4>
                     </div>
                   </div>
@@ -144,7 +192,7 @@ export default function Page() {
           </div>
         </div>
       </div>
-
+      {/* latest news */}
       <div className="row clearfix">
         <div className="col-lg-8">
           <nav
@@ -152,9 +200,9 @@ export default function Page() {
             style={{ justifyContent: "flex-start" }}
           >
             <h4 className="mb-0 pe-2 ls1 text-uppercase fw-bold">
-              Berita Terbaru
+              {dictionary.berita_page.latest_news}
             </h4>
-            | <Link href="/berita/beritaterbaru">more..</Link>
+            | <Link href={`/${lang}/berita/beritaterbaru`}>more..</Link>
             <button
               className="navbar-toggler"
               style={{ visibility: "hidden" }}
@@ -182,7 +230,7 @@ export default function Page() {
                   <div className="posts-md">
                     <div className="entry">
                       <div className="entry-image">
-                        <a href={`/berita/show/${data.id}`}>
+                        <a href={`${lang}/berita/show/${data.id}`}>
                           <Image
                             src={data.cover}
                             alt={data.judul}
@@ -192,8 +240,11 @@ export default function Page() {
                           />
                         </a>
                         <div className="entry-categories">
-                          <a href={`/berita/show/${data.id}`} className="bg-travel">
-                            {data.kategori.nama}
+                          <a
+                            href={`${lang}/berita/show/${data.id}`}
+                            className="bg-travel"
+                          >
+                            {data.kategori?.nama || "Uncategorized"}
                           </a>
                         </div>
                       </div>
@@ -236,7 +287,9 @@ export default function Page() {
                           <div className="col ps-3">
                             <div className="entry-title">
                               <h4>
-                                <a href={`berita/show/${item.id}`}>{item.judul}</a>
+                                <a href={`berita/show/${item.id}`}>
+                                  {item.judul}
+                                </a>
                               </h4>
                             </div>
                             <div className="entry-meta">
@@ -269,14 +322,19 @@ export default function Page() {
                               />
                             </a>
                             <div className="entry-categories">
-                              <a href={`/berita/show/${item.id}`} className="bg-lifestyle">
-                                {item.kategori.nama}
+                              <a
+                                href={`/berita/show/${item.id}`}
+                                className="bg-lifestyle"
+                              >
+                                {item.kategori?.nama || "Uncategorized"}
                               </a>
                             </div>
                           </div>
                           <div className="entry-title title-sm nott">
                             <h3 className="mb-2">
-                              <a href={`/berita/show/${item.id}`}>{item.judul}</a>
+                              <a href={`/berita/show/${item.id}`}>
+                                {item.judul}
+                              </a>
                             </h3>
                           </div>
                           <div className="entry-meta">
@@ -288,7 +346,9 @@ export default function Page() {
                             </ul>
                           </div>
                           <div className="entry-content clearfix">
-                            <p className="line-clamp-2 mb-0">{item.deskripsi}</p>
+                            <p className="line-clamp-2 mb-0">
+                              {item.deskripsi}
+                            </p>
                           </div>
                         </div>
                       </div>
@@ -314,7 +374,9 @@ export default function Page() {
                         <div className="col ps-3">
                           <div className="entry-title">
                             <h4 className="fw-medium">
-                              <a href={`/berita/show/${item.id}`}>{item.judul}</a>
+                              <a href={`/berita/show/${item.id}`}>
+                                {item.judul}
+                              </a>
                             </h4>
                           </div>
                           <div className="entry-meta">
@@ -334,7 +396,7 @@ export default function Page() {
             </div>
           </div>
         </div>
-        <SideBar />
+        <Sidebar />
       </div>
 
       <Carousel />
@@ -447,14 +509,18 @@ export default function Page() {
                         <div className="col ps-3">
                           <div className="entry-title">
                             <h4 className="fw-semibold">
-                              <a href={`/berita/show/${item.id}`}>{item.judul}</a>
+                              <a href={`/berita/show/${item.id}`}>
+                                {item.judul}
+                              </a>
                             </h4>
                           </div>
                           <div className="entry-meta">
                             <ul>
                               <li>
                                 <i className="icon-time"></i>
-                                <a href={`/berita/show/${item.id}`}>{item.waktu_publish}</a>
+                                <a href={`/berita/show/${item.id}`}>
+                                  {item.waktu_publish}
+                                </a>
                               </li>
                             </ul>
                           </div>
