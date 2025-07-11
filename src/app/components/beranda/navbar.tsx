@@ -48,9 +48,9 @@ export default function Navbar() {
             <nav className="primary-menu">
               <ul className="menu-container">
                 <li className="menu-item">
-                  <a className="menu-link" href="<?= base_url(); ?>">
+                  <Link className="menu-link" href="">
                     <div>Home</div>
-                  </a>
+                  </Link>
                 </li>
                 <li className="menu-item">
                   <Link className="menu-link" href="/berita">
@@ -58,50 +58,50 @@ export default function Navbar() {
                   </Link>
                 </li>
                 <li className="menu-item">
-                  <a className="menu-link" href="<?= base_url('program'); ?>">
+                  <Link className="menu-link" href="/program">
                     <div>Program</div>
-                  </a>
+                  </Link>
                 </li>
                 <li className="menu-item">
-                  <a
+                  <Link
                     className="menu-link"
                     href="<?= base_url('seputarudinus'); ?>"
                   >
                     <div>Seputar Udinus</div>
-                  </a>
+                  </Link>
                 </li>
                 <li className="menu-item">
-                  <a className="menu-link" href="<?= base_url('live'); ?>">
+                  <Link className="menu-link" href="<?= base_url('live'); ?>">
                     <div>Live Streaming</div>
-                  </a>
+                  </Link>
                 </li>
 
                 <li className="menu-item">
-                  <a className="menu-link" href="#">
+                  <Link className="menu-link" href="#">
                     {/* <div>Lainnya <div id="menu-lainnya"><i className="icon-angle-down"></i></div></div> */}
                     <div>
                       Lainnya
                       <i id="menu-lainnya" className="icon-angle-down"></i>
                     </div>
-                  </a>
+                  </Link>
                   <ul className="sub-menu-container">
                     <li className="menu-item">
-                      <a
+                      <Link
                         className="menu-link"
                         href="<?= base_url('contact'); ?>"
                       >
                         <div>Contact</div>
-                      </a>
+                      </Link>
                     </li>
                     <li className="menu-item">
-                      <a className="menu-link" href="<?= DMA; ?>">
+                      <Link className="menu-link" href="<?= DMA; ?>">
                         <div>Digital Marketing</div>
-                      </a>
+                      </Link>
                     </li>
                     <li className="menu-item">
-                      <a className="menu-link" href="<?= MARKETING; ?>">
+                      <Link className="menu-link" href="<?= MARKETING; ?>">
                         <div>Sales</div>
-                      </a>
+                      </Link>
                     </li>
                   </ul>
                 </li>
