@@ -32,13 +32,13 @@ export default async function Home() {
     `${process.env.NEXT_PUBLIC_BASE_URL}/home/our-expertise2`
   );
 
-  console.log("Slider Data:", slider);
-  console.log("Berita Terbaru Data:", beritaTerbaru);
-  console.log("jadwal terbaru", jadwalTayang);
-  console.log("our program", ourProgram);
-  console.log("Who We Are Data:", whoweare);
-  console.log("Our Expertise 1 Data:", ourExpertise1);
-  console.log("Our Expertise 2 Data:", ourExpertise2);
+  // console.log("Slider Data:", slider);
+  // console.log("Berita Terbaru Data:", beritaTerbaru);
+  // console.log("jadwal terbaru", jadwalTayang);
+  // console.log("our program", ourProgram);
+  // console.log("Who We Are Data:", whoweare);
+  // console.log("Our Expertise 1 Data:", ourExpertise1);
+  // console.log("Our Expertise 2 Data:", ourExpertise2);
 
   const expertiseData = {
     expertise1: ourExpertise1?.data || [],

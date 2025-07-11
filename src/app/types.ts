@@ -82,6 +82,7 @@ export interface OurProgram {
   thumbnail: string;
   judul: string;
   deskripsi: string;
+  link: string;
 }
 
 export interface HomeWhoWeAre {
