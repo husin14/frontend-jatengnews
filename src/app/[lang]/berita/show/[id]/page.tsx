@@ -95,9 +95,18 @@ export default function BeritaDetailPage() {
 
       <div className="row clearfix" style={{ marginTop: "8px" }}>
         <div className="col-lg-8">
-          <h2 className="fw-bold lh-sm mb-3" style={{ fontSize: "2.5rem" }}>
+            <h2
+            className="fw-bold lh-sm mb-3"
+            style={{
+              fontSize: "2.5rem",
+              // Responsive font size: 70% on screens <= 600px
+                ...(typeof window !== "undefined" && window.innerWidth <= 600
+                ? { fontSize: "1.25rem" }
+                : {}),
+              }}
+              >
             {berita.judul}
-          </h2>
+            </h2>
 
           <div className="d-flex align-items-center text-muted mb-3 ms-2 small">
             <div className="me-2 d-flex flex-column justify-content-center align-items-center">
