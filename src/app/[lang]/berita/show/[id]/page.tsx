@@ -27,7 +27,6 @@ export default function BeritaDetailPage() {
   const frontendUrl = process.env.NEXT_PUBLIC_FRONTEND_URL || "https://tvku.tv";
 
   useEffect(() => {
-    // Menampilkan iklan popup setelah komponen dimuat
     setShowIklan(true);
   }, []);
 

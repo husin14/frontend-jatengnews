@@ -73,7 +73,7 @@ export default function Home() {
                   <div className="feature-box media-box">
                     <div className="fbox-media">
                       <Image
-                        src={`/ourprograms/${program.thumbnail}`}
+                        src={program.thumbnail}
                         alt={program.judul}
                         width={500}
                         height={300}
