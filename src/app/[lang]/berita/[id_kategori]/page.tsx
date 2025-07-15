@@ -73,7 +73,6 @@ export default function KategoriBeritaPage() {
         } else {
           setKategori(kategoriResponse.data);
         }
-        // setKategori(kategoriResponse.data);
         setDictionary(dictionaryResponse.data);
         console.log("Kategori:", kategoriResponse.data);
       } catch (err) {
