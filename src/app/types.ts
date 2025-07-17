@@ -110,3 +110,38 @@ export interface expertise2 {
   thumbnail: string;
   judul: string;
 }
+
+export interface SeputarUdinusSlide {
+  id: number;
+  id_slides_title: number;
+  thumbnail: string;
+  thumbnail_hover: string;
+  teks: string;
+  link: string | null;
+  deskripsi: string;
+}
+
+export interface SeputarUdinusSlideTitle {
+  id: number;
+  judul: string;
+}
+
+export interface ApiSlideResponse {
+  current_page: number;
+  per_page: number;
+  total: number;
+  last_page: number;
+  next_page_url: string | null;
+  prev_page_url: string | null;
+  data: SeputarUdinusSlide[];
+}
+
+export interface ApiTitleResponse {
+  current_page: number;
+  per_page: number;
+  total: number;
+  last_page: number;
+  next_page_url: string | null;
+  prev_page_url: string | null;
+  data: SeputarUdinusSlideTitle[];
+}

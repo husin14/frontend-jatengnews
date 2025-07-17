@@ -5,7 +5,7 @@ import Image from "next/image";
 import axios from "axios";
 import { OurProgram } from "@/app/types";
 
-export default function Home() {
+export default function Page() {
   const baseurl = process.env.NEXT_PUBLIC_BASE_URL;
   const [programs, setPrograms] = useState<OurProgram[]>([]);
   const [loading, setLoading] = useState<boolean>(true);

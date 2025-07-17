@@ -1,0 +1,160 @@
+"use client";
+
+import React, { useState, useEffect } from "react";
+import axios from "axios";
+import Link from "next/link";
+import {
+  SeputarUdinusSlide,
+  SeputarUdinusSlideTitle,
+} from "@/app/types";
+
+const baseurl = process.env.NEXT_PUBLIC_BASE_URL;
+
+async function getSeputarDinusDataWithAxios() {
+  try {
+    const titlesPromise = axios.get(
+      `${baseurl}/seputar-dinus-slides-title?sort=id_asc`
+    );
+    const slidesPromise = axios.get(
+      `${baseurl}/seputar-dinus-slider?sort=id_asc`
+    );
+
+    const [titlesRes, slidesRes] = await Promise.all([
+      titlesPromise,
+      slidesPromise,
+    ]);
+
+    const slideTitles: SeputarUdinusSlideTitle[] = titlesRes.data.data;
+    const slides: SeputarUdinusSlide[] = slidesRes.data.data;
+
+    return { slideTitles, slides };
+  } catch (error) {
+    console.error("Error fetching data:", error);
+    return {
+      slideTitles: [],
+      slides: [],
+    };
+  }
+}
+
+export default function Page() {
+  const [slideTitles, setSlideTitles] = useState<SeputarUdinusSlideTitle[]>([]);
+  const [slides, setSlides] = useState<SeputarUdinusSlide[]>([]);
+  const [isLoading, setIsLoading] = useState(true);
+  const [error, setError] = useState<string | null>(null);
+
+  useEffect(() => {
+    const fetchData = async () => {
+      try {
+        setIsLoading(true);
+        setError(null);
+        const data = await getSeputarDinusDataWithAxios();
+        setSlideTitles(data.slideTitles);
+        setSlides(data.slides);
+      } catch (err) {
+        setError(
+          err instanceof Error
+            ? err.message
+            : "An error occurred while fetching data"
+        );
+      } finally {
+        setIsLoading(false);
+      }
+    };
+
+    fetchData();
+  }, []);
+
+  if (isLoading) {
+    return (
+      <div className="container">
+        <div className="text-center py-5">
+          <div className="spinner-border" role="status">
+            <span className="visually-hidden">Loading...</span>
+          </div>
+        </div>
+      </div>
+    );
+  }
+
+  if (error) {
+    return (
+      <div className="container">
+        <div className="alert alert-danger my-5" role="alert">
+          {error}
+        </div>
+      </div>
+    );
+  }
+
+  return (
+    <>
+      <section id="page-title">
+        <div className="container clearfix">
+          <h1>Seputar Udinus</h1>
+          <ol className="breadcrumb">
+            <li className="breadcrumb-item">
+              <Link href="/">Home</Link>
+            </li>
+            <li className="breadcrumb-item active" aria-current="page">
+              Seputar Udinus
+            </li>
+          </ol>
+        </div>
+      </section>
+
+      <section id="content">
+        <div className="content-wrap">
+          <div className="container">
+            {slideTitles.map((title) => {
+              const relatedSlides = slides
+                .filter((slide) => slide.id_slides_title === title.id)
+                .slice(0, 7); // max 7
+
+              return (
+                <React.Fragment key={title.id}>
+                  <div className="row">
+                    <div style={{ marginBottom: "10px" }}>
+                      <span className="myslick-title">{title.judul}</span>
+                      {" | "}
+                      <Link
+                        href={`/seputarudinus/title/${title.id}`}
+                        className="agrey"
+                      >
+                        more..
+                      </Link>
+                    </div>
+
+                    <div className="myslick d-flex flex-wrap gap-3">
+                      {relatedSlides.map((slide, index) => (
+                        <Link
+                          key={slide.id}
+                          href={`/seputarudinus/content/${slide.id}`}
+                          className="myslick-a text-decoration-none"
+                        >
+                          <div className="myslick-item">
+                            <img
+                              id={index === 1 ? "imge1" : undefined}
+                              className="myslick-img img-fluid"
+                              src={`https://tvku.tv/storage/sptudinus/${slide.thumbnail}`}
+                              alt={slide.teks}
+                            />
+                            <div className="myslick-item-caption">
+                              {slide.teks}
+                            </div>
+                          </div>
+                        </Link>
+                      ))}
+                    </div>
+                  </div>
+
+                  <div className="myslick-divider my-4 border-bottom"></div>
+                </React.Fragment>
+              );
+            })}
+          </div>
+        </div>
+      </section>
+    </>
+  );
+}

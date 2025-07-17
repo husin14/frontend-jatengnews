@@ -65,7 +65,7 @@ export default function Navbar() {
                 <li className="menu-item">
                   <Link
                     className="menu-link"
-                    href="<?= base_url('seputarudinus'); ?>"
+                    href="/seputarudinus"
                   >
                     <div>Seputar Udinus</div>
                   </Link>
