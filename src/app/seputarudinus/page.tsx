@@ -123,28 +123,98 @@ export default function Page() {
                       </Link>
                     </div>
 
-                    <div className="myslick d-flex flex-wrap gap-3">
-                      {relatedSlides.map((slide, index) => (
-                        <Link
-                          key={slide.id}
-                          href={`/seputarudinus/content/${slide.id}`}
-                          className="myslick-a text-decoration-none"
-                        >
-                          <div className="myslick-item">
-                            <Image
-                              id={index === 1 ? "imge1" : undefined}
-                              className="myslick-img img-fluid"
-                              width={300}
-                              height={200}
-                              src={`https://tvku.tv/storage/sptudinus/${slide.thumbnail}`}
-                              alt={slide.teks}
-                            />
-                            <div className="myslick-item-caption">
-                              {slide.teks}
+                    <div
+                      className="slider-container"
+                      style={{ position: "relative", overflow: "hidden" }}
+                    >
+                      <div
+                        className="myslick"
+                        style={{
+                          display: "flex",
+                          gap: "10px",
+                          transition: "transform 0.3s ease",
+                          transform: `translateX(0px)`,
+                        }}
+                      >
+                        {relatedSlides.map((slide, index) => (
+                          <Link
+                            key={slide.id}
+                            href={`/seputarudinus/content/${slide.id}`}
+                            className="myslick-a text-decoration-none"
+                            style={{ flexShrink: 0 }}
+                          >
+                            <div className="myslick-item">
+                              <Image
+                                id={index === 1 ? "imge1" : undefined}
+                                className="myslick-img"
+                                width={300}
+                                height={200}
+                                src={`https://tvku.tv/storage/sptudinus/${slide.thumbnail}`}
+                                alt={slide.teks}
+                              />
+                              <div className="myslick-item-caption">
+                                {slide.teks}
+                              </div>
                             </div>
-                          </div>
-                        </Link>
-                      ))}
+                          </Link>
+                        ))}
+                      </div>
+
+                      {relatedSlides.length > 3 && (
+                        <>
+                          <button
+                            className="slick-prev"
+                            onClick={(e) => {
+                              e.preventDefault();
+                              const slider =
+                                e.currentTarget.parentElement?.querySelector(
+                                  ".myslick"
+                                ) as HTMLElement;
+                              if (slider) {
+                                const currentTransform =
+                                  slider.style.transform.match(
+                                    /translateX\((-?\d+)px\)/
+                                  );
+                                const currentX = currentTransform
+                                  ? parseInt(currentTransform[1])
+                                  : 0;
+                                const newX = Math.min(currentX + 320, 0);
+                                slider.style.transform = `translateX(${newX}px)`;
+                              }
+                            }}
+                          >
+                            <i className="icon-align-right"></i>
+                          </button>
+                          <button
+                            className="slick-next"
+                            onClick={(e) => {
+                              e.preventDefault();
+                              const slider =
+                                e.currentTarget.parentElement?.querySelector(
+                                  ".myslick"
+                                ) as HTMLElement;
+                              if (slider) {
+                                const currentTransform =
+                                  slider.style.transform.match(
+                                    /translateX\((-?\d+)px\)/
+                                  );
+                                const currentX = currentTransform
+                                  ? parseInt(currentTransform[1])
+                                  : 0;
+                                const maxScroll =
+                                  -(relatedSlides.length - 3) * 320;
+                                const newX = Math.max(
+                                  currentX - 320,
+                                  maxScroll
+                                );
+                                slider.style.transform = `translateX(${newX}px)`;
+                              }
+                            }}
+                          >
+                            <i className="icon-align-right"></i>
+                          </button>
+                        </>
+                      )}
                     </div>
                   </div>
 
