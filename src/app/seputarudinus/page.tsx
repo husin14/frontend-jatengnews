@@ -3,10 +3,8 @@
 import React, { useState, useEffect } from "react";
 import axios from "axios";
 import Link from "next/link";
-import {
-  SeputarUdinusSlide,
-  SeputarUdinusSlideTitle,
-} from "@/app/types";
+import Image from "next/image";
+import { SeputarUdinusSlide, SeputarUdinusSlideTitle } from "@/app/types";
 
 const baseurl = process.env.NEXT_PUBLIC_BASE_URL;
 
@@ -109,7 +107,7 @@ export default function Page() {
             {slideTitles.map((title) => {
               const relatedSlides = slides
                 .filter((slide) => slide.id_slides_title === title.id)
-                .slice(0, 7); // max 7
+                .slice(0, 7);
 
               return (
                 <React.Fragment key={title.id}>
@@ -133,9 +131,11 @@ export default function Page() {
                           className="myslick-a text-decoration-none"
                         >
                           <div className="myslick-item">
-                            <img
+                            <Image
                               id={index === 1 ? "imge1" : undefined}
                               className="myslick-img img-fluid"
+                              width={300}
+                              height={200}
                               src={`https://tvku.tv/storage/sptudinus/${slide.thumbnail}`}
                               alt={slide.teks}
                             />
