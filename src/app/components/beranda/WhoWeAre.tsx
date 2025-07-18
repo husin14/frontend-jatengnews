@@ -2,30 +2,27 @@ import React from "react";
 import { HomeWhoWeAre } from "../../types";
 import Image from "next/image";
 
-
 type WhoWeAreProps = {
-    data: HomeWhoWeAre;
-}
+  data: HomeWhoWeAre;
+};
 
-export const WhoWeAre : React.FC<WhoWeAreProps>= ({ data }) => {
+export const WhoWeAre: React.FC<WhoWeAreProps> = ({ data }) => {
   return (
     <>
       <div className="container clearfix">
         <div className="row align-items-center col-mb-50">
-          <div className="col-md-12 col-lg-6 order-lg-2 center">
-            {data?.gambar ? (
-              <Image
-                src={data.gambar}
-                data-animate="fadeInLeft"
-                alt="Who We Are"
-                width={500}
-                height={300}
-              />
-            ) : null}
-          </div>
+            <div className="col-md-12 col-lg-6 order-lg-2 center">
+            <Image
+              src={typeof data.gambar === "string" && data.gambar.startsWith("/") ? data.gambar : "/images/TVKU.jpg"}
+              data-animate="fadeInLeft"
+              alt="Who We Are"
+              width={700}
+              height={420}
+            />
+            </div>
           <div className="col-md-12 col-lg-6 order-lg-1 text-center text-md-start">
             <div className="heading-block">
-              <h2>{data.judul || "who we are"}</h2>
+              <h2>{data.judul || "Who We Are"}</h2>
             </div>
             {data.deskripsi}
           </div>

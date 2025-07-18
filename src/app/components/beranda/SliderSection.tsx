@@ -1,4 +1,6 @@
 import React from "react";
+import { ChevronLeft, ChevronRight, ChevronDown } from "lucide-react";
+
 
 type Carousel = {
     judul: string;
@@ -41,10 +43,11 @@ const SliderSection: React.FC<SliderSectionProps> = ({ carousels }) => (
                     ))}
                 </div>
                 <div className="slider-arrow-left">
-                    <i className="icon-angle-left"></i>
+                    <ChevronLeft style={{ width: "40px", height: "40px", color: "#fff", position: "absolute", top: "10%" }} />
+
                 </div>
                 <div className="slider-arrow-right">
-                    <i className="icon-angle-right"></i>
+                    <ChevronRight style={{ width: "40px", height: "40px", color: "#fff", position: "absolute", top: "10%" }} />
                 </div>
             </div>
             <a
@@ -53,7 +56,7 @@ const SliderSection: React.FC<SliderSectionProps> = ({ carousels }) => (
                 data-offset="100"
                 className="one-page-arrow dark"
             >
-                <i className="icon-angle-down infinite animated fadeInDown"></i>
+                <ChevronDown className="w-10 h-10 infinite animated fadeInDown" style={{ width: "40px", height: "40px", color: "#fff", position: "absolute", top: "10%" }}  />
             </a>
         </div>
     </section>
