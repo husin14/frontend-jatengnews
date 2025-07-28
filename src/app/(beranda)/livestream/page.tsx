@@ -20,25 +20,18 @@ export default function LiveStreamingPage() {
     if (videoRef.current) {
       const video = videoRef.current;
 
-      // First, let's check if the browser supports HLS natively
       if (video.canPlayType("application/vnd.apple.mpegurl")) {
-        // Some browsers (Safari) support HLS natively
         video.src = streamUrl;
         video.addEventListener("loadedmetadata", () => {
           video.play();
         });
-      }
-      // If not, we'll use hls.js if it's supported
-      else if (Hls.isSupported()) {
-        // If we already have an hls instance, destroy it
+      } else if (Hls.isSupported()) {
         if (hlsRef.current) {
           hlsRef.current.destroy();
         }
 
-        // Create a new hls instance
         const hls = new Hls({
           debug: false,
-          // You can add more config options as needed
         });
 
         hls.loadSource(streamUrl);
@@ -48,12 +41,10 @@ export default function LiveStreamingPage() {
           video.play();
         });
 
-        // Store the hls instance for cleanup
         hlsRef.current = hls;
       }
     }
 
-    // Cleanup function
     return () => {
       if (hlsRef.current) {
         hlsRef.current.destroy();
