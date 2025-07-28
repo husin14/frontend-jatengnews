@@ -63,15 +63,12 @@ export default function Navbar() {
                   </Link>
                 </li>
                 <li className="menu-item">
-                  <Link
-                    className="menu-link"
-                    href="/seputarudinus"
-                  >
+                  <Link className="menu-link" href="/seputarudinus">
                     <div>Seputar Udinus</div>
                   </Link>
                 </li>
                 <li className="menu-item">
-                  <Link className="menu-link" href="<?= base_url('live'); ?>">
+                  <Link className="menu-link" href="/livestream">
                     <div>Live Streaming</div>
                   </Link>
                 </li>
