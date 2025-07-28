@@ -1,9 +1,9 @@
+"use client";
 
-'use client'; 
-
-import Head from 'next/head';
-import Script from 'next/script';
-import { useEffect, useRef } from 'react';
+import Head from "next/head";
+import Script from "next/script";
+import { useEffect, useRef } from "react";
+import Hls from "hls.js";
 
 declare global {
   interface Window {
@@ -12,35 +12,52 @@ declare global {
 }
 
 export default function LiveStreamingPage() {
-  const streamUrl = 'https://tvku.tv/hlsstream/hls/live.m3u8';
-
+  const streamUrl = "https://tvku.tv/hlsstream/hls/live.m3u8";
   const videoRef = useRef<HTMLVideoElement>(null);
-  const playerRef = useRef<any>(null); //eslint-disable-line
+  const hlsRef = useRef<Hls | null>(null);
 
   useEffect(() => {
-    if (window.videojs && videoRef.current && !playerRef.current) {
-      playerRef.current = window.videojs(
-        videoRef.current,
-        {
-          autoplay: true,
-          controls: true,
-          sources: [
-            {
-              src: streamUrl,
-              type: 'application/x-mpegURL',
-            },
-          ],
-        },
-        () => {
-          console.log('Player is ready');
-        },
-      );
+    if (videoRef.current) {
+      const video = videoRef.current;
+
+      // First, let's check if the browser supports HLS natively
+      if (video.canPlayType("application/vnd.apple.mpegurl")) {
+        // Some browsers (Safari) support HLS natively
+        video.src = streamUrl;
+        video.addEventListener("loadedmetadata", () => {
+          video.play();
+        });
+      }
+      // If not, we'll use hls.js if it's supported
+      else if (Hls.isSupported()) {
+        // If we already have an hls instance, destroy it
+        if (hlsRef.current) {
+          hlsRef.current.destroy();
+        }
+
+        // Create a new hls instance
+        const hls = new Hls({
+          debug: false,
+          // You can add more config options as needed
+        });
+
+        hls.loadSource(streamUrl);
+        hls.attachMedia(video);
+
+        hls.on(Hls.Events.MANIFEST_PARSED, () => {
+          video.play();
+        });
+
+        // Store the hls instance for cleanup
+        hlsRef.current = hls;
+      }
     }
 
+    // Cleanup function
     return () => {
-      if (playerRef.current) {
-        playerRef.current.dispose();
-        playerRef.current = null;
+      if (hlsRef.current) {
+        hlsRef.current.destroy();
+        hlsRef.current = null;
       }
     };
   }, [streamUrl]);
@@ -48,7 +65,6 @@ export default function LiveStreamingPage() {
   return (
     <>
       <Head>
-        <title>Live Streaming - Next.js</title>
         <link
           href="https://vjs.zencdn.net/8.10.0/video-js.css"
           rel="stylesheet"
@@ -56,8 +72,8 @@ export default function LiveStreamingPage() {
       </Head>
 
       <Script
-        src="https://vjs.zencdn.net/8.10.0/video.min.js"
-        strategy="afterInteractive"
+        src="https://cdn.jsdelivr.net/npm/hls.js@1.0.3-0.canary.7275/dist/hls.min.js"
+        strategy="beforeInteractive"
       />
 
       <section id="page-title">
@@ -81,9 +97,8 @@ export default function LiveStreamingPage() {
               <div data-vjs-player>
                 <video
                   ref={videoRef}
-                  id="example-video"
-                  className="video-js vjs-default-skin"
-                  style={{ width: '100%', height: '540px' }}
+                  id="video-player"
+                  style={{ width: "100%", height: "540px" }}
                   controls
                   preload="auto"
                   playsInline
