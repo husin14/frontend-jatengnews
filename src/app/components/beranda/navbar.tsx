@@ -48,7 +48,7 @@ export default function Navbar() {
             <nav className="primary-menu">
               <ul className="menu-container">
                 <li className="menu-item">
-                  <Link className="menu-link" href="">
+                  <Link className="menu-link" href="/">
                     <div>Home</div>
                   </Link>
                 </li>
