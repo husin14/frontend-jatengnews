@@ -74,7 +74,7 @@ export default function Navbar() {
                 </li>
 
                 <li className="menu-item">
-                  <Link className="menu-link" href="#">
+                  <Link className="menu-link" href="#lainnya">
                     {/* <div>Lainnya <div id="menu-lainnya"><i className="icon-angle-down"></i></div></div> */}
                     <div>
                       Lainnya
@@ -85,7 +85,7 @@ export default function Navbar() {
                     <li className="menu-item">
                       <Link
                         className="menu-link"
-                        href="<?= base_url('contact'); ?>"
+                        href="/contact"
                       >
                         <div>Contact</div>
                       </Link>

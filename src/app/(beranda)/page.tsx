@@ -7,7 +7,6 @@ import { OurProgramSection } from "../components/beranda/OurProgramSection";
 import { KerjasamaSection } from "../components/beranda/KerjasamaSection";
 import { WhoWeAre } from "../components/beranda/WhoWeAre";
 import { ExpertiseSection } from "../components/beranda/ExpertiseSection";
-import { ExpertiseSection2 } from "../components/beranda/ExpertiseSectionDummy";
 
 
 export default async function Home() {
