@@ -1,10 +1,52 @@
+"use client";
+
+import { usePathname, useRouter } from "next/navigation";
 import Image from "next/image";
 import Link from "next/link";
-import React from "react";
 import TvkuBlue from "../../../../public/beranda_assets/images/tvkublue2x.png";
 import TvkuWhite from "../../../../public/beranda_assets/images/tvkuwhite2x.png";
+import { ChevronDown } from "lucide-react";
 
-export default function Navbar() {
+interface NavbarProps {
+  lang?: "id" | "en";
+  dictionary?: any; // eslint-disable-line
+}
+
+export default function Navbar({
+  lang: propLang,
+  dictionary: propDictionary,
+}: NavbarProps) {
+  const router = useRouter();
+  const pathname = usePathname();
+
+  const activeLang = propLang || (pathname.startsWith("/en") ? "en" : "id");
+
+  const dictionary = propDictionary || {
+    navbar: {
+      home: "Beranda",
+      news: "Berita",
+      program: "Program",
+      seputar_udinus: "Seputar Udinus",
+      livestream: "Live Streaming",
+      lainnya: "Lainnya",
+      language: "Bahasa",
+      indonesia: "Indonesia",
+      english: "Inggris",
+    },
+    messages: {
+      loading: "Memuat...",
+      no_news_category: "Tidak ada berita untuk kategori ini.",
+      hover_category: "Arahkan kursor ke kategori untuk melihat berita.",
+    },
+  };
+
+  const handleLanguageChange = (newLang: "id" | "en") => {
+    const newPathname = pathname.startsWith(`/${activeLang}`)
+      ? pathname.replace(`/${activeLang}`, `/${newLang}`)
+      : `/${newLang}${pathname}`;
+    router.push(newPathname);
+  };
+
   return (
     <header
       id="header"
@@ -49,12 +91,12 @@ export default function Navbar() {
               <ul className="menu-container">
                 <li className="menu-item">
                   <Link className="menu-link" href="/">
-                    <div>Home</div>
+                    <div>{dictionary.navbar.home}</div>
                   </Link>
                 </li>
                 <li className="menu-item">
                   <Link className="menu-link" href="/berita">
-                    <div>News</div>
+                    <div>{dictionary.navbar.Berita}</div>
                   </Link>
                 </li>
                 <li className="menu-item">
@@ -64,7 +106,7 @@ export default function Navbar() {
                 </li>
                 <li className="menu-item">
                   <Link className="menu-link" href="/seputarudinus">
-                    <div>Seputar Udinus</div>
+                    <div>{dictionary.navbar.seputar_udinus} </div>
                   </Link>
                 </li>
                 <li className="menu-item">
@@ -72,21 +114,51 @@ export default function Navbar() {
                     <div>Live Streaming</div>
                   </Link>
                 </li>
-
                 <li className="menu-item">
-                  <Link className="menu-link" href="#lainnya">
-                    {/* <div>Lainnya <div id="menu-lainnya"><i className="icon-angle-down"></i></div></div> */}
+                  <div className="menu-link" style={{ cursor: "pointer" }}>
                     <div>
-                      Lainnya
-                      <i id="menu-lainnya" className="icon-angle-down"></i>
+                      {dictionary.navbar.language}
+                      <ChevronDown />
                     </div>
-                  </Link>
+                  </div>
                   <ul className="sub-menu-container">
                     <li className="menu-item">
                       <Link
                         className="menu-link"
-                        href="/contact"
+                        href="#"
+                        onClick={(e) => {
+                          e.preventDefault();
+                          handleLanguageChange("id");
+                        }}
                       >
+                        <div>{dictionary.navbar.indonesia}</div>
+                      </Link>
+                    </li>
+                    <li className="menu-item">
+                      <Link
+                        className="menu-link"
+                        href="#"
+                        onClick={(e) => {
+                          e.preventDefault();
+                          handleLanguageChange("id");
+                        }}
+                      >
+                        <div>{dictionary.navbar.english}</div>
+                      </Link>
+                    </li>
+                  </ul>
+                </li>
+                <li className="menu-item">
+                  <Link className="menu-link" href="#lainnya">
+                    <div>
+                      Lainnya
+                      <ChevronDown id="menu-lainnya" />
+                      {/*<i id="menu-lainnya" className="icon-angle-down"></i>*/}
+                    </div>
+                  </Link>
+                  <ul className="sub-menu-container">
+                    <li className="menu-item">
+                      <Link className="menu-link" href="/contact">
                         <div>Contact</div>
                       </Link>
                     </li>

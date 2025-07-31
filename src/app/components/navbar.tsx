@@ -78,7 +78,7 @@ const Navbar = ({
         setLoadingMegaMenuNews(false);
       }
     },
-    [baseurl, activeLang]
+    [baseurl, activeLang],
   );
 
   const handleMegaMenuCategoryHover = (categoryId: number) => {
@@ -165,7 +165,7 @@ const Navbar = ({
                                   }`}
                                   onMouseEnter={() =>
                                     handleMegaMenuCategoryHover(
-                                      item.id_kategori
+                                      item.id_kategori,
                                     )
                                   }
                                   onMouseLeave={handleMegaMenuCategoryLeave}
@@ -228,7 +228,7 @@ const Navbar = ({
                                             <li>
                                               <i className="icon-time"></i>
                                               {new Date(
-                                                item.waktu_publish
+                                                item.waktu_publish,
                                               ).toLocaleDateString("id-ID")}
                                             </li>
                                           </ul>

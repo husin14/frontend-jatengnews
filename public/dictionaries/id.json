@@ -2,6 +2,7 @@
   "navbar": {
     "home": "Beranda",
     "news": "Berita",
+    "seputar_udinus": "Seputar Udinus",
     "language": "Bahasa",
     "indonesia": "Indonesia",
     "english": "Inggris"
@@ -10,6 +11,6 @@
     "all_news": "Semua Berita",
     "latest_news": "Berita Terbaru",
     "news_category": "Kategori Berita",
-    "popular_news" : "Berita Populer"
+    "popular_news": "Berita Populer"
   }
 }
