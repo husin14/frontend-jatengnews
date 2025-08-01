@@ -17,10 +17,10 @@ export default function Page() {
     const getProgram = async () => {
       try {
         const response = await axios.get(
-          `${baseurl}/our-programs?sort=id_asc&current_page=${currentPage}&per_page=6`
+          `${baseurl}/our-programs?sort=id_asc&current_page=${currentPage}&per_page=6`,
         );
         setPrograms(response.data.data);
-        setTotalPages(Math.ceil(response.data.total / 6)); 
+        setTotalPages(Math.ceil(response.data.total / 6));
       } catch {
         setError("Failed to load programs");
       } finally {
@@ -29,11 +29,11 @@ export default function Page() {
     };
 
     getProgram();
-  }, [currentPage]); 
+  }, [currentPage, baseurl]);
 
   const handlePageChange = (page: number) => {
     if (page > 0 && page <= totalPages) {
-      setCurrentPage(page); 
+      setCurrentPage(page);
     }
   };
 
@@ -115,7 +115,7 @@ export default function Page() {
                     onClick={() => handlePageChange(currentPage - 1)}
                     disabled={currentPage <= 1}
                   >
-                    &lsaquo; 
+                    &lsaquo;
                   </button>
                 </li>
 
@@ -148,7 +148,7 @@ export default function Page() {
                     onClick={() => handlePageChange(currentPage + 1)}
                     disabled={currentPage >= totalPages}
                   >
-                     &rsaquo;
+                    &rsaquo;
                   </button>
                 </li>
               </ul>

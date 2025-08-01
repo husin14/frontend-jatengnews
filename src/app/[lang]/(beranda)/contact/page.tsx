@@ -1,6 +1,7 @@
 "use client";
 
 import Head from "next/head";
+import Image from "next/image";
 
 export default function ContactPage() {
   return (
@@ -33,10 +34,20 @@ export default function ContactPage() {
               <div className="col-md-6">
                 <div className="card text-center p-4">
                   <div className="mb-3">
-                    <img src="/icons/email.svg" alt="email icon" width={40} />
+                    <Image
+                      src="/icons/email.svg"
+                      alt="email icon"
+                      width={40}
+                      height={40}
+                    />
                   </div>
                   <h5 className="fw-bold">EMAIL</h5>
-                  <p className="mb-0">tvku.semarang@tvku.tv</p>
+                  <p
+                    className="
+                    mb-0"
+                  >
+                    tvku.semarang@tvku.tv
+                  </p>
                 </div>
               </div>
 
@@ -44,10 +55,20 @@ export default function ContactPage() {
               <div className="col-md-6">
                 <div className="card text-center p-4">
                   <div className="mb-3">
-                    <img src="/icons/phone.svg" alt="phone icon" width={40} />
+                    <Image
+                      src="/icons/phone.svg"
+                      alt="phone icon"
+                      width={40}
+                      height={40}
+                    />
                   </div>
                   <h5 className="fw-bold">TELEPON</h5>
-                  <p className="mb-0">024 - 3520334</p>
+                  <p
+                    className="
+                    mb-0"
+                  >
+                    024 - 3520334
+                  </p>
                 </div>
               </div>
 
@@ -55,10 +76,11 @@ export default function ContactPage() {
               <div className="col-md-6">
                 <div className="card text-center p-4">
                   <div className="mb-3">
-                    <img
+                    <Image
                       src="/icons/location.svg"
                       alt="location icon"
                       width={40}
+                      height={40}
                     />
                   </div>
                   <h5 className="fw-bold">ALAMAT</h5>
@@ -74,10 +96,11 @@ export default function ContactPage() {
               <div className="col-md-6">
                 <div className="card text-center p-4">
                   <div className="mb-3">
-                    <img
+                    <Image
                       src="/icons/whatsapp.svg"
                       alt="whatsapp icon"
                       width={40}
+                      height={40}
                     />
                   </div>
                   <h5 className="fw-bold">CONTACT PERSON</h5>
