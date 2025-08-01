@@ -1,35 +1,34 @@
 import React from "react";
 import axios from "axios";
-import SliderSection from "../components/beranda/SliderSection";
-import { BeritaTerbaruSection } from "../components/beranda/BeritaTerbaruSection";
-import { jadwalAcara } from "../types";
-import { OurProgramSection } from "../components/beranda/OurProgramSection";
-import { KerjasamaSection } from "../components/beranda/KerjasamaSection";
-import { WhoWeAre } from "../components/beranda/WhoWeAre";
-import { ExpertiseSection } from "../components/beranda/ExpertiseSection";
-
+import SliderSection from "../../components/beranda/SliderSection";
+import { BeritaTerbaruSection } from "../../components/beranda/BeritaTerbaruSection";
+import { jadwalAcara } from "../../types";
+import { OurProgramSection } from "../../components/beranda/OurProgramSection";
+import { KerjasamaSection } from "../../components/beranda/KerjasamaSection";
+import { WhoWeAre } from "../../components/beranda/WhoWeAre";
+import { ExpertiseSection } from "../../components/beranda/ExpertiseSection";
 
 export default async function Home() {
   const { data: slider } = await axios.get(
-    `${process.env.NEXT_PUBLIC_BASE_URL}/home/slider`
+    `${process.env.NEXT_PUBLIC_BASE_URL}/home/slider`,
   );
   const { data: beritaTerbaru } = await axios.get(
-    `${process.env.NEXT_PUBLIC_BASE_URL}/berita?per_page=6`
+    `${process.env.NEXT_PUBLIC_BASE_URL}/berita?per_page=6`,
   );
   const { data: jadwalTayang } = await axios.get(
-    `${process.env.NEXT_PUBLIC_BASE_URL}/jadwal-acara`
+    `${process.env.NEXT_PUBLIC_BASE_URL}/jadwal-acara`,
   );
   const { data: ourProgram } = await axios.get(
-    `${process.env.NEXT_PUBLIC_BASE_URL}/our-programs`
+    `${process.env.NEXT_PUBLIC_BASE_URL}/our-programs`,
   );
   const { data: whoweare } = await axios.get(
-    `${process.env.NEXT_PUBLIC_BASE_URL}/home/who-we-are`
+    `${process.env.NEXT_PUBLIC_BASE_URL}/home/who-we-are`,
   );
   const { data: ourExpertise1 } = await axios.get(
-    `${process.env.NEXT_PUBLIC_BASE_URL}/home/our-expertise1`
+    `${process.env.NEXT_PUBLIC_BASE_URL}/home/our-expertise1`,
   );
   const { data: ourExpertise2 } = await axios.get(
-    `${process.env.NEXT_PUBLIC_BASE_URL}/home/our-expertise2`
+    `${process.env.NEXT_PUBLIC_BASE_URL}/home/our-expertise2`,
   );
 
   // console.log("Slider Data:", slider);
@@ -84,7 +83,7 @@ export default async function Home() {
           program.acara
         }: ${jamAwal} - ${jamAkhir}, current time: ${jam}, match: ${
           jam >= jamAwal && jam <= jamAkhir
-        }`
+        }`,
       );
 
       return jam >= jamAwal && jam <= jamAkhir;
@@ -118,8 +117,7 @@ export default async function Home() {
             <WhoWeAre data={whoweare.data[0]} />
           )}
           {/* Expertise */}
-          <ExpertiseSection 
-          data={expertiseData}/>
+          <ExpertiseSection data={expertiseData} />
         </div>
       </section>
     </div>

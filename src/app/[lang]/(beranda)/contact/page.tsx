@@ -55,11 +55,16 @@ export default function ContactPage() {
               <div className="col-md-6">
                 <div className="card text-center p-4">
                   <div className="mb-3">
-                    <img src="/icons/location.svg" alt="location icon" width={40} />
+                    <img
+                      src="/icons/location.svg"
+                      alt="location icon"
+                      width={40}
+                    />
                   </div>
                   <h5 className="fw-bold">ALAMAT</h5>
                   <p className="mb-0">
-                    Nakula I 5–11, Semarang Tengah, E Building 2nd Floor,<br />
+                    Nakula I 5–11, Semarang Tengah, E Building 2nd Floor,
+                    <br />
                     Universitas Dian Nuswantoro Semarang
                   </p>
                 </div>
@@ -69,7 +74,11 @@ export default function ContactPage() {
               <div className="col-md-6">
                 <div className="card text-center p-4">
                   <div className="mb-3">
-                    <img src="/icons/whatsapp.svg" alt="whatsapp icon" width={40} />
+                    <img
+                      src="/icons/whatsapp.svg"
+                      alt="whatsapp icon"
+                      width={40}
+                    />
                   </div>
                   <h5 className="fw-bold">CONTACT PERSON</h5>
                   <p className="mb-0">Bagus – +62 812-2811-5941</p>

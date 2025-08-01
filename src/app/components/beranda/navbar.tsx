@@ -58,7 +58,7 @@ export default function Navbar({
           <div className="header-row">
             <div id="logo">
               <Link
-                href="/"
+                href={`/${activeLang}`}
                 className="standard-logo"
                 data-dark-logo={TvkuWhite}
               >
@@ -69,7 +69,11 @@ export default function Navbar({
                   height={100}
                 />
               </Link>
-              <Link href="/" className="retina-logo" data-dark-logo={TvkuWhite}>
+              <Link
+                href={`/${activeLang}`}
+                className="retina-logo"
+                data-dark-logo={TvkuWhite}
+              >
                 <Image
                   src={TvkuBlue}
                   alt="TVKU Logo"
@@ -90,27 +94,33 @@ export default function Navbar({
             <nav className="primary-menu">
               <ul className="menu-container">
                 <li className="menu-item">
-                  <Link className="menu-link" href="/">
+                  <Link className="menu-link" href={`/${activeLang}`}>
                     <div>{dictionary.navbar.home}</div>
                   </Link>
                 </li>
                 <li className="menu-item">
-                  <Link className="menu-link" href="/berita">
-                    <div>{dictionary.navbar.Berita}</div>
+                  <Link className="menu-link" href={`/${activeLang}/berita`}>
+                    <div>{dictionary.navbar.news}</div>
                   </Link>
                 </li>
                 <li className="menu-item">
-                  <Link className="menu-link" href="/program">
+                  <Link className="menu-link" href={`/${activeLang}/program`}>
                     <div>Program</div>
                   </Link>
                 </li>
                 <li className="menu-item">
-                  <Link className="menu-link" href="/seputarudinus">
+                  <Link
+                    className="menu-link"
+                    href={`/${activeLang}/seputarudinus`}
+                  >
                     <div>{dictionary.navbar.seputar_udinus} </div>
                   </Link>
                 </li>
                 <li className="menu-item">
-                  <Link className="menu-link" href="/livestream">
+                  <Link
+                    className="menu-link"
+                    href={`/${activeLang}/livestream`}
+                  >
                     <div>Live Streaming</div>
                   </Link>
                 </li>
@@ -158,17 +168,20 @@ export default function Navbar({
                   </Link>
                   <ul className="sub-menu-container">
                     <li className="menu-item">
-                      <Link className="menu-link" href="/contact">
+                      <Link
+                        className="menu-link"
+                        href={`/${activeLang}/contact`}
+                      >
                         <div>Contact</div>
                       </Link>
                     </li>
                     <li className="menu-item">
-                      <Link className="menu-link" href="<?= DMA; ?>">
+                      <Link className="menu-link" href="">
                         <div>Digital Marketing</div>
                       </Link>
                     </li>
                     <li className="menu-item">
-                      <Link className="menu-link" href="<?= MARKETING; ?>">
+                      <Link className="menu-link" href="">
                         <div>Sales</div>
                       </Link>
                     </li>

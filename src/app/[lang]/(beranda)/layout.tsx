@@ -1,8 +1,8 @@
 import type { Metadata } from "next";
 import "@/app/globals.css";
 import Script from "next/script";
-import Navbar from "../components/beranda/navbar";
-import Footer from "../components/footer";
+import Navbar from "../../components/beranda/navbar";
+import Footer from "../../components/footer";
 
 export const metadata: Metadata = {
   title: "TVKU Semarang",
@@ -25,43 +25,43 @@ export default function RootLayout({
         />
         <link
           rel="stylesheet"
-          href="beranda_assets/canvas/css/bootstrap.css"
+          href="/beranda_assets/canvas/css/bootstrap.css"
           type="text/css"
         />
         <link
           rel="stylesheet"
-          href="beranda_assets/canvas/css/style.css"
+          href="/beranda_assets/canvas/css/style.css"
           type="text/css"
         />
         <link
           rel="stylesheet"
-          href="beranda_assets/canvas/css/swiper.css"
+          href="/beranda_assets/canvas/css/swiper.css"
           type="text/css"
         />
         <link
           rel="stylesheet"
-          href="beranda_assets/canvas/css/dark.css"
+          href="/beranda_assets/canvas/css/dark.css"
           type="text/css"
         />
         <link
           rel="stylesheet"
-          href="beranda_assets/canvas/css/font-icons.css"
+          href="/beranda_assets/canvas/css/font-icons.css"
           type="text/css"
         />
         <link
           rel="stylesheet"
-          href="beranda_assets/canvas/css/animate.css"
+          href="/beranda_assets/canvas/css/animate.css"
           type="text/css"
         />
         <link
           rel="stylesheet"
-          href="beranda_assets/canvas/css/magnific-popup.css"
+          href="/beranda_assets/canvas/css/magnific-popup.css"
           type="text/css"
         />
 
         <link
           rel="stylesheet"
-          href="beranda_assets/canvas/css/custom.css"
+          href="/beranda_assets/canvas/css/custom.css"
           type="text/css"
         />
 
@@ -72,7 +72,7 @@ export default function RootLayout({
         />
         <link
           rel="stylesheet"
-          href="beranda_assets/css/myslickstyle.css"
+          href="/beranda_assets/css/myslickstyle.css"
           type="text/css"
         />
 
