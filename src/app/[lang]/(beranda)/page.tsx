@@ -8,36 +8,48 @@ import { KerjasamaSection } from "../../components/beranda/KerjasamaSection";
 import { WhoWeAre } from "../../components/beranda/WhoWeAre";
 import { ExpertiseSection } from "../../components/beranda/ExpertiseSection";
 
-export default async function Home() {
-  const { data: slider } = await axios.get(
-    `${process.env.NEXT_PUBLIC_BASE_URL}/home/slider`,
-  );
-  const { data: beritaTerbaru } = await axios.get(
-    `${process.env.NEXT_PUBLIC_BASE_URL}/berita?per_page=6`,
-  );
-  const { data: jadwalTayang } = await axios.get(
-    `${process.env.NEXT_PUBLIC_BASE_URL}/jadwal-acara`,
-  );
-  const { data: ourProgram } = await axios.get(
-    `${process.env.NEXT_PUBLIC_BASE_URL}/our-programs`,
-  );
-  const { data: whoweare } = await axios.get(
-    `${process.env.NEXT_PUBLIC_BASE_URL}/home/who-we-are`,
-  );
-  const { data: ourExpertise1 } = await axios.get(
-    `${process.env.NEXT_PUBLIC_BASE_URL}/home/our-expertise1`,
-  );
-  const { data: ourExpertise2 } = await axios.get(
-    `${process.env.NEXT_PUBLIC_BASE_URL}/home/our-expertise2`,
-  );
+export default async function Home({
+  params,
+}: {
+  params: { lang: "id" | "en" };
+}) {
+  const { lang } = params;
+  const baseurl = process.env.NEXT_PUBLIC_BASE_URL;
 
-  // console.log("Slider Data:", slider);
-  // console.log("Berita Terbaru Data:", beritaTerbaru);
-  // console.log("jadwal terbaru", jadwalTayang);
-  // console.log("our program", ourProgram);
-  // console.log("Who We Are Data:", whoweare);
-  // console.log("Our Expertise 1 Data:", ourExpertise1);
-  // console.log("Our Expertise 2 Data:", ourExpertise2);
+  const beritaUrl =
+    lang === "en"
+      ? "http://apidev.tvku.tv/api/berita-translations?per_page=6"
+      : `${baseurl}/berita?per_page=6`;
+
+  const ourExpertiseoneUrl =
+    lang === "en"
+      ? "https://apidev.tvku.tv/api/home/our-expertise1-translations"
+      : `${baseurl}/home/our-expertise1`;
+  const [
+    sliderRes,
+    beritaTerbaruRes,
+    jadwalTayangRes,
+    ourProgramRes,
+    whoweareRes,
+    ourExpertise1Res,
+    ourExpertise2Res,
+  ] = await Promise.all([
+    axios.get(`${baseurl}/home/slider`),
+    axios.get(beritaUrl),
+    axios.get(`${baseurl}/jadwal-acara`),
+    axios.get(`${baseurl}/our-programs`),
+    axios.get(`${baseurl}/home/who-we-are`),
+    axios.get(`${ourExpertiseoneUrl}`),
+    axios.get(`${baseurl}/home/our-expertise2`),
+  ]);
+
+  const slider = sliderRes.data;
+  const beritaTerbaru = beritaTerbaruRes.data;
+  const jadwalTayang = jadwalTayangRes.data;
+  const ourProgram = ourProgramRes.data;
+  const whoweare = whoweareRes.data;
+  const ourExpertise1 = ourExpertise1Res.data;
+  const ourExpertise2 = ourExpertise2Res.data;
 
   const expertiseData = {
     expertise1: ourExpertise1?.data || [],
@@ -83,7 +95,7 @@ export default async function Home() {
           program.acara
         }: ${jamAwal} - ${jamAkhir}, current time: ${jam}, match: ${
           jam >= jamAwal && jam <= jamAkhir
-        }`,
+        }`
       );
 
       return jam >= jamAwal && jam <= jamAkhir;

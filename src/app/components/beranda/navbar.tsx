@@ -6,6 +6,8 @@ import Link from "next/link";
 import TvkuBlue from "../../../../public/beranda_assets/images/tvkublue2x.png";
 import TvkuWhite from "../../../../public/beranda_assets/images/tvkuwhite2x.png";
 import { ChevronDown } from "lucide-react";
+import enDictionary from "../../../../public/dictionaries/en.json";
+import idDictionary from "../../../../public/dictionaries/id.json";
 
 interface NavbarProps {
   lang?: "id" | "en";
@@ -21,24 +23,7 @@ export default function Navbar({
 
   const activeLang = propLang || (pathname.startsWith("/en") ? "en" : "id");
 
-  const dictionary = propDictionary || {
-    navbar: {
-      home: "Beranda",
-      news: "Berita",
-      program: "Program",
-      seputar_udinus: "Seputar Udinus",
-      livestream: "Live Streaming",
-      lainnya: "Lainnya",
-      language: "Bahasa",
-      indonesia: "Indonesia",
-      english: "Inggris",
-    },
-    messages: {
-      loading: "Memuat...",
-      no_news_category: "Tidak ada berita untuk kategori ini.",
-      hover_category: "Arahkan kursor ke kategori untuk melihat berita.",
-    },
-  };
+  const dictionary = propDictionary || (activeLang === "en" ? enDictionary : idDictionary);
 
   const handleLanguageChange = (newLang: "id" | "en") => {
     const newPathname = pathname.startsWith(`/${activeLang}`)
@@ -150,7 +135,7 @@ export default function Navbar({
                         href="#"
                         onClick={(e) => {
                           e.preventDefault();
-                          handleLanguageChange("id");
+                          handleLanguageChange("en");
                         }}
                       >
                         <div>{dictionary.navbar.english}</div>
