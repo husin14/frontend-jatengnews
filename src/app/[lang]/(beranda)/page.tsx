@@ -11,9 +11,9 @@ import { ExpertiseSection } from "../../components/beranda/ExpertiseSection";
 export default async function Home({
   params,
 }: {
-  params: { lang: "id" | "en" };
+  params: Promise<{ lang: "id" | "en" }>;
 }) {
-  const { lang } = params;
+  const { lang } = await params;
   const baseurl = process.env.NEXT_PUBLIC_BASE_URL;
 
   const beritaUrl =

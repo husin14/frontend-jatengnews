@@ -8,7 +8,7 @@ type Expertiseprops = {
     expertise2_1?: expertise2[];
     expertise2_2?: expertise2[];
   };
-}
+};
 
 export const ExpertiseSection: React.FC<Expertiseprops> = ({ data }) => {
   const expertise1Data = data?.expertise1 || [];
@@ -28,8 +28,8 @@ export const ExpertiseSection: React.FC<Expertiseprops> = ({ data }) => {
                 <div className="entry-image">
                   <a href="#" data-lightbox="image">
                     <Image
-                      src={item.thumbnail}
-                      alt="Standard Post with Image"
+                      src={item.thumbnail || "/images/TVKU.jpg"}
+                      alt={item.judul}
                       width={200}
                       height={150}
                     />
@@ -60,7 +60,7 @@ export const ExpertiseSection: React.FC<Expertiseprops> = ({ data }) => {
                     <a href="#">
                       <Image
                         src={item.thumbnail}
-                        alt="Open Imagination"
+                        alt={item.judul}
                         width={150}
                         height={100}
                       />
@@ -89,7 +89,7 @@ export const ExpertiseSection: React.FC<Expertiseprops> = ({ data }) => {
                     <a href="#">
                       <Image
                         src={item.thumbnail}
-                        alt="Open Imagination"
+                        alt={item.judul}
                         width={150}
                         height={100}
                       />
