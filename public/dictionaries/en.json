@@ -12,5 +12,13 @@
     "latest_news": "Latest News",
     "news_category": "News Category",
     "popular_news": "Popular News"
+  },
+  "program_page": {
+    "title": "Our Featured Programs",
+    "breadcrumb_home": "Home",
+    "breadcrumb_program": "Program",
+    "loading": "Loading...",
+    "error": "Error",
+    "try_again": "Try Again"
   }
 }

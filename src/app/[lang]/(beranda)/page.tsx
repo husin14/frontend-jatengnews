@@ -18,13 +18,18 @@ export default async function Home({
 
   const beritaUrl =
     lang === "en"
-      ? "http://apidev.tvku.tv/api/berita-translations?per_page=6"
+      ? `${baseurl}/berita-translations?per_page=6`
       : `${baseurl}/berita?per_page=6`;
 
-  const ourExpertiseoneUrl =
+  const ourExpertise1Url =
     lang === "en"
-      ? "https://apidev.tvku.tv/api/home/our-expertise1-translations"
+      ? `${baseurl}/home/our-expertise1-translations`
       : `${baseurl}/home/our-expertise1`;
+
+  const ourExpertise2Url =
+    lang === "en"
+      ? `${baseurl}/home/our-expertise2-translations`
+      : `${baseurl}/home/our-expertise2`;
   const [
     sliderRes,
     beritaTerbaruRes,
@@ -39,8 +44,8 @@ export default async function Home({
     axios.get(`${baseurl}/jadwal-acara`),
     axios.get(`${baseurl}/our-programs`),
     axios.get(`${baseurl}/home/who-we-are`),
-    axios.get(`${ourExpertiseoneUrl}`),
-    axios.get(`${baseurl}/home/our-expertise2`),
+    axios.get(ourExpertise1Url),
+    axios.get(ourExpertise2Url),
   ]);
 
   const slider = sliderRes.data;
