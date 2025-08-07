@@ -1,6 +1,7 @@
 import React from "react";
 import { berita, jadwalAcara } from "../../types";
 import Image from "next/image";
+import Link from "next/link";
 
 type BeritaTerbaruSectionProps = {
   Berita: berita[];
@@ -9,6 +10,7 @@ type BeritaTerbaruSectionProps = {
   tanggal: string;
   jam: number;
   onair: { acara: string } | null;
+  activelang: string;
 };
 
 export const BeritaTerbaruSection: React.FC<BeritaTerbaruSectionProps> = ({
@@ -18,6 +20,7 @@ export const BeritaTerbaruSection: React.FC<BeritaTerbaruSectionProps> = ({
   tanggal,
   jam,
   onair,
+  activelang,
 }) => {
   return (
     <div className="container">
@@ -73,7 +76,10 @@ export const BeritaTerbaruSection: React.FC<BeritaTerbaruSectionProps> = ({
                     ))}
                   <div className="entry col-12 entry-siar">
                     <div className="entry-title">
-                      <a href="#" style={{ color: "black" }}>
+                      <Link
+                        href={`${activelang}/berita`}
+                        style={{ color: "black" }}
+                      >
                         <div
                           style={{
                             fontSize: 17,
@@ -85,7 +91,7 @@ export const BeritaTerbaruSection: React.FC<BeritaTerbaruSectionProps> = ({
                         >
                           Selengkapnya
                         </div>
-                      </a>
+                      </Link>
                     </div>
                   </div>
                 </div>

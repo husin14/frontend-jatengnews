@@ -100,7 +100,7 @@ export default async function Home({
           program.acara
         }: ${jamAwal} - ${jamAkhir}, current time: ${jam}, match: ${
           jam >= jamAwal && jam <= jamAkhir
-        }`
+        }`,
       );
 
       return jam >= jamAwal && jam <= jamAkhir;
@@ -124,6 +124,7 @@ export default async function Home({
             tanggal={tanggal}
             jam={jam}
             onair={onair}
+            activelang={lang}
           />
           {/* Our Program */}
           <OurProgramSection list_program={ourProgram?.data} />
