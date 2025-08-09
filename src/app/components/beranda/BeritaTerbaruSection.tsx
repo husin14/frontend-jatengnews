@@ -35,9 +35,9 @@ export const BeritaTerbaruSection: React.FC<BeritaTerbaruSectionProps> = ({
           >
             <div className="flexslider">
               <div className="slider-wrap">
-                {Berita.map((item, idx) => (
-                  <div className="slide" data-thumb={item.cover} key={idx}>
-                    <a href="#">
+                {Berita.map((item) => (
+                  <div className="slide" data-thumb={item.cover} key={item.id}>
+                    <a href={`${activelang}/berita/show/${item.id}`}>
                       <Image
                         src={item.cover}
                         alt={item.judul}
@@ -68,7 +68,9 @@ export const BeritaTerbaruSection: React.FC<BeritaTerbaruSectionProps> = ({
                       <div className="entry col-12 entry-siar" key={idx}>
                         <div className="entry-title">
                           <h4>
-                            <a href="#">{item.judul}</a>
+                            <a href={`${activelang}/berita/show/${item.id}`}>
+                              {item.judul}
+                            </a>
                           </h4>
                         </div>
                         <hr style={{ borderTop: "dashed 1px black" }} />
