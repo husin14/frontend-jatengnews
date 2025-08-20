@@ -23,7 +23,8 @@ export default function Navbar({
 
   const activeLang = propLang || (pathname.startsWith("/en") ? "en" : "id");
 
-  const dictionary = propDictionary || (activeLang === "en" ? enDictionary : idDictionary);
+  const dictionary =
+    propDictionary || (activeLang === "en" ? enDictionary : idDictionary);
 
   const handleLanguageChange = (newLang: "id" | "en") => {
     const newPathname = pathname.startsWith(`/${activeLang}`)
@@ -42,7 +43,7 @@ export default function Navbar({
         <div className="container">
           <div className="header-row">
             <div id="logo">
-              <Link
+              <a
                 href={`/${activeLang}`}
                 className="standard-logo"
                 data-dark-logo={TvkuWhite}
@@ -53,8 +54,8 @@ export default function Navbar({
                   width={125}
                   height={100}
                 />
-              </Link>
-              <Link
+              </a>
+              <a
                 href={`/${activeLang}`}
                 className="retina-logo"
                 data-dark-logo={TvkuWhite}
@@ -65,7 +66,7 @@ export default function Navbar({
                   width={125}
                   height={100}
                 />
-              </Link>
+              </a>
             </div>
 
             <div id="primary-menu-trigger">
@@ -79,9 +80,9 @@ export default function Navbar({
             <nav className="primary-menu">
               <ul className="menu-container">
                 <li className="menu-item">
-                  <Link className="menu-link" href={`/${activeLang}`}>
+                  <a className="menu-link" href={`/${activeLang}`}>
                     <div>{dictionary.navbar.home}</div>
-                  </Link>
+                  </a>
                 </li>
                 <li className="menu-item">
                   <Link className="menu-link" href={`/${activeLang}/berita`}>
