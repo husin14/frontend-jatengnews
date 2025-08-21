@@ -125,9 +125,9 @@ const Navbar = ({
             <nav className="primary-menu style-6">
               <ul className="menu-container">
                 <li className="menu-item menu-color-home">
-                  <Link className="menu-link" href={`/${activeLang}/`}>
+                  <a className="menu-link" href={`/${activeLang}/`}>
                     <div>Beranda</div>
-                  </Link>
+                  </a>
                 </li>
                 {categories.slice(0, 5).map((item, idx) => (
                   <li key={idx} className="menu-item menu-color-home">
