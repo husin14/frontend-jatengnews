@@ -25,14 +25,14 @@ const SliderSection: React.FC<SliderSectionProps> = ({ carousels }) => (
                 <div className="swiper-wrapper">
                     {carousels.map((data, idx) => (
                         <div className="swiper-slide dark" key={idx}>
-                            <div className="container">
+                            {/* <div className="container">
                                 <div className="slider-caption slider-caption-center">
                                     <h2 data-animate="fadeInUp">{data.judul ? data.judul : ""}</h2>
                                     <p className="d-none d-sm-block" data-animate="fadeInUp" data-delay="200">
                                         {data.sub_judul ? data.sub_judul : ""}
                                     </p>
                                 </div>
-                            </div>
+                            </div> */}
                             <div
                                 className="swiper-slide-bg"
                                 style={{
