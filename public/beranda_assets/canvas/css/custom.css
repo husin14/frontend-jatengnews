@@ -9,15 +9,14 @@
 .slick-prev,
 .slick-next {
   font-size: 30px;
-  line-height: 0;
   /*  */
   position: absolute;
   top: 40%;
   /*  */
   display: block;
   /*  */
-  width: 20px;
-  height: 20px;
+  width: 30px;
+  height: 30px;
   padding: 0;
   -webkit-transform: translate(0, -50%);
   -ms-transform: translate(0, -50%);
@@ -328,14 +327,6 @@
     font-size: 3vw;
   }
 
-
-  /* slick slider our program */
-  /* .our-program-beranda-slick>.slick-list>.slick-track>.slick-slide>div { */
-  /* width: 235px;
-    height: 332.2px; */
-  /* width: 100%;
-    height: auto; */
-  /* } */
 }
 
 @media only screen and (min-width: 768px) {
@@ -364,14 +355,6 @@
   .widget-siaran:first-child {
     margin-top: 0px;
   }
-
-  /* slick slider our program */
-  /* .our-program-beranda-slick>.slick-list>.slick-track>.slick-slide>div { */
-  /* width: 210px;
-    height: 296.87px; */
-  /* width: 100%;
-    height: auto; */
-  /* } */
 }
 
 @media only screen and (min-width: 992px) {
@@ -393,15 +376,6 @@
   .rowjadwalsiar {
     margin-top: 0px;
   }
-
-
-  /* slick slider our program */
-  /* .our-program-beranda-slick>.slick-list>.slick-track>.slick-slide>div { */
-  /* width: 215px;
-    height: 303.94px; */
-  /* width: 100%;
-    height: auto; */
-  /* } */
 
   .our-program-beranda-slick .slick-arrow {
     background-color: #f1f2f3;
