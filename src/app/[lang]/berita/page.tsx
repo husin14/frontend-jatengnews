@@ -9,6 +9,7 @@ import { convert } from "html-to-text";
 import { berita, kategori } from "@/app/types";
 import Sidebar from "@/app/components/sideBar";
 import Carousel from "@/app/components/carousel";
+import { formatDate } from "@/app/utils/dateFormatter";
 
 export default function BeritaPage() {
   const params = useParams();
@@ -150,7 +151,7 @@ export default function BeritaPage() {
                 <div className="entry-meta">
                   <ul>
                     <li>
-                      <i className="icon-calendar3" /> {beritaTerbaru[0].waktu}
+                      <i className="icon-calendar3" /> {formatDate(beritaTerbaru[0].waktu, lang)}
                     </li>
                     {/* <li>
                       <a href="blog-single.html#comments">
@@ -269,10 +270,10 @@ export default function BeritaPage() {
                       </div>
                       <div className="entry-meta">
                         <ul>
-                          <li>
-                            <i className="icon-time"></i>
-                            {data.waktu_publish}
-                          </li>
+                              <li>
+                                <i className="icon-calendar3"></i>
+                                {formatDate(data.waktu, lang)}
+                              </li>
                         </ul>
                       </div>
                       <div className="entry-content clearfix line-clamp-1">
@@ -309,8 +310,8 @@ export default function BeritaPage() {
                             <div className="entry-meta">
                               <ul>
                                 <li>
-                                  <i className="icon-time"></i>
-                                  {item.waktu_publish}
+                                  <i className="icon-calendar3"></i>
+                                  {formatDate(item.waktu, lang)}
                                 </li>
                               </ul>
                             </div>
@@ -354,8 +355,8 @@ export default function BeritaPage() {
                           <div className="entry-meta">
                             <ul>
                               <li>
-                                <i className="icon-time"></i>
-                                {item.waktu_publish}
+                                <i className="icon-calendar3"></i>
+                                {formatDate(item.waktu, lang)}
                               </li>
                             </ul>
                           </div>
@@ -396,8 +397,8 @@ export default function BeritaPage() {
                           <div className="entry-meta">
                             <ul>
                               <li>
-                                <i className="icon-time"></i>
-                                {item.waktu_publish}
+                                <i className="icon-calendar3"></i>
+                                {formatDate(item.waktu, lang)}
                               </li>
                             </ul>
                           </div>
@@ -531,9 +532,9 @@ export default function BeritaPage() {
                           <div className="entry-meta">
                             <ul>
                               <li>
-                                <i className="icon-time"></i>
+                                <i className="icon-calendar3"></i>
                                 <a href={`/berita/show/${item.id}`}>
-                                  {item.waktu_publish}
+                                  {formatDate(item.waktu, lang)}
                                 </a>
                               </li>
                             </ul>
