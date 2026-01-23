@@ -43,7 +43,9 @@ export default function Navbar({
         <div className="container">
           <div className="header-row">
             <div id="logo">
-              <a
+              <a href="/" className="standard-logo" data-dark-logo="/images/tvkuwhite2x.png"><img src="/images/tvkublue2x.png" alt="TVKU Logo"></img></a>
+              <a href="/" className="retina-logo" data-dark-logo="/images/tvkuwhite2x.png"><img src="/images/tvkublue2x.png" alt="TVKU Logo"></img></a>
+              {/* <a
                 href={`/${activeLang}`}
                 className="standard-logo"
                 data-dark-logo={TvkuWhite}
@@ -66,7 +68,7 @@ export default function Navbar({
                   width={125}
                   height={100}
                 />
-              </a>
+              </a> */}
             </div>
 
             <div id="primary-menu-trigger">
