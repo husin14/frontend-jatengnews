@@ -36,7 +36,7 @@ export const WhoWeAre: React.FC<WhoWeAreProps> = ({ data }) => {
                 <div className="feature-box fbox-plain">
                   <div className="fbox-icon">
                     <a href="#">
-                      <i className="i-alt">{num}.</i>
+                      <i className="i-alt" style={{ color: '#1B91CE' }}>{num}.</i>
                     </a>
                   </div>
                   <div className="fbox-content">
