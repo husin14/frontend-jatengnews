@@ -25,43 +25,43 @@ export default function RootLayout({
         />
         <link
           rel="stylesheet"
-          href="/beranda_assets/canvas/css/bootstrap.css"
+          href="/canvas_theme/css/bootstrap.css"
           type="text/css"
         />
         <link
           rel="stylesheet"
-          href="/beranda_assets/canvas/css/style.css"
+          href="/canvas_theme/css/style.css"
           type="text/css"
         />
         <link
           rel="stylesheet"
-          href="/beranda_assets/canvas/css/swiper.css"
+          href="/canvas_theme/css/swiper.css"
           type="text/css"
         />
         <link
           rel="stylesheet"
-          href="/beranda_assets/canvas/css/dark.css"
+          href="/canvas_theme/css/dark.css"
           type="text/css"
         />
         <link
           rel="stylesheet"
-          href="/beranda_assets/canvas/css/font-icons.css"
+          href="/canvas_theme/css/font-icons.css"
           type="text/css"
         />
         <link
           rel="stylesheet"
-          href="/beranda_assets/canvas/css/animate.css"
+          href="/canvas_theme/css/animate.css"
           type="text/css"
         />
         <link
           rel="stylesheet"
-          href="/beranda_assets/canvas/css/magnific-popup.css"
+          href="/canvas_theme/css/magnific-popup.css"
           type="text/css"
         />
 
         <link
           rel="stylesheet"
-          href="/beranda_assets/canvas/css/custom.css"
+          href="/assets/css/custom.css"
           type="text/css"
         />
 
@@ -72,23 +72,10 @@ export default function RootLayout({
         />
         <link
           rel="stylesheet"
-          href="/beranda_assets/css/myslickstyle.css"
+          href="/assets/css/myslickstyle.css"
           type="text/css"
         />
 
-        <link
-          rel="stylesheet"
-          href="/beranda_assets/canvas/css/custom.css"
-          type="text/css"
-        />
-
-        {/* <!-- slick slider --> */}
-        <link
-          rel="stylesheet"
-          type="text/css"
-          href="https://cdn.jsdelivr.net/npm/slick-carousel@1.8.1/slick/slick.css"
-        />
-        <link rel="stylesheet" href="/css/myslickstyle.css" type="text/css" />
       </head>
       <body className="stretched">
         <div id="wrapper" className="clearfix">

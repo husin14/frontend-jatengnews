@@ -38,12 +38,7 @@ export const BeritaTerbaruSection: React.FC<BeritaTerbaruSectionProps> = ({
                 {Berita.map((item) => (
                   <div className="slide" data-thumb={item.cover} key={item.id}>
                     <a href={`${activelang}/berita/show/${item.id}`}>
-                      <Image
-                        src={item.cover}
-                        alt={item.judul}
-                        width={100}
-                        height={100}
-                      />
+                      <img src={item.cover} alt={item.judul}></img>
                       <div className="bg-overlay">
                         <div className="bg-overlay-content text-overlay-mask desc-sm dark desc-sm align-items-end justify-content-start p-4">
                           <div className="portfolio-desc py-0">
