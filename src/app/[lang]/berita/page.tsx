@@ -116,12 +116,13 @@ export default function BeritaPage() {
         <div className="col-lg-8">
           <div className="posts-md">
             {beritaTerbaru.length > 0 && (
+              // console.log("beritaTerbaru[0]: ", beritaTerbaru[0].waktu),
               <div className="entry">
                 <div className="entry-image">
                   <Link
                     href={`/${lang}/berita/show/${
                       beritaTerbaru[0].id || beritaTerbaru[0].id
-                    }`}
+                      }`}
                   >
                     <Image
                       src={
@@ -136,17 +137,30 @@ export default function BeritaPage() {
                   </Link>
                 </div>
                 <div className="entry-title title-sm">
-                  <h3>
+                  <h3 style={{ marginBottom: '0px' }}>
                     <Link
                       href={`/${lang}/berita/show/${
                         beritaTerbaru[0].id || beritaTerbaru[0].id
-                      }`}
+                        }`}
                     >
                       {beritaTerbaru[0].judul}
                     </Link>
                   </h3>
                 </div>
-                <div className="entry-content">
+                <div className="entry-meta">
+                  <ul>
+                    <li>
+                      <i className="icon-calendar3" /> {beritaTerbaru[0].waktu}
+                    </li>
+                    {/* <li>
+                      <a href="blog-single.html#comments">
+                        <i className="icon-comments" /> 15
+                      </a>
+                    </li> */}
+                  </ul>
+                </div>
+
+                <div className="entry-content" style={{ marginTop: '0px' }}>
                   <p className="line-clamp-2 mb-0">
                     {beritaTerbaru[0].deskripsi}
                   </p>

@@ -19,6 +19,7 @@ export interface berita {
   cover: string;
   deskripsi: string;
   waktu_publish: string; 
+  waktu: string; 
   kategori: kategori;
   kategori_slug: string;
   path_media: string;
