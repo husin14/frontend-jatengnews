@@ -1,3 +1,4 @@
+"use client"
 import React from "react";
 import { OurProgram } from "../../types";
 import Image from "next/image";
@@ -26,19 +27,20 @@ export const OurProgramSection: React.FC<OurProgramSectionProps> = ({
         <div className="row">
           <div className="our-program-beranda-slick">
             {list_program.map((item) => (
-              <a href="" key={item.id}>
+              <a href="" key={item.id} onClick={(e) => e.preventDefault()}>
                 <div
                   style={{
                     backgroundImage: `url('${item.thumbnail}')`,
                   }}
                 >
-                  <Image
+                  <img style={{ visibility: "hidden" }} src={item.thumbnail}></img>
+                  {/* <Image
                     style={{ visibility: "hidden" }}
                     src={item.thumbnail}
                     alt={item.judul}
                     width={100}
                     height={100}
-                  />
+                  /> */}
                 </div>
               </a>
             ))}
