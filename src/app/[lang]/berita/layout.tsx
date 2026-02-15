@@ -1,20 +1,10 @@
 import type { Metadata } from "next";
-// import { Geist, Geist_Mono } from "next/font/google";
 import "../../globals.css";
 import Script from "next/script";
 import Header from "@/app/components/header";
 import Navbar from "@/app/components/navbar";
 import Footer from "@/app/components/footer";
-import { getDictionary } from "@/app/dictionaries";
-// const geistSans = Geist({
-//   variable: "--font-geist-sans",
-//   subsets: ["latin"],
-// });
-
-// const geistMono = Geist_Mono({
-//   variable: "--font-geist-mono",
-//   subsets: ["latin"],
-// });
+import { getDictionary, type Locale } from "@/app/dictionaries";
 
 export const metadata: Metadata = {
   title: "Create Next App",
@@ -23,14 +13,22 @@ export const metadata: Metadata = {
 
 export default async function RootLayout({
   children,
-  params: { lang },
-}: Readonly<{
+  params,
+}: {
   children: React.ReactNode;
-  params: { lang: "id" | "en" };
-}>) {
+  params: any;
+}) {
+  const langParam = params?.lang;
+
+  const lang: Locale =
+    langParam === "id" || langParam === "en"
+      ? langParam
+      : "id";
+
   const dictionary = await getDictionary(lang);
+
   return (
-    <html lang="en">
+    <html lang={lang}>
       <head>
         <link
           href="https://fonts.googleapis.com/css?family=Lato:300,400,400i,700|Poppins:300,400,500,600,700|PT+Serif:400,400i&display=swap"
