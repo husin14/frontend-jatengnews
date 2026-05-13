@@ -11,7 +11,7 @@ const Header = () => {
       <div className="header-row justify-content-between">
         {/* Logo */}
         <div id="logo" className="col-auto ms-auto ms-mb-0 me-mb-0 order-md-2">
-          <Link href="/">
+          <a href="/">
             <Image
               className="mx-auto"
               src="/images/tvkublue2x.png"
@@ -19,7 +19,7 @@ const Header = () => {
               height={100}
               width={125}
             />
-          </Link>
+          </a>
           {/* <a href="" className="standard-logo"></a> */}
           {/* <a href="<?= base_url() ?>" className="retina-logo">
                   <Image

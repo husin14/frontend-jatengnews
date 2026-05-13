@@ -124,7 +124,7 @@ const Navbar = ({
             <nav className="primary-menu style-6">
               <ul className="menu-container">
                 <li className="menu-item menu-color-home">
-                  <a className="menu-link" href={`/${activeLang}/`}>
+                  <a className="menu-link" href={`/${activeLang}`}>
                     <div>Beranda</div>
                   </a>
                 </li>

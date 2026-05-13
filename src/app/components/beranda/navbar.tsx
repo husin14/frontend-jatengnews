@@ -82,14 +82,14 @@ export default function Navbar({
             <nav className="primary-menu">
               <ul className="menu-container">
                 <li className="menu-item">
-                  <a className="menu-link" href={`/${activeLang}`}>
+                  <Link className="menu-link" href={`/${activeLang}`}>
                     <div>{dictionary.navbar.home}</div>
-                  </a>
+                  </Link>
                 </li>
                 <li className="menu-item">
-                  <Link className="menu-link" href={`/${activeLang}/berita`}>
+                  <a className="menu-link" href={`/${activeLang}/berita`}>
                     <div>{dictionary.navbar.news}</div>
-                  </Link>
+                  </a>
                 </li>
                 <li className="menu-item">
                   <Link className="menu-link" href={`/${activeLang}/program`}>
