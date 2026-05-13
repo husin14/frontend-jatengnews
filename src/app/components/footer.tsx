@@ -1,7 +1,7 @@
 "use client";
 
 import React, { useEffect, useState } from "react";
-import axios from "axios";
+import apiClient from "../utils/apiClient";
 import { recentPostFooter, kategori } from "../types";
 import Link from "next/link";
 import Image from "next/image";
@@ -11,12 +11,11 @@ function Footer() {
   const [cleanDeskripsi, setCleanDeskripsi] = useState<recentPostFooter[]>([]);
   const [kategoriList, setKategoriList] = useState<kategori[]>([]);
   const [showAllTags, setShowAllTags] = useState(false);
-  const baseurl = process.env.NEXT_PUBLIC_BASE_URL;
 
   useEffect(() => {
     const getBerita = async () => {
       try {
-        const res = await axios.get(`${baseurl}/berita`);
+        const res = await apiClient.get(`/berita`);
         const data: recentPostFooter[] = res.data.data;
 
         const cleaned = data.map((item: recentPostFooter) => ({
@@ -32,7 +31,7 @@ function Footer() {
 
     const getKategori = async () => {
       try {
-        const res = await axios.get(`${baseurl}/kategori`);
+        const res = await apiClient.get(`/kategori`);
         const data: kategori[] = res.data.data;
         setKategoriList(data);
       } catch (error) {

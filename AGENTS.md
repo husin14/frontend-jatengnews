@@ -72,9 +72,8 @@ src/
    import Link from "next/link";
    
    // 2. External libraries
-   import axios from "axios";
+   import apiClient from "@/app/utils/apiClient";
    import { convert } from "html-to-text";
-   
    // 3. Internal types/utils (using @ alias)
    import { berita, kategori } from "@/app/types";
    import { formatDate } from "@/app/utils/dateFormatter";

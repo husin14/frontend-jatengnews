@@ -1,7 +1,7 @@
 "use client";
 
 import React, { useEffect, useState, useCallback } from "react";
-import axios from "axios";
+import apiClient from "../utils/apiClient";
 import { kategori as KategoriType, berita as BeritaType } from "../types";
 import Link from "next/link";
 import Image from "next/image";
@@ -27,7 +27,6 @@ const Navbar = ({
     number | null
   >(null);
   const [loadingMegaMenuNews, setLoadingMegaMenuNews] = useState(false);
-  const baseurl = process.env.NEXT_PUBLIC_BASE_URL;
 
   const dictionary = propDictionary || {
     Navbar: {
@@ -49,9 +48,9 @@ const Navbar = ({
       try {
         const url =
           activeLang === "en"
-            ? `https://apidev.tvku.tv/api/kategori-translations-all?language_code=en`
-            : `${baseurl}/kategori`;
-        const resKategori = await axios.get(url);
+            ? `/kategori-translations-all?language_code=en`
+            : `/kategori`;
+        const resKategori = await apiClient.get(url);
         setCategories(resKategori.data.data);
       } catch (error) {
         console.error("Error fetching categories:", error);
@@ -59,7 +58,7 @@ const Navbar = ({
     };
 
     getKategori();
-  }, [baseurl, activeLang]);
+  }, [activeLang]);
 
   const fetchNewsForMegaMenu = useCallback(
     async (categoryId: number) => {
@@ -67,9 +66,9 @@ const Navbar = ({
       try {
         const url =
           activeLang === "en"
-            ? `${baseurl}kategori-translations?language_code=en&kategori_id=${categoryId}`
-            : `${baseurl}/berita?id_kategori=${categoryId}`;
-        const res = await axios.get(url);
+            ? `/kategori-translations?language_code=en&kategori_id=${categoryId}`
+            : `/berita?id_kategori=${categoryId}`;
+        const res = await apiClient.get(url);
         setMegaMenuNews(res.data.data);
       } catch (error) {
         console.error(`Error fetching news for category ${categoryId}:`, error);
@@ -78,7 +77,7 @@ const Navbar = ({
         setLoadingMegaMenuNews(false);
       }
     },
-    [baseurl, activeLang]
+    [activeLang]
   );
 
   const handleMegaMenuCategoryHover = (categoryId: number) => {

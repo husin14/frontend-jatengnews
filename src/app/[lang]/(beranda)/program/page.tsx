@@ -2,7 +2,7 @@
 
 import React, { useState, useEffect } from "react";
 import Image from "next/image";
-import axios from "axios";
+import apiClient from "@/app/utils/apiClient";
 import { OurProgram } from "@/app/types";
 
 type Dictionary = {
@@ -21,7 +21,6 @@ export default function Page({
 }: {
   params: Promise<{ lang: "id" | "en" }>;
 }) {
-  const baseurl = process.env.NEXT_PUBLIC_BASE_URL;
   const [programs, setPrograms] = useState<OurProgram[]>([]);
   const [loading, setLoading] = useState<boolean>(true);
   const [error, setError] = useState<string | null>(null);
@@ -67,10 +66,10 @@ export default function Page({
       try {
         const apiUrl =
           lang === "en"
-            ? `${baseurl}/our-programs-translation?sort=id_asc&current_page=${currentPage}&per_page=6`
-            : `${baseurl}/our-programs?sort=id_asc&current_page=${currentPage}&per_page=6`;
+            ? `/our-programs-translation?sort=id_asc&current_page=${currentPage}&per_page=6`
+            : `/our-programs?sort=id_asc&current_page=${currentPage}&per_page=6`;
 
-        const response = await axios.get(apiUrl);
+        const response = await apiClient.get(apiUrl);
         setPrograms(response.data.data);
         setTotalPages(Math.ceil(response.data.total / 6));
       } catch {
@@ -81,7 +80,7 @@ export default function Page({
     };
 
     getProgram();
-  }, [currentPage, baseurl, lang]);
+  }, [currentPage, lang]);
 
   const handlePageChange = (page: number) => {
     if (page > 0 && page <= totalPages) {

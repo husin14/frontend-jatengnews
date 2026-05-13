@@ -1,5 +1,5 @@
 import React from "react";
-import axios from "axios";
+import apiClient from "../../utils/apiClient";
 import SliderSection from "../../components/beranda/SliderSection";
 import { BeritaTerbaruSection } from "../../components/beranda/BeritaTerbaruSection";
 import { jadwalAcara } from "../../types";
@@ -14,48 +14,55 @@ export default async function Home({
   params: Promise<{ lang: "id" | "en" }>;
 }) {
   const { lang } = await params;
-  const baseurl = process.env.NEXT_PUBLIC_BASE_URL;
 
   const beritaUrl =
     lang === "en"
-      ? `${baseurl}/berita-translations?per_page=6`
-      : `${baseurl}/berita?per_page=6`;
+      ? `/berita-translations?per_page=6`
+      : `/berita?per_page=6`;
 
   const ourExpertise1Url =
     lang === "en"
-      ? `${baseurl}/home/our-expertise1-translations`
-      : `${baseurl}/home/our-expertise1`;
+      ? `/home/our-expertise1-translations`
+      : `/home/our-expertise1`;
 
   const ourExpertise2Url =
     lang === "en"
-      ? `${baseurl}/home/our-expertise2-translations`
-      : `${baseurl}/home/our-expertise2`;
-  const [
-    sliderRes,
-    beritaTerbaruRes,
-    jadwalTayangRes,
-    ourProgramRes,
-    whoweareRes,
-    ourExpertise1Res,
-    ourExpertise2Res,
-  ] = await Promise.all([
-    axios.get(`${baseurl}/home/slider`),
-    axios.get(beritaUrl),
-    axios.get(`${baseurl}/jadwal-acara`),
-    // axios.get(`${baseurl}/our-programs`),
-    axios.get(`${baseurl}/our-programs-static`),
-    axios.get(`${baseurl}/home/who-we-are`),
-    axios.get(ourExpertise1Url),
-    axios.get(ourExpertise2Url),
-  ]);
+      ? `/home/our-expertise2-translations`
+      : `/home/our-expertise2`;
 
-  const slider = sliderRes.data;
-  const beritaTerbaru = beritaTerbaruRes.data;
-  const jadwalTayang = jadwalTayangRes.data;
-  const ourProgram = ourProgramRes.data;
-  const whoweare = whoweareRes.data;
-  const ourExpertise1 = ourExpertise1Res.data;
-  const ourExpertise2 = ourExpertise2Res.data;
+  let slider, beritaTerbaru, jadwalTayang, ourProgram, whoweare, ourExpertise1, ourExpertise2;
+
+  try {
+    const [
+      sliderRes,
+      beritaTerbaruRes,
+      jadwalTayangRes,
+      ourProgramRes,
+      whoweareRes,
+      ourExpertise1Res,
+      ourExpertise2Res,
+    ] = await Promise.all([
+      apiClient.get(`/home/slider`),
+      apiClient.get(beritaUrl),
+      apiClient.get(`/jadwal-acara`),
+      apiClient.get(`/our-programs-static`),
+      apiClient.get(`/home/who-we-are`),
+      apiClient.get(ourExpertise1Url),
+      apiClient.get(ourExpertise2Url),
+    ]);
+
+    slider = sliderRes.data;
+    beritaTerbaru = beritaTerbaruRes.data;
+    jadwalTayang = jadwalTayangRes.data;
+    ourProgram = ourProgramRes.data;
+    whoweare = whoweareRes.data;
+    ourExpertise1 = ourExpertise1Res.data;
+    ourExpertise2 = ourExpertise2Res.data;
+  } catch (error) {
+    console.error("Failed to fetch data for Home page. Check your NEXT_PUBLIC_BASE_URL and API health.");
+    // In a real app, you might want to redirect to an error page or show a fallback UI
+    throw error; // Re-throw to trigger Next.js error boundary/page
+  }
 
   const expertiseData = {
     expertise1: ourExpertise1?.data || [],

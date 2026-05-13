@@ -2,7 +2,7 @@
 
 import { berita } from "../types";
 import { useEffect, useState, useRef } from "react";
-import axios from "axios";
+import apiClient from "../utils/apiClient";
 
 declare global {
   interface Window {
@@ -11,7 +11,6 @@ declare global {
 }
 
 const Carousel = () => {
-  const baseurl = process.env.NEXT_PUBLIC_BASE_URL;
   const [berita, setBerita] = useState<berita[]>([]);
   const [mounted, setMounted] = useState(false);
   const carouselRef = useRef<HTMLDivElement>(null);
@@ -28,7 +27,7 @@ const Carousel = () => {
 
     const fetchBerita = async () => {
       try {
-        const res = await axios.get(`${baseurl}/berita?sort=populer`);
+        const res = await apiClient.get(`/berita?sort=populer`);
         setBerita(res.data.data);
         console.log(res.data.data);
       } catch (error) {
@@ -37,7 +36,7 @@ const Carousel = () => {
     };
 
     fetchBerita();
-  }, [mounted, baseurl]);
+  }, [mounted]);
 
   // Initialize carousel only after everything is ready
   useEffect(() => {

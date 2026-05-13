@@ -4,7 +4,7 @@ import React, { useEffect, useState } from "react";
 import { useParams } from "next/navigation";
 import Link from "next/link";
 import Image from "next/image";
-import axios from "axios";
+import apiClient from "@/app/utils/apiClient";
 import { convert } from "html-to-text";
 import { berita, kategori } from "@/app/types";
 import Sidebar from "@/app/components/sideBar";
@@ -22,8 +22,6 @@ export default function BeritaPage() {
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState<string | null>(null);
 
-  const baseurl = process.env.NEXT_PUBLIC_BASE_URL;
-
   useEffect(() => {
     if (!lang) return;
 
@@ -34,21 +32,21 @@ export default function BeritaPage() {
       try {
         const beritaUrl =
           lang === "en"
-            ? `https://apidev.tvku.tv/api/berita-translations?language_code=en`
-            : `${baseurl}/berita`;
+            ? `/berita-translations?language_code=en`
+            : `/berita`;
 
         const featureUrl =
           lang === "en"
-            ? `https://apidev.tvku.tv/api/berita-translations?language_code=en&id_kategori=19`
-            : `${baseurl}/berita?id_kategori=19`;
+            ? `/berita-translations?language_code=en&id_kategori=19`
+            : `/berita?id_kategori=19`;
 
         const dictionaryUrl = `/dictionaries/${lang}.json`;
 
         const [beritaResponse, featureResponse, dictionaryResponse] =
           await Promise.all([
-            axios.get(beritaUrl),
-            axios.get(featureUrl),
-            axios.get(dictionaryUrl),
+            apiClient.get(beritaUrl),
+            apiClient.get(featureUrl),
+            fetch(dictionaryUrl).then(res => res.json()),
           ]);
 
         const processedBerita = beritaResponse.data.data.map((item: berita) => ({
@@ -67,7 +65,7 @@ export default function BeritaPage() {
         }));
         setFeatureData(processedFeature);
 
-        setDictionary(dictionaryResponse.data);
+        setDictionary(dictionaryResponse);
       } catch (err) {
         console.error("Failed to fetch data:", err);
         setError("Gagal memuat data. Silakan coba lagi nanti.");
@@ -77,12 +75,12 @@ export default function BeritaPage() {
     };
 
     fetchData();
-  }, [lang, baseurl]);
+  }, [lang]);
 
   useEffect(() => {
     const getKategori = async () => {
       try {
-        const res = await axios.get(`${baseurl}/kategori`);
+        const res = await apiClient.get(`/kategori`);
         setKategori(res.data.data);
         setError(null);
       } catch (error) {
@@ -91,7 +89,7 @@ export default function BeritaPage() {
       }
     };
     getKategori();
-  }, [baseurl]);
+  }, []);
 
   if (loading || !dictionary) {
     return <div className="text-center p-5">Loading...</div>;

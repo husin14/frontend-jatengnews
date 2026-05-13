@@ -4,7 +4,7 @@ import React, { useEffect, useState } from "react";
 import { useParams } from "next/navigation";
 import Link from "next/link";
 import Image from "next/image";
-import axios from "axios";
+import apiClient from "@/app/utils/apiClient";
 
 import { berita } from "@/app/types";
 import Sidebar from "@/app/components/sideBar";
@@ -23,7 +23,6 @@ export default function BeritaDetailPage() {
   const [error, setError] = useState<string | null>(null);
   const [showIklan, setShowIklan] = useState(false);
 
-  const baseurl = process.env.NEXT_PUBLIC_BASE_URL;
   const frontendUrl = process.env.NEXT_PUBLIC_FRONTEND_URL || "https://tvku.tv";
 
   useEffect(() => {
@@ -44,14 +43,14 @@ export default function BeritaDetailPage() {
       try {
         const beritaDetailUrl =
           lang === "en"
-            ? `https://apidev.tvku.tv/api/berita-translations?language_code=en&id_berita_master=${id}`
-            : `${baseurl}/berita/${id}`;
+            ? `/berita-translations?language_code=en&id_berita_master=${id}`
+            : `/berita/${id}`;
         
         const dictionaryUrl = `/dictionaries/${lang}.json`;
 
         const [beritaResponse, dictionaryResponse] = await Promise.all([
-          axios.get(beritaDetailUrl),
-          axios.get(dictionaryUrl),
+          apiClient.get(beritaDetailUrl),
+          fetch(dictionaryUrl).then(res => res.json()),
         ]);
 
         let beritaData;
@@ -64,7 +63,7 @@ export default function BeritaDetailPage() {
         }
 
         setBerita(beritaData);
-        setDictionary(dictionaryResponse.data);
+        setDictionary(dictionaryResponse);
 
       } catch (err) {
         console.error("Failed to fetch data:", err);
@@ -75,7 +74,7 @@ export default function BeritaDetailPage() {
     };
 
     fetchData();
-  }, [id, lang, baseurl]);
+  }, [id, lang]);
 
   if (loading || !dictionary) {
     return <p className="text-center py-10">{dictionary?.messages?.loading || "Memuat..."}</p>;

@@ -1,20 +1,18 @@
 "use client";
 
 import React, { useState, useEffect } from "react";
-import axios from "axios";
+import apiClient from "@/app/utils/apiClient";
 import Link from "next/link";
 import Image from "next/image";
 import { SeputarUdinusSlide, SeputarUdinusSlideTitle } from "@/app/types";
 
-const baseurl = process.env.NEXT_PUBLIC_BASE_URL;
-
 async function getSeputarDinusDataWithAxios() {
   try {
-    const titlesPromise = axios.get(
-      `${baseurl}/seputar-dinus-slides-title?sort=id_asc`
+    const titlesPromise = apiClient.get(
+      `/seputar-dinus-slides-title?sort=id_asc`
     );
-    const slidesPromise = axios.get(
-      `${baseurl}/seputar-dinus-slider?sort=id_asc`
+    const slidesPromise = apiClient.get(
+      `/seputar-dinus-slider?sort=id_asc`
     );
 
     const [titlesRes, slidesRes] = await Promise.all([
