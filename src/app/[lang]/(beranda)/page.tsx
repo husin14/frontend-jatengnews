@@ -15,6 +15,11 @@ export default async function Home({
 }) {
   const { lang } = await params;
 
+  const sliderUrl =
+    lang === "en"
+      ? `/home/slider-list-translations`
+      : `/home/slider-list`;
+
   const beritaUrl =
     lang === "en"
       ? `/berita-translations?per_page=6`
@@ -42,7 +47,7 @@ export default async function Home({
       ourExpertise1Res,
       ourExpertise2Res,
     ] = await Promise.all([
-      apiClient.get(`/home/slider`),
+      apiClient.get(sliderUrl),
       apiClient.get(beritaUrl),
       apiClient.get(`/jadwal-acara`),
       apiClient.get(`/our-programs-static`),
