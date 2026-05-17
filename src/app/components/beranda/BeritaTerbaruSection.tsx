@@ -33,24 +33,26 @@ export const BeritaTerbaruSection: React.FC<BeritaTerbaruSectionProps> = ({
             data-thumbs="true"
             data-easing="easeOutQuad"
           >
-            <div className="flexslider">
-              <div className="slider-wrap">
-                {Berita.map((item) => (
-                  <div className="slide" data-thumb={item.cover} key={item.id}>
-                    <a href={`/${activelang}/berita/show/${item.id}`}>
-                      <img src={item.cover} alt={item.judul}></img>
-                      <div className="bg-overlay">
-                        <div className="bg-overlay-content text-overlay-mask desc-sm dark desc-sm align-items-end justify-content-start p-4">
-                          <div className="portfolio-desc py-0">
-                            <h3>{item.judul}</h3>
+            {Berita && Berita.length > 0 && (
+              <div className="flexslider">
+                <div className="slider-wrap">
+                  {Berita.map((item) => (
+                    <div className="slide" data-thumb={item.cover} key={item.id}>
+                      <a href={`/${activelang}/berita/show/${item.id}`}>
+                        <img src={item.cover} alt={item.judul}></img>
+                        <div className="bg-overlay">
+                          <div className="bg-overlay-content text-overlay-mask desc-sm dark desc-sm align-items-end justify-content-start p-4">
+                            <div className="portfolio-desc py-0">
+                              <h3>{item.judul}</h3>
+                            </div>
                           </div>
                         </div>
-                      </div>
-                    </a>
-                  </div>
-                ))}
+                      </a>
+                    </div>
+                  ))}
+                </div>
               </div>
-            </div>
+            )}
           </div>
         </div>
         <div className="col-12 col-lg-6">
