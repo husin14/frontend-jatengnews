@@ -24,6 +24,7 @@ export default function BeritaDetailPage() {
   const [showIklan, setShowIklan] = useState(false);
 
   const frontendUrl = process.env.NEXT_PUBLIC_FRONTEND_URL || "https://tvku.tv";
+  const langPrefix = lang === "id" ? "" : `/${lang}`;
 
   useEffect(() => {
     setShowIklan(true);
@@ -85,7 +86,7 @@ export default function BeritaDetailPage() {
   }
 
   // URL kanonis untuk Disqus dan social share
-  const pageUrl = `${frontendUrl}/${lang}/berita/show/${id}`;
+  const pageUrl = `${frontendUrl}${langPrefix}/berita/show/${id}`;
 
   return (
     <>
@@ -137,7 +138,7 @@ export default function BeritaDetailPage() {
               />
               {berita.kategori && (
                 <div className="entry-categories">
-                   <Link href={`/${lang}/berita/${berita.kategori.id_kategori}`} className="bg-travel">
+                   <Link href={`${langPrefix}/berita/${berita.kategori.id_kategori}`} className="bg-travel">
                       {berita.kategori.nama}
                     </Link>
                 </div>

@@ -90,12 +90,15 @@ const Navbar = ({
     setMegaMenuNews([]);
   };
 
+  const langPrefix = activeLang === "id" ? "" : `/${activeLang}`;
+
   const handleLanguageChange = (newLang: "id" | "en") => {
+    const newPrefix = newLang === "id" ? "" : `/${newLang}`;
     if (pathname.startsWith(`/${activeLang}/berita`)) {
-      const newPathname = pathname.replace(`/${activeLang}/`, `/${newLang}/`);
+      const newPathname = pathname.replace(`/${activeLang}/`, `${newPrefix}/`);
       router.push(newPathname);
     } else {
-      router.push(`/${newLang}/berita`);
+      router.push(`${newPrefix}/berita`);
     }
   };
 
@@ -124,7 +127,7 @@ const Navbar = ({
             <nav className="primary-menu style-6">
               <ul className="menu-container">
                 <li className="menu-item menu-color-home">
-                  <a className="menu-link" href={`/${activeLang}`}>
+                  <a className="menu-link" href={`${langPrefix}/`}>
                     <div>Beranda</div>
                   </a>
                 </li>
@@ -132,7 +135,7 @@ const Navbar = ({
                   <li key={idx} className="menu-item menu-color-home">
                     <Link
                       className="menu-link"
-                      href={`/${activeLang}/berita/${item.id_kategori}`}
+                      href={`${langPrefix}/berita/${item.id_kategori}`}
                     >
                       <div>{item.nama}</div>
                     </Link>
@@ -168,7 +171,7 @@ const Navbar = ({
                                     )
                                   }
                                   onMouseLeave={handleMegaMenuCategoryLeave}
-                                  href={`/${activeLang}/berita/${item.id_kategori}`}
+                                  href={`${langPrefix}/berita/${item.id_kategori}`}
                                 >
                                   {item.nama}
                                 </Link>
@@ -194,7 +197,7 @@ const Navbar = ({
                                       <div className="entry">
                                         <div className="entry-image mb-3">
                                           <Link
-                                            href={`/berita/show/${item.id}`}
+                                            href={`${langPrefix}/berita/show/${item.id}`}
                                           >
                                             <Image
                                               src={item.cover}
@@ -206,7 +209,7 @@ const Navbar = ({
                                           </Link>
                                           <div className="entry-categories">
                                             <Link
-                                              href={`/berita/${item.kategori?.id_kategori}`}
+                                              href={`${langPrefix}/berita/${item.kategori?.id_kategori}`}
                                               className="bg-lifestyle"
                                             >
                                               {item.kategori?.nama}
@@ -216,7 +219,7 @@ const Navbar = ({
                                         <div className="entry-title title-xs nott">
                                           <h3 className="mb-1">
                                             <Link
-                                              href={`/berita/show/${item.id}`}
+                                              href={`${langPrefix}/berita/show/${item.id}`}
                                             >
                                               {item.judul}
                                             </Link>

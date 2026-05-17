@@ -22,6 +22,7 @@ export const BeritaTerbaruSection: React.FC<BeritaTerbaruSectionProps> = ({
   onair,
   activelang,
 }) => {
+  const langPrefix = activelang === "id" ? "" : `/${activelang}`;
   return (
     <div className="container">
       <div className="row rowjadwalsiar">
@@ -38,7 +39,7 @@ export const BeritaTerbaruSection: React.FC<BeritaTerbaruSectionProps> = ({
                 <div className="slider-wrap">
                   {Berita.map((item) => (
                     <div className="slide" data-thumb={item.cover} key={item.id}>
-                      <a href={`/${activelang}/berita/show/${item.id}`}>
+                      <a href={`${langPrefix}/berita/show/${item.id}`}>
                         <img src={item.cover} alt={item.judul}></img>
                         <div className="bg-overlay">
                           <div className="bg-overlay-content text-overlay-mask desc-sm dark desc-sm align-items-end justify-content-start p-4">
@@ -65,7 +66,7 @@ export const BeritaTerbaruSection: React.FC<BeritaTerbaruSectionProps> = ({
                       <div className="entry col-12 entry-siar" key={idx}>
                         <div className="entry-title">
                           <h4>
-                            <a href={`/${activelang}/berita/show/${item.id}`}>
+                            <a href={`${langPrefix}/berita/show/${item.id}`}>
                               {item.judul}
                             </a>
                           </h4>
@@ -76,7 +77,7 @@ export const BeritaTerbaruSection: React.FC<BeritaTerbaruSectionProps> = ({
                   <div className="entry col-12 entry-siar">
                     <div className="entry-title">
                       <a
-                        href={`/${activelang}/berita`}
+                        href={`${langPrefix}/berita`}
                         style={{ color: "black" }}
                       >
                         <div

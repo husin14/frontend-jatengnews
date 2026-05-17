@@ -5,7 +5,7 @@ const nextConfig: NextConfig = {
   // eslint: {
   //   ignoreDuringBuilds: true,
   // },
-  async redirects() {
+  /* async redirects() {
       return[
         {
           source: '/',
@@ -13,7 +13,7 @@ const nextConfig: NextConfig = {
           permanent: true,
         }
       ]
-  },
+  }, */
   images: {
     remotePatterns: [
       {

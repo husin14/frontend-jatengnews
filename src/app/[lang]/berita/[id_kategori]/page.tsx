@@ -150,8 +150,9 @@ export default function KategoriBeritaPage() {
     );
   }
 
+  const langPrefix = lang === "id" ? "" : `/${lang}`;
   const total_no_of_pages = beritaApiResponse.last_page;
-  const baseUrlLink = `/${lang}/berita/${id_kategori}`;
+  const baseUrlLink = `${langPrefix}/berita/${id_kategori}`;
   const displayedPages = getPageRange();
 
   const firstpage_class = currentPage > 1 ? "" : "disabled";
@@ -178,7 +179,7 @@ export default function KategoriBeritaPage() {
                     <div className="entry row mb-5">
                       <div className="col-md-6">
                         <div className="entry-image">
-                          <Link href={`/${lang}/berita/show/${item.id}`}>
+                          <Link href={`${langPrefix}/berita/show/${item.id}`}>
                             <Image
                               src={item.cover}
                               alt={item.judul}
@@ -192,7 +193,7 @@ export default function KategoriBeritaPage() {
                       <div className="col-md-6 mt-3 mt-md-0">
                         <div className="entry-title title-sm nott">
                           <h3>
-                            <Link href={`/${lang}/berita/show/${item.id}`}>
+                            <Link href={`${langPrefix}/berita/show/${item.id}`}>
                               {item.judul}
                             </Link>
                           </h3>

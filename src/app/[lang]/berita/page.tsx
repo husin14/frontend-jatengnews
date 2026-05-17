@@ -108,6 +108,7 @@ export default function BeritaPage() {
   }
 
   const data = beritaTerbaru[0];
+  const langPrefix = lang === "id" ? "" : `/${lang}`;
 
   return (
     <>
@@ -119,7 +120,7 @@ export default function BeritaPage() {
               <div className="entry">
                 <div className="entry-image">
                   <Link
-                    href={`/${lang}/berita/show/${
+                    href={`${langPrefix}/berita/show/${
                       beritaTerbaru[0].id || beritaTerbaru[0].id
                       }`}
                   >
@@ -138,7 +139,7 @@ export default function BeritaPage() {
                 <div className="entry-title title-sm">
                   <h3 style={{ marginBottom: '0px' }}>
                     <Link
-                      href={`/${lang}/berita/show/${
+                      href={`${langPrefix}/berita/show/${
                         beritaTerbaru[0].id || beritaTerbaru[0].id
                         }`}
                     >
@@ -175,7 +176,7 @@ export default function BeritaPage() {
                 <div className="grid-inner row g-0">
                   <div className="col-auto">
                     <div className="entry-image">
-                      <Link href={`/${lang}/berita/show/${item.id || item.id}`}>
+                      <Link href={`${langPrefix}/berita/show/${item.id || item.id}`}>
                         <Image
                           src={
                             item.cover ||
@@ -192,7 +193,7 @@ export default function BeritaPage() {
                     <div className="entry-title">
                       <h4>
                         <Link
-                          href={`/${lang}/berita/show/${item.id || item.id}`}
+                          href={`${langPrefix}/berita/show/${item.id || item.id}`}
                         >
                           {item.judul}
                         </Link>
@@ -215,7 +216,7 @@ export default function BeritaPage() {
             <h4 className="mb-0 pe-2 ls1 text-uppercase fw-bold">
               {dictionary.berita_page.latest_news}
             </h4>
-            | <Link href={`/${lang}/berita/beritaterbaru`}>more..</Link>
+            | <Link href={`${langPrefix}/berita/beritaterbaru`}>more..</Link>
             <button
               className="navbar-toggler"
               style={{ visibility: "hidden" }}
@@ -243,7 +244,7 @@ export default function BeritaPage() {
                   <div className="posts-md">
                     <div className="entry">
                       <div className="entry-image">
-                        <a href={`${lang}/berita/show/${data.id}`}>
+                        <Link href={`${langPrefix}/berita/show/${data.id}`}>
                           <Image
                             src={data.cover}
                             alt={data.judul}
@@ -251,19 +252,19 @@ export default function BeritaPage() {
                             height={200}
                             style={{ width: "416px", height: "233px" }}
                           />
-                        </a>
+                        </Link>
                         <div className="entry-categories">
-                          <a
-                            href={`${lang}/berita/show/${data.id}`}
+                          <Link
+                            href={`${langPrefix}/berita/show/${data.id}`}
                             className="bg-travel"
                           >
                             {data.kategori?.nama || "Uncategorized"}
-                          </a>
+                          </Link>
                         </div>
                       </div>
                       <div className="entry-title nott">
                         <h3 className="mb-2">
-                          <a href={`berita/show/${data.id}`}>{data.judul}</a>
+                          <Link href={`${langPrefix}/berita/show/${data.id}`}>{data.judul}</Link>
                         </h3>
                       </div>
                       <div className="entry-meta">
@@ -287,22 +288,22 @@ export default function BeritaPage() {
                         <div className="grid-inner row align-items-center g-0">
                           <div className="col-auto">
                             <div className="entry-image">
-                              <a href={`/berita/show/${item.id}`}>
+                              <Link href={`${langPrefix}/berita/show/${item.id}`}>
                                 <Image
                                   src={item.cover}
                                   alt={item.judul}
                                   width={400}
                                   height={200}
                                 />
-                              </a>
+                              </Link>
                             </div>
                           </div>
                           <div className="col ps-3">
                             <div className="entry-title">
                               <h4>
-                                <a href={`berita/show/${item.id}`}>
+                                <Link href={`${langPrefix}/berita/show/${item.id}`}>
                                   {item.judul}
-                                </a>
+                                </Link>
                               </h4>
                             </div>
                             <div className="entry-meta">
@@ -325,7 +326,7 @@ export default function BeritaPage() {
                       <div className="posts-md">
                         <div className="entry">
                           <div className="entry-image">
-                            <a href={`/berita/show/${item.id}`}>
+                            <Link href={`${langPrefix}/berita/show/${item.id}`}>
                               <Image
                                 src={item.cover}
                                 alt={item.judul}
@@ -333,21 +334,21 @@ export default function BeritaPage() {
                                 height={200}
                                 style={{ width: "416px", height: "233px" }}
                               />
-                            </a>
+                            </Link>
                             <div className="entry-categories">
-                              <a
-                                href={`/berita/show/${item.id}`}
+                              <Link
+                                href={`${langPrefix}/berita/show/${item.id}`}
                                 className="bg-lifestyle"
                               >
                                 {item.kategori?.nama || "Uncategorized"}
-                              </a>
+                              </Link>
                             </div>
                           </div>
                           <div className="entry-title title-sm nott">
                             <h3 className="mb-2">
-                              <a href={`/berita/show/${item.id}`}>
+                              <Link href={`${langPrefix}/berita/show/${item.id}`}>
                                 {item.judul}
-                              </a>
+                              </Link>
                             </h3>
                           </div>
                           <div className="entry-meta">
@@ -374,22 +375,22 @@ export default function BeritaPage() {
                       <div className="grid-inner row align-items-center no-gutter">
                         <div className="col-auto">
                           <div className="entry-image">
-                            <a href={`/berita/show/${item.id}`}>
+                            <Link href={`${langPrefix}/berita/show/${item.id}`}>
                               <Image
                                 src={item.cover}
                                 alt={item.judul}
                                 width={400}
                                 height={200}
                               />
-                            </a>
+                            </Link>
                           </div>
                         </div>
                         <div className="col ps-3">
                           <div className="entry-title">
                             <h4 className="fw-medium">
-                              <a href={`/berita/show/${item.id}`}>
+                              <Link href={`${langPrefix}/berita/show/${item.id}`}>
                                 {item.judul}
-                              </a>
+                              </Link>
                             </h4>
                           </div>
                           <div className="entry-meta">
@@ -428,7 +429,7 @@ export default function BeritaPage() {
                     <div className="entry row mb-5">
                       <div className="col-md-6">
                         <div className="entry-image">
-                          <Link href={`/berita/show/${item.id}`}>
+                          <Link href={`${langPrefix}/berita/show/${item.id}`}>
                             <Image
                               src={item.cover}
                               alt={item.judul}
@@ -442,7 +443,7 @@ export default function BeritaPage() {
                       <div className="col-md-6 mt-3 mt-md-0">
                         <div className="entry-title title-sm nott">
                           <h3>
-                            <Link href={`/berita/show/${item.id}`}>
+                            <Link href={`${langPrefix}/berita/show/${item.id}`}>
                               {item.judul}
                             </Link>
                           </h3>
@@ -487,12 +488,12 @@ export default function BeritaPage() {
                       key={item.id_kategori}
                       className="d-flex align-items-center"
                     >
-                      <a
-                        href={`/berita/show/${item.id_kategori}`}
+                      <Link
+                        href={`${langPrefix}/berita/show/${item.id_kategori}`}
                         className="flex-fill"
                       >
                         {item.nama}
-                      </a>
+                      </Link>
                       <span className="badge text-light bg-sports">10</span>
                     </li>
                   ))}
@@ -509,31 +510,31 @@ export default function BeritaPage() {
                       <div className="grid-inner row align-items-center g-0">
                         <div className="col-auto">
                           <div className="entry-image">
-                            <a href={`/berita/show/${item.id}`}>
+                            <Link href={`${langPrefix}/berita/show/${item.id}`}>
                               <Image
                                 src={item.cover}
                                 alt={item.judul}
                                 width={400}
                                 height={200}
                               />
-                            </a>
+                            </Link>
                           </div>
                         </div>
                         <div className="col ps-3">
                           <div className="entry-title">
                             <h4 className="fw-semibold">
-                              <a href={`/berita/show/${item.id}`}>
+                              <Link href={`${langPrefix}/berita/show/${item.id}`}>
                                 {item.judul}
-                              </a>
+                              </Link>
                             </h4>
                           </div>
                           <div className="entry-meta">
                             <ul>
                               <li>
                                 <i className="icon-calendar3"></i>
-                                <a href={`/berita/show/${item.id}`}>
+                                <Link href={`${langPrefix}/berita/show/${item.id}`}>
                                   {formatDate(item.waktu, lang)}
-                                </a>
+                                </Link>
                               </li>
                             </ul>
                           </div>

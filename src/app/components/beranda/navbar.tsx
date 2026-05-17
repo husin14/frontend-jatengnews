@@ -26,11 +26,13 @@ export default function Navbar({
   const dictionary =
     propDictionary || (activeLang === "en" ? enDictionary : idDictionary);
 
+  const langPrefix = activeLang === "id" ? "" : `/${activeLang}`;
+
   const handleLanguageChange = (newLang: "id" | "en") => {
     const newPathname = pathname.startsWith(`/${activeLang}`)
-      ? pathname.replace(`/${activeLang}`, `/${newLang}`)
-      : `/${newLang}${pathname}`;
-    router.push(newPathname);
+      ? pathname.replace(`/${activeLang}`, newLang === "id" ? "" : `/${newLang}`)
+      : newLang === "id" ? pathname : `/${newLang}${pathname}`;
+    router.push(newPathname || "/");
   };
 
   return (
@@ -46,7 +48,7 @@ export default function Navbar({
               <a href="/" className="standard-logo" data-dark-logo="/images/tvkuwhite2x.png"><img src="/images/tvkublue2x.png" alt="TVKU Logo"></img></a>
               <a href="/" className="retina-logo" data-dark-logo="/images/tvkuwhite2x.png"><img src="/images/tvkublue2x.png" alt="TVKU Logo"></img></a>
               {/* <a
-                href={`/${activeLang}`}
+                href={`${langPrefix}/`}
                 className="standard-logo"
                 data-dark-logo={TvkuWhite}
               >
@@ -58,7 +60,7 @@ export default function Navbar({
                 />
               </a>
               <a
-                href={`/${activeLang}`}
+                href={`${langPrefix}/`}
                 className="retina-logo"
                 data-dark-logo={TvkuWhite}
               >
@@ -82,24 +84,24 @@ export default function Navbar({
             <nav className="primary-menu">
               <ul className="menu-container">
                 <li className="menu-item">
-                  <Link className="menu-link" href={`/${activeLang}`}>
+                  <Link className="menu-link" href={`${langPrefix}/`}>
                     <div>{dictionary.navbar.home}</div>
                   </Link>
                 </li>
                 <li className="menu-item">
-                  <a className="menu-link" href={`/${activeLang}/berita`}>
+                  <a className="menu-link" href={`${langPrefix}/berita`}>
                     <div>{dictionary.navbar.news}</div>
                   </a>
                 </li>
                 <li className="menu-item">
-                  <Link className="menu-link" href={`/${activeLang}/program`}>
+                  <Link className="menu-link" href={`${langPrefix}/program`}>
                     <div>Program</div>
                   </Link>
                 </li>
                 <li className="menu-item">
                   <Link
                     className="menu-link"
-                    href={`/${activeLang}/seputarudinus`}
+                    href={`${langPrefix}/seputarudinus`}
                   >
                     <div>{dictionary.navbar.seputar_udinus} </div>
                   </Link>
@@ -107,7 +109,7 @@ export default function Navbar({
                 <li className="menu-item">
                   <Link
                     className="menu-link"
-                    href={`/${activeLang}/livestream`}
+                    href={`${langPrefix}/livestream`}
                   >
                     <div>Live Streaming</div>
                   </Link>
@@ -158,7 +160,7 @@ export default function Navbar({
                     <li className="menu-item">
                       <Link
                         className="menu-link"
-                        href={`/${activeLang}/contact`}
+                        href={`${langPrefix}/contact`}
                       >
                         <div>Contact</div>
                       </Link>
