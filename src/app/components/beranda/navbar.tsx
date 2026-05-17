@@ -112,7 +112,7 @@ export default function Navbar({
                     <div>Live Streaming</div>
                   </Link>
                 </li>
-                <li className="menu-item">
+                {/* <li className="menu-item">
                   <div className="menu-link" style={{ cursor: "pointer" }}>
                     <div>
                       {dictionary.navbar.language}
@@ -145,7 +145,7 @@ export default function Navbar({
                       </Link>
                     </li>
                   </ul>
-                </li>
+                </li> */}
                 <li className="menu-item">
                   <Link className="menu-link" href="#lainnya">
                     <div>

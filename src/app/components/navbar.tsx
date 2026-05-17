@@ -250,7 +250,8 @@ const Navbar = ({
                     </div>
                   </div>
                 </li>
-                <li className="menu-item">
+
+                {/* <li className="menu-item">
                   <div className="menu-link" style={{ cursor: "pointer" }}>
                     <div>
                       {dictionary.navbar.language}
@@ -283,7 +284,8 @@ const Navbar = ({
                       </a>
                     </li>
                   </ul>
-                </li>
+                </li> */}
+
               </ul>
             </nav>
             {/* #primary-menu end */}
