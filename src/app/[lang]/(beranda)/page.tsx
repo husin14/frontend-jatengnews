@@ -105,20 +105,26 @@ export default async function Home({
 
   const jam = now.getHours() + now.getMinutes() / 60;
 
+  const timeToFloat = (timeStr: string) => {
+    if (!timeStr) return 0;
+    const [hours, minutes] = timeStr.split(":").map(Number);
+    return hours + (minutes || 0) / 60;
+  };
+
   let onair = null;
   if (jadwalTayang?.data) {
     const currentProgram = jadwalTayang.data.find((program: jadwalAcara) => {
-      const jamAwal = parseFloat(program.jam_awal);
-      const jamAkhir = parseFloat(program.jam_akhir);
+      const jamAwal = timeToFloat(program.jam_awal);
+      const jamAkhir = timeToFloat(program.jam_akhir);
       console.log(
         `Program ${
           program.acara
         }: ${jamAwal} - ${jamAkhir}, current time: ${jam}, match: ${
-          jam >= jamAwal && jam <= jamAkhir
+          jam >= jamAwal && jam < jamAkhir
         }`,
       );
 
-      return jam >= jamAwal && jam <= jamAkhir;
+      return jam >= jamAwal && jam < jamAkhir;
     });
 
     if (currentProgram) {

@@ -122,9 +122,14 @@ export const BeritaTerbaruSection: React.FC<BeritaTerbaruSectionProps> = ({
                   >
                     <ol>
                       {jadwalAcara.map((j, idx) => {
-                        const isNow =
-                          jam >= parseFloat(j.jam_awal) &&
-                          jam <= parseFloat(j.jam_akhir);
+                        const timeToFloat = (timeStr: string) => {
+                          if (!timeStr) return 0;
+                          const [hours, minutes] = timeStr.split(":").map(Number);
+                          return hours + (minutes || 0) / 60;
+                        };
+                        const jamAwal = timeToFloat(j.jam_awal);
+                        const jamAkhir = timeToFloat(j.jam_akhir);
+                        const isNow = jam >= jamAwal && jam < jamAkhir;
                         return (
                           <li key={idx}>
                             {j.acara}
