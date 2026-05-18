@@ -15,6 +15,9 @@ export default async function Home({
 }) {
   const { lang } = await params;
 
+  const now = new Date();
+  const idHari = now.getDay();
+
   const sliderUrl =
     lang === "en"
       ? `/home/slider-list-translations`
@@ -49,7 +52,7 @@ export default async function Home({
     ] = await Promise.all([
       apiClient.get(sliderUrl),
       apiClient.get(beritaUrl),
-      apiClient.get(`/jadwal-acara`),
+      apiClient.get(`/jadwal-acara-public?id_hari=${idHari}`),
       apiClient.get(`/our-programs-static`),
       apiClient.get(`/home/who-we-are`),
       apiClient.get(ourExpertise1Url),
@@ -79,7 +82,6 @@ export default async function Home({
       [],
   };
 
-  const now = new Date();
   const days = ["Minggu", "Senin", "Selasa", "Rabu", "Kamis", "Jumat", "Sabtu"];
   const months = [
     "Januari",
