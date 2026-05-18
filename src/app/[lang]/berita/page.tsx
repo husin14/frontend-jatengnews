@@ -1,7 +1,4 @@
-"use client";
-
-import React, { useEffect, useState } from "react";
-import { useParams } from "next/navigation";
+import React from "react";
 import Link from "next/link";
 import Image from "next/image";
 import apiClient from "@/app/utils/apiClient";
@@ -10,93 +7,66 @@ import { berita, kategori } from "@/app/types";
 import Sidebar from "@/app/components/sideBar";
 import Carousel from "@/app/components/carousel";
 import { formatDate } from "@/app/utils/dateFormatter";
+import { getDictionary, Locale } from "@/app/dictionaries";
 
-export default function BeritaPage() {
-  const params = useParams();
-  const lang = params.lang as "id" | "en";
+export default async function BeritaPage({
+  params,
+}: {
+  params: Promise<{ lang: string }>;
+}) {
+  const { lang: langParam } = await params;
+  const lang = (langParam === "id" || langParam === "en" ? langParam : "id") as Locale;
 
-  const [kategori, setKategori] = useState<kategori[]>([]);
-  const [beritaTerbaru, setBeritaTerbaru] = useState<berita[]>([]);
-  const [featureData, setFeatureData] = useState<berita[]>([]);
-  const [dictionary, setDictionary] = useState<any>(null); //eslint-disable-line 
-  const [loading, setLoading] = useState(true);
-  const [error, setError] = useState<string | null>(null);
+  let kategoriData: kategori[] = [];
+  let beritaTerbaru: berita[] = [];
+  let featureData: berita[] = [];
+  let dictionary: any = null;
+  let error: string | null = null;
 
-  useEffect(() => {
-    if (!lang) return;
+  try {
+    const beritaUrl =
+      lang === "en" ? `/berita-translations?language_code=en` : `/berita`;
 
-    const fetchData = async () => {
-      setLoading(true);
-      setError(null);
+    const featureUrl =
+      lang === "en"
+        ? `/berita-translations?language_code=en&id_kategori=19`
+        : `/berita?id_kategori=19`;
 
-      try {
-        const beritaUrl =
-          lang === "en"
-            ? `/berita-translations?language_code=en`
-            : `/berita`;
+    const [beritaResponse, featureResponse, kategoriResponse, dictionaryResponse] =
+      await Promise.all([
+        apiClient.get(beritaUrl),
+        apiClient.get(featureUrl),
+        apiClient.get(`/kategori`),
+        getDictionary(lang),
+      ]);
 
-        const featureUrl =
-          lang === "en"
-            ? `/berita-translations?language_code=en&id_kategori=19`
-            : `/berita?id_kategori=19`;
+    beritaTerbaru = beritaResponse.data.data.map((item: berita) => ({
+      ...item,
+      deskripsi: convert(item.deskripsi, {
+        selectors: [{ selector: "img", format: "skip" }],
+      }),
+    }));
 
-        const dictionaryUrl = `/dictionaries/${lang}.json`;
+    featureData = featureResponse.data.data.map((item: berita) => ({
+      ...item,
+      deskripsi: convert(item.deskripsi, {
+        selectors: [{ selector: "img", format: "skip" }],
+      }),
+    }));
 
-        const [beritaResponse, featureResponse, dictionaryResponse] =
-          await Promise.all([
-            apiClient.get(beritaUrl),
-            apiClient.get(featureUrl),
-            fetch(dictionaryUrl).then(res => res.json()),
-          ]);
-
-        const processedBerita = beritaResponse.data.data.map((item: berita) => ({
-          ...item,
-          deskripsi: convert(item.deskripsi, {
-            selectors: [{ selector: "img", format: "skip" }],
-          }),
-        }));
-        setBeritaTerbaru(processedBerita);
-
-        const processedFeature = featureResponse.data.data.map((item: berita) => ({
-          ...item,
-          deskripsi: convert(item.deskripsi, {
-            selectors: [{ selector: "img", format: "skip" }],
-          }),
-        }));
-        setFeatureData(processedFeature);
-
-        setDictionary(dictionaryResponse);
-      } catch (err) {
-        console.error("Failed to fetch data:", err);
-        setError("Gagal memuat data. Silakan coba lagi nanti.");
-      } finally {
-        setLoading(false);
-      }
-    };
-
-    fetchData();
-  }, [lang]);
-
-  useEffect(() => {
-    const getKategori = async () => {
-      try {
-        const res = await apiClient.get(`/kategori`);
-        setKategori(res.data.data);
-        setError(null);
-      } catch (error) {
-        console.error("Error fetching category:", error);
-        setError("Failed to load category");
-      }
-    };
-    getKategori();
-  }, []);
-
-  if (loading || !dictionary) {
-    return <div className="text-center p-5">Loading...</div>;
+    kategoriData = kategoriResponse.data.data;
+    dictionary = dictionaryResponse;
+  } catch (err) {
+    console.error("Failed to fetch data:", err);
+    error = "Gagal memuat data. Silakan coba lagi nanti.";
   }
 
   if (error) {
     return <div className="text-center p-5 text-red-500">{error}</div>;
+  }
+
+  if (!dictionary) {
+    return <div className="text-center p-5">Loading...</div>;
   }
 
   if (!beritaTerbaru || beritaTerbaru.length === 0) {
@@ -116,13 +86,12 @@ export default function BeritaPage() {
         <div className="col-lg-8">
           <div className="posts-md">
             {beritaTerbaru.length > 0 && (
-              // console.log("beritaTerbaru[0]: ", beritaTerbaru[0].waktu),
               <div className="entry">
                 <div className="entry-image">
                   <Link
                     href={`${langPrefix}/berita/show/${
-                      beritaTerbaru[0].id || beritaTerbaru[0].id
-                      }`}
+                      beritaTerbaru[0].id
+                    }`}
                   >
                     <Image
                       src={
@@ -140,8 +109,8 @@ export default function BeritaPage() {
                   <h3 style={{ marginBottom: '0px' }}>
                     <Link
                       href={`${langPrefix}/berita/show/${
-                        beritaTerbaru[0].id || beritaTerbaru[0].id
-                        }`}
+                        beritaTerbaru[0].id
+                      }`}
                     >
                       {beritaTerbaru[0].judul}
                     </Link>
@@ -152,11 +121,6 @@ export default function BeritaPage() {
                     <li>
                       <i className="icon-calendar3" /> {formatDate(beritaTerbaru[0].waktu, lang)}
                     </li>
-                    {/* <li>
-                      <a href="blog-single.html#comments">
-                        <i className="icon-comments" /> 15
-                      </a>
-                    </li> */}
                   </ul>
                 </div>
 
@@ -176,7 +140,7 @@ export default function BeritaPage() {
                 <div className="grid-inner row g-0">
                   <div className="col-auto">
                     <div className="entry-image">
-                      <Link href={`${langPrefix}/berita/show/${item.id || item.id}`}>
+                      <Link href={`${langPrefix}/berita/show/${item.id}`}>
                         <Image
                           src={
                             item.cover ||
@@ -193,7 +157,7 @@ export default function BeritaPage() {
                     <div className="entry-title">
                       <h4>
                         <Link
-                          href={`${langPrefix}/berita/show/${item.id || item.id}`}
+                          href={`${langPrefix}/berita/show/${item.id}`}
                         >
                           {item.judul}
                         </Link>
@@ -269,10 +233,10 @@ export default function BeritaPage() {
                       </div>
                       <div className="entry-meta">
                         <ul>
-                              <li>
-                                <i className="icon-calendar3"></i>
-                                {formatDate(data.waktu, lang)}
-                              </li>
+                          <li>
+                            <i className="icon-calendar3"></i>
+                            {formatDate(data.waktu, lang)}
+                          </li>
                         </ul>
                       </div>
                       <div className="entry-content clearfix line-clamp-1">
@@ -417,7 +381,6 @@ export default function BeritaPage() {
 
       <div className="container clearfix">
         <div className="row clearfix">
-          {/* */}
           <div className="col-lg-8">
             <div className="mt-0">
               <h4 className="mb-2 ls1 text-uppercase fw-bold">Feature</h4>
@@ -464,7 +427,6 @@ export default function BeritaPage() {
                           </ul>
                         </div>
                         <div className="entry-content">
-                          {/* Use dangerouslySetInnerHTML if you still want to render some parsed HTML, or just text */}
                           <p className="mb-0 line-clamp-3">{item.deskripsi}</p>
                         </div>
                       </div>
@@ -474,7 +436,6 @@ export default function BeritaPage() {
               </div>
             </div>
           </div>
-          {/* 2 sidebar */}
           <div className="col-lg-4 sticky-sidebar-wrap kategoriberita">
             <div className="sticky-sidebar">
               <div className="widget widget_links clearfix">
@@ -483,7 +444,7 @@ export default function BeritaPage() {
                 </h4>
                 <div className="line line-xs line-sports"></div>
                 <ul>
-                  {kategori.map((item) => (
+                  {kategoriData.map((item) => (
                     <li
                       key={item.id_kategori}
                       className="d-flex align-items-center"
