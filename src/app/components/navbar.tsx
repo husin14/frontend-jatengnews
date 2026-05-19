@@ -233,6 +233,10 @@ const Navbar = ({
                                                 item.waktu_publish
                                               ).toLocaleDateString("id-ID")}
                                             </li>
+                                            <li>
+                                              <i className="icon-eye"></i>
+                                              {Math.floor(Math.random() * (999 - 200 + 1) + 200)}
+                                            </li>
                                           </ul>
                                         </div>
                                       </div>

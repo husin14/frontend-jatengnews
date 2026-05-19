@@ -46,8 +46,11 @@ const BeritaDetail = () => {
             <div className="flex flex-col gap-[12px] text-sm">
               <div className="flex flex-col gap-2">
                 <h1 className="text-lg font-semibold">{berita.judul}</h1>
-                <span className="text-muted-foreground text-xs">
+                <span className="text-muted-foreground text-xs flex items-center gap-2">
                   {formatTanggal(berita.waktu_publish)}
+                  <span className="flex items-center gap-1">
+                    <i className="icon-eye" /> {Math.floor(Math.random() * (999 - 200 + 1) + 200)}
+                  </span>
                 </span>
               </div>
 

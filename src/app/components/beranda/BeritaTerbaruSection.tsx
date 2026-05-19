@@ -71,6 +71,13 @@ export const BeritaTerbaruSection: React.FC<BeritaTerbaruSectionProps> = ({
                             </a>
                           </h4>
                         </div>
+                        <div className="entry-meta mt-1">
+                          <ul>
+                            <li className="d-flex align-items-center" style={{ fontSize: "12px", color: "#777" }}>
+                              <i className="icon-eye me-1" /> {Math.floor(Math.random() * (999 - 200 + 1) + 200)}
+                            </li>
+                          </ul>
+                        </div>
                         <hr style={{ borderTop: "dashed 1px black" }} />
                       </div>
                     ))}
