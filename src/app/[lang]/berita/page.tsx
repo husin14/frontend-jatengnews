@@ -89,9 +89,8 @@ export default async function BeritaPage({
               <div className="entry">
                 <div className="entry-image">
                   <Link
-                    href={`${langPrefix}/berita/show/${
-                      beritaTerbaru[0].id
-                    }`}
+                    href={`${langPrefix}/berita/show/${beritaTerbaru[0].id
+                      }`}
                   >
                     <Image
                       src={
@@ -108,9 +107,8 @@ export default async function BeritaPage({
                 <div className="entry-title title-sm">
                   <h3 style={{ marginBottom: '0px' }}>
                     <Link
-                      href={`${langPrefix}/berita/show/${
-                        beritaTerbaru[0].id
-                      }`}
+                      href={`${langPrefix}/berita/show/${beritaTerbaru[0].id
+                        }`}
                     >
                       {beritaTerbaru[0].judul}
                     </Link>
@@ -165,6 +163,17 @@ export default async function BeritaPage({
                           {item.judul}
                         </Link>
                       </h4>
+                    </div>
+
+                    <div className="entry-meta">
+                      <ul>
+                        <li>
+                          <i className="icon-calendar3" /> {formatDate(item.waktu, lang)}
+                        </li>
+                        <li>
+                          <i className="icon-eye" /> {Math.floor(Math.random() * (999 - 200 + 1) + 200)}
+                        </li>
+                      </ul>
                     </div>
                   </div>
                 </div>
