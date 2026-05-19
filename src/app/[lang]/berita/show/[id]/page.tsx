@@ -123,6 +123,8 @@ export default function BeritaDetailPage() {
                 month: "long",
                 day: "numeric",
               })}
+              <i className="icon-eye ms-3 me-2"></i>
+              {Math.floor(Math.random() * (999 - 200 + 1) + 200)}
             </div>
           </div>
 

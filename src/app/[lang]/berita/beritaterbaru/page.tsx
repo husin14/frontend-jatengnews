@@ -183,6 +183,9 @@ export default function BeritaTerbaruPage() {
                                 }
                               )}
                             </li>
+                            <li>
+                              <i className="icon-eye" /> {Math.floor(Math.random() * (999 - 200 + 1) + 200)}
+                            </li>
                           </ul>
                         </div>
                         <div className="entry-content">
