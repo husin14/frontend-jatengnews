@@ -2,6 +2,8 @@ import React from "react";
 import { berita, jadwalAcara } from "../../types";
 import Image from "next/image";
 import Link from "next/link";
+import { formatDate } from "@/app/utils/dateFormatter";
+import { Locale } from "@/app/dictionaries";
 
 type BeritaTerbaruSectionProps = {
   Berita: berita[];
@@ -10,7 +12,7 @@ type BeritaTerbaruSectionProps = {
   tanggal: string;
   jam: number;
   onair: { acara: string } | null;
-  activelang: string;
+  activelang: Locale;
 };
 
 export const BeritaTerbaruSection: React.FC<BeritaTerbaruSectionProps> = ({
@@ -20,9 +22,9 @@ export const BeritaTerbaruSection: React.FC<BeritaTerbaruSectionProps> = ({
   tanggal,
   jam,
   onair,
-  activelang,
+  activelang: lang,
 }) => {
-  const langPrefix = activelang === "id" ? "" : `/${activelang}`;
+  const langPrefix = lang === "id" ? "" : `/${lang}`;
   return (
     <div className="container">
       <div className="row rowjadwalsiar">
@@ -73,7 +75,10 @@ export const BeritaTerbaruSection: React.FC<BeritaTerbaruSectionProps> = ({
                         </div>
                         <div className="entry-meta mt-1">
                           <ul>
-                            <li className="d-flex align-items-center" style={{ fontSize: "12px", color: "#777" }}>
+                            <li>
+                              <i className="icon-calendar3" /> {formatDate(item.waktu, lang)}
+                            </li>
+                            <li>
                               <i className="icon-eye me-1" /> {Math.floor(Math.random() * (999 - 200 + 1) + 200)}
                             </li>
                           </ul>
