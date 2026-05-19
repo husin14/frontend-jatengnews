@@ -121,6 +121,9 @@ export default async function BeritaPage({
                     <li>
                       <i className="icon-calendar3" /> {formatDate(beritaTerbaru[0].waktu, lang)}
                     </li>
+                    <li>
+                      <i className="icon-eye" /> {Math.floor(Math.random() * (999 - 200 + 1) + 200)}
+                    </li>
                   </ul>
                 </div>
 
@@ -237,6 +240,10 @@ export default async function BeritaPage({
                             <i className="icon-calendar3"></i>
                             {formatDate(data.waktu, lang)}
                           </li>
+                          <li>
+                            <i className="icon-eye"></i>
+                            {Math.floor(Math.random() * (999 - 200 + 1) + 200)}
+                          </li>
                         </ul>
                       </div>
                       <div className="entry-content clearfix line-clamp-1">
@@ -275,6 +282,10 @@ export default async function BeritaPage({
                                 <li>
                                   <i className="icon-calendar3"></i>
                                   {formatDate(item.waktu, lang)}
+                                </li>
+                                <li>
+                                  <i className="icon-eye"></i>
+                                  {Math.floor(Math.random() * (999 - 200 + 1) + 200)}
                                 </li>
                               </ul>
                             </div>
@@ -321,6 +332,10 @@ export default async function BeritaPage({
                                 <i className="icon-calendar3"></i>
                                 {formatDate(item.waktu, lang)}
                               </li>
+                              <li>
+                                <i className="icon-eye"></i>
+                                {Math.floor(Math.random() * (999 - 200 + 1) + 200)}
+                              </li>
                             </ul>
                           </div>
                           <div className="entry-content clearfix">
@@ -362,6 +377,10 @@ export default async function BeritaPage({
                               <li>
                                 <i className="icon-calendar3"></i>
                                 {formatDate(item.waktu, lang)}
+                              </li>
+                              <li>
+                                <i className="icon-eye"></i>
+                                {Math.floor(Math.random() * (999 - 200 + 1) + 200)}
                               </li>
                             </ul>
                           </div>
@@ -423,6 +442,9 @@ export default async function BeritaPage({
                                   day: "numeric",
                                 }
                               )}
+                            </li>
+                            <li>
+                              <i className="icon-eye" /> {Math.floor(Math.random() * (999 - 200 + 1) + 200)}
                             </li>
                           </ul>
                         </div>
@@ -496,6 +518,10 @@ export default async function BeritaPage({
                                 <Link href={`${langPrefix}/berita/show/${item.id}`}>
                                   {formatDate(item.waktu, lang)}
                                 </Link>
+                              </li>
+                              <li>
+                                <i className="icon-eye"></i>
+                                {Math.floor(Math.random() * (999 - 200 + 1) + 200)}
                               </li>
                             </ul>
                           </div>
