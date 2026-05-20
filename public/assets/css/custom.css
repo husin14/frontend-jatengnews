@@ -293,7 +293,10 @@
   top: 50%;
 }
 
-.menu-item:hover > .menu-link, .menu-item.current > .menu-link {
+.menu-item:hover > .menu-link, 
+.menu-item.current > .menu-link,
+.dark .menu-item:hover > .menu-link,
+.dark .menu-item.current > .menu-link {
     color: #1B91CE;
 }
 
