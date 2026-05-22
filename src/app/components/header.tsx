@@ -1,10 +1,11 @@
 import React from "react";
 import Image from "next/image";
 import Link from "next/link";
+import { formatDate } from "@/app/utils/dateFormatter";
 
 const Header = () => {
   const now = new Date();
-  const fullDate = now.toDateString();
+  const fullDate = formatDate(now.toISOString(), "id");
 
   return (
     <div className="container">
@@ -57,7 +58,10 @@ const Header = () => {
         <div className="col-12 col-sm-6 col-md-4 order-md-3 mb-4 mb-md-0">
           <ul className="nav align-items-center justify-content-center justify-content-sm-end">
             <li className="nav-item">
-              <div className="text-uppercase badge bg-dark rounded-pill py-2 px-3 fw-medium">
+              <div
+                className="text-uppercase badge bg-dark rounded-pill py-2 px-3 fw-medium"
+                suppressHydrationWarning
+              >
                 {fullDate}
               </div>
             </li>
