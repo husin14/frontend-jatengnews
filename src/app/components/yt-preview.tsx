@@ -7,7 +7,21 @@ interface YtPreviewProps {
 const YtPreview: React.FC<YtPreviewProps> = ({ link }) => {
     if (!link) return null;
 
-    const embedUrl = link.replace("watch?v=", "embed/");
+    // Helper function to extract YouTube ID from various formats
+    const getYouTubeId = (url: string) => {
+        const regExp = /^.*(youtu.be\/|v\/|u\/\w\/|embed\/|watch\?v=|\&v=)([^#\&\?]*).*/;
+        const match = url.match(regExp);
+        return (match && match[2].length === 11) ? match[2] : null;
+    };
+
+    const videoId = getYouTubeId(link);
+
+    if (!videoId) {
+        // Fallback or just return null if not a valid YT link
+        return null;
+    }
+
+    const embedUrl = `https://www.youtube.com/embed/${videoId}`;
 
     return (
         <div className="mb-3" style={{ marginTop: "8px" }}>
