@@ -127,7 +127,7 @@ const Navbar = ({
             <nav className="primary-menu style-6">
               <ul className="menu-container">
                 <li className="menu-item menu-color-home">
-                  <a className="menu-link" href={`${langPrefix}/`}>
+                  <a className="menu-link" href={`${langPrefix}/berita`}>
                     <div>Beranda</div>
                   </a>
                 </li>
