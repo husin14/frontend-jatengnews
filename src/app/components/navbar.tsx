@@ -43,23 +43,6 @@ const Navbar = ({
     },
   };
 
-  useEffect(() => {
-    const getKategori = async () => {
-      try {
-        const url =
-          activeLang === "en"
-            ? `/kategori-translations-all?language_code=en`
-            : `/kategori`;
-        const resKategori = await apiClient.get(url);
-        setCategories(resKategori.data.data);
-      } catch (error) {
-        console.error("Error fetching categories:", error);
-      }
-    };
-
-    getKategori();
-  }, [activeLang]);
-
   const fetchNewsForMegaMenu = useCallback(
     async (categoryId: number) => {
       setLoadingMegaMenuNews(true);
@@ -79,6 +62,35 @@ const Navbar = ({
     },
     [activeLang]
   );
+
+  useEffect(() => {
+    const getKategori = async () => {
+      try {
+        const url =
+          activeLang === "en"
+            ? `/kategori-translations-all?language_code=en`
+            : `/kategori`;
+        const resKategori = await apiClient.get(url);
+        const cats = resKategori.data.data;
+        setCategories(cats);
+        
+        // Find the "Pendidikan" category and pre-fetch its news
+        const pendidikanCat = cats.find(
+          (cat: any) =>
+            cat.nama.toLowerCase() === "pendidikan" ||
+            cat.id_kategori === 27
+        );
+        if (pendidikanCat) {
+          setActiveMegaMenuCategory(pendidikanCat.id_kategori);
+          fetchNewsForMegaMenu(pendidikanCat.id_kategori);
+        }
+      } catch (error) {
+        console.error("Error fetching categories:", error);
+      }
+    };
+
+    getKategori();
+  }, [activeLang, fetchNewsForMegaMenu]);
 
   const handleMegaMenuCategoryHover = (categoryId: number) => {
     setActiveMegaMenuCategory(categoryId);
@@ -141,7 +153,20 @@ const Navbar = ({
                     </Link>
                   </li>
                 ))}
-                <li className="menu-item menu-color-home mega-menu">
+                <li
+                  className="menu-item menu-color-home mega-menu"
+                  onMouseEnter={() => {
+                    const pendidikanCat = categories.find(
+                      (cat) =>
+                        cat.nama.toLowerCase() === "pendidikan" ||
+                        cat.id_kategori === 27
+                    );
+                    if (pendidikanCat) {
+                      setActiveMegaMenuCategory(pendidikanCat.id_kategori);
+                      fetchNewsForMegaMenu(pendidikanCat.id_kategori);
+                    }
+                  }}
+                >
                   <a className="menu-link" href="#">
                     <div className="dropdown-toggle">Lainnya</div>
                   </a>
@@ -149,13 +174,18 @@ const Navbar = ({
                     <div className="container">
                       <div className="row">
                         {/* Mega Menu - Category Links */}
-                        <ul className="sub-menu-container mega-menu-column col-lg-3">
+                        <ul className="sub-menu-container mega-menu-column col-lg-4">
                           <li className="menu-item">
                             <div
-                              className="nav nav-sm tab-hover flex-column nav-pills"
+                              className="nav nav-sm tab-hover nav-pills"
                               id="v-pills-tab"
                               role="tablist"
                               aria-orientation="vertical"
+                              style={{
+                                display: "grid",
+                                gridTemplateColumns: "repeat(2, 1fr)",
+                                gap: "5px 10px",
+                              }}
                             >
                               {categories.slice(5, 16).map((item) => (
                                 <Link
@@ -170,7 +200,6 @@ const Navbar = ({
                                       item.id_kategori
                                     )
                                   }
-                                  onMouseLeave={handleMegaMenuCategoryLeave}
                                   href={`${langPrefix}/berita/${item.id_kategori}`}
                                 >
                                   {item.nama}
@@ -180,7 +209,7 @@ const Navbar = ({
                           </li>
                         </ul>
                         {/* Mega Menu - News Display */}
-                        <ul className="sub-menu-container mega-menu-column col-lg-9">
+                        <ul className="sub-menu-container mega-menu-column col-lg-8">
                           <li className="menu-item">
                             <div
                               className="tab-content"
