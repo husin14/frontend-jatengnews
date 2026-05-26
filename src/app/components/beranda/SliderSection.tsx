@@ -13,9 +13,18 @@ type SliderSectionProps = {
 };
 
 const SliderSection: React.FC<SliderSectionProps> = ({ carousels }) => (
+    <>
+    <style dangerouslySetInnerHTML={{ __html: `
+        @media (max-width: 767.98px) {
+            .slider-16-9-mobile {
+                min-height: 56.25vw !important; /* 16:9 Aspect Ratio (9/16 = 0.5625) */
+                height: 56.25vw !important;
+            }
+        }
+    `}} />
     <section
         id="slider"
-        className="slider-element slider-parallax swiper_wrapper min-vh-60 min-vh-md-100 include-header"
+        className="slider-element slider-parallax swiper_wrapper slider-16-9-mobile min-vh-md-100 include-header"
         data-autoplay="3000"
         data-speed="650"
         data-loop="true"
@@ -60,6 +69,7 @@ const SliderSection: React.FC<SliderSectionProps> = ({ carousels }) => (
             </a>
         </div>
     </section>
+    </>
 );
 
 export default SliderSection;
