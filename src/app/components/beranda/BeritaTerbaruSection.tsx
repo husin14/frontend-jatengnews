@@ -64,7 +64,7 @@ export const BeritaTerbaruSection: React.FC<BeritaTerbaruSectionProps> = ({
               <div className="col-12 col-md-7">
                 <div className="posts-sm row col-mb-30">
                   {Berita &&
-                    Berita.map((item, idx) => (
+                    Berita.slice(0, 4).map((item, idx) => (
                       <div className="entry col-12 entry-siar" key={idx}>
                         <div className="entry-title">
                           <h4>
