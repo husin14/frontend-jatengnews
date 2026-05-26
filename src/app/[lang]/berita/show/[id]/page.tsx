@@ -18,6 +18,9 @@ export default function BeritaDetailPage() {
   const lang = (params.lang as "id" | "en") || "id";
 
   const [berita, setBerita] = useState<berita | null>(null);
+  const [relatedBerita, setRelatedBerita] = useState<berita[]>([]);
+  const [recentBerita, setRecentBerita] = useState<berita[]>([]);
+  const [popularBerita, setPopularBerita] = useState<berita[]>([]);
   const [dictionary, setDictionary] = useState<any>(null); //eslint-disable-line
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState<string | null>(null);
@@ -77,6 +80,69 @@ export default function BeritaDetailPage() {
     fetchData();
   }, [id, lang]);
 
+  useEffect(() => {
+    if (!berita || !lang) return;
+
+    const fetchRelated = async () => {
+      try {
+        const idKategori = berita.kategori?.id_kategori;
+        if (!idKategori) return;
+
+        const relatedUrl =
+          lang === "en"
+            ? `/berita-translations?language_code=en&id_kategori=${idKategori}&current_page=1`
+            : `/berita?id_kategori=${idKategori}&current_page=1`;
+
+        const response = await apiClient.get(relatedUrl);
+        const items = response.data?.data || [];
+
+        // Saring berita saat ini agar tidak muncul di related posts
+        const filtered = items
+          .filter((item: berita) => item.id !== berita.id)
+          .slice(0, 4);
+
+        setRelatedBerita(filtered);
+      } catch (err) {
+        console.error("Gagal mengambil related posts:", err);
+      }
+    };
+
+    fetchRelated();
+  }, [berita, lang]);
+
+  useEffect(() => {
+    if (!lang) return;
+
+    const fetchRecentAndPopular = async () => {
+      try {
+        const recentUrl =
+          lang === "en"
+            ? `/berita-translations?language_code=en`
+            : `/berita`;
+
+        const popularUrl =
+          lang === "en"
+            ? `/berita-translations?language_code=en&sort=populer`
+            : `/berita?sort=populer`;
+
+        const [recentRes, popularRes] = await Promise.all([
+          apiClient.get(recentUrl),
+          apiClient.get(popularUrl),
+        ]);
+
+        const recentItems = recentRes.data?.data || [];
+        const popularItems = popularRes.data?.data || [];
+
+        setRecentBerita(recentItems.slice(0, 5));
+        setPopularBerita(popularItems.slice(0, 5));
+      } catch (err) {
+        console.error("Gagal mengambil recent/popular posts:", err);
+      }
+    };
+
+    fetchRecentAndPopular();
+  }, [lang]);
+
   if (loading || !dictionary) {
     return <p className="text-center py-10">{dictionary?.messages?.loading || "Memuat..."}</p>;
   }
@@ -91,7 +157,34 @@ export default function BeritaDetailPage() {
   return (
     <>
       {showIklan && <PopupIklan onClose={handleCloseIklan} />}
-      <YtPreview link={berita.link} />
+      
+      {berita.cover ? (
+        <div className="entry-image mb-3" style={{ marginTop: "8px" }}>
+          <Image
+            src={berita.cover}
+            alt={berita.judul}
+            width={1200}
+            height={675}
+            style={{ width: "100%", height: "auto" }}
+            priority
+          />
+          {berita.kategori && (
+            <div className="entry-categories">
+              <Link href={`${langPrefix}/berita/${berita.kategori.id_kategori}`} className="bg-travel">
+                {berita.kategori.nama}
+              </Link>
+            </div>
+          )}
+        </div>
+      ) : (
+        berita.kategori && (
+          <div className="mb-3 ms-2">
+            <Link href={`${langPrefix}/berita/${berita.kategori.id_kategori}`} className="badge bg-secondary text-white p-2">
+              {berita.kategori.nama}
+            </Link>
+          </div>
+        )
+      )}
 
       <div className="row clearfix" style={{ marginTop: "8px" }}>
         <div className="col-lg-8">
@@ -129,29 +222,12 @@ export default function BeritaDetailPage() {
           </div>
 
           <div className="entry">
-            <div className="entry-image">
-              <Image
-                src={berita.cover}
-                alt={berita.judul}
-                width={800}
-                height={400}
-                style={{ width: "100%", height: "auto" }}
-                priority
-              />
-              {berita.kategori && (
-                <div className="entry-categories">
-                   <Link href={`${langPrefix}/berita/${berita.kategori.id_kategori}`} className="bg-travel">
-                      {berita.kategori.nama}
-                    </Link>
-                </div>
-              )}
-            </div>
-
             <div className="entry-content clearfix mt-4">
               <div
                 dangerouslySetInnerHTML={{ __html: berita.deskripsi }}
                 className="text-dark"
               />
+              <YtPreview link={berita.link} />
             </div>
           </div>
           
@@ -160,9 +236,69 @@ export default function BeritaDetailPage() {
             identifier={id} 
             shortname="tvku" 
           />
+
+          {relatedBerita.length > 0 && (
+            <div className="mt-5">
+              <h4 className="fw-bold">Related Posts:</h4>
+              <div className="related-posts row posts-md col-mb-30">
+                {relatedBerita.map((item) => (
+                  <div key={item.id} className="entry col-12 col-md-6">
+                    <div className="grid-inner row align-items-center gutter-20">
+                      <div className="col-4">
+                        <div className="entry-image mb-0">
+                          <Link href={`${langPrefix}/berita/show/${item.id}`}>
+                            <Image
+                              src={item.cover}
+                              alt={item.judul}
+                              width={150}
+                              height={100}
+                              className="rounded"
+                              style={{ width: "100%", height: "auto" }}
+                            />
+                          </Link>
+                        </div>
+                      </div>
+                      <div className="col-8">
+                        <div className="entry-title title-xs mb-2">
+                          <h3 className="mb-0">
+                            <Link href={`${langPrefix}/berita/show/${item.id}`}>
+                              {item.judul}
+                            </Link>
+                          </h3>
+                        </div>
+                        <div className="entry-meta">
+                          <ul>
+                            <li>
+                              <i className="icon-calendar3"></i>{" "}
+                              {new Date(item.waktu_publish).toLocaleDateString(
+                                lang === "id" ? "id-ID" : "en-US",
+                                {
+                                  year: "numeric",
+                                  month: "long",
+                                  day: "numeric",
+                                }
+                              )}
+                            </li>
+                            <li>
+                              <i className="icon-eye"></i>{" "}
+                              {Math.floor(Math.random() * (999 - 200 + 1) + 200)}
+                            </li>
+                          </ul>
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+                ))}
+              </div>
+            </div>
+          )}
         </div>
 
-        <Sidebar />
+        <Sidebar
+          recentPosts={recentBerita}
+          popularPosts={popularBerita}
+          lang={lang}
+        />
       </div>
     </>
   );
