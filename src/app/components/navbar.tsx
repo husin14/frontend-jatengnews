@@ -64,6 +64,9 @@ const Navbar = ({
   );
 
   useEffect(() => {
+    let idleId: number;
+    let timeoutId: NodeJS.Timeout;
+
     const getKategori = async () => {
       try {
         const url =
@@ -74,15 +77,27 @@ const Navbar = ({
         const cats = resKategori.data.data;
         setCategories(cats);
         
-        // Find the "Pendidikan" category and pre-fetch its news
-        const pendidikanCat = cats.find(
-          (cat: any) =>
-            cat.nama.toLowerCase() === "pendidikan" ||
-            cat.id_kategori === 27
-        );
-        if (pendidikanCat) {
-          setActiveMegaMenuCategory(pendidikanCat.id_kategori);
-          fetchNewsForMegaMenu(pendidikanCat.id_kategori);
+        // Strategy: Background fetch news when browser is idle or after a safety timeout
+        const startBackgroundFetch = () => {
+          const pendidikanCat = cats.find(
+            (cat: any) =>
+              cat.nama.toLowerCase() === "pendidikan" ||
+              cat.id_kategori === 27
+          );
+          if (pendidikanCat) {
+            setActiveMegaMenuCategory(pendidikanCat.id_kategori);
+            fetchNewsForMegaMenu(pendidikanCat.id_kategori);
+          }
+        };
+
+        if (typeof window !== "undefined") {
+          if ("requestIdleCallback" in window) {
+            // Use requestIdleCallback to fetch when browser is not busy
+            idleId = (window as any).requestIdleCallback(startBackgroundFetch, { timeout: 3000 });
+          } else {
+            // Fallback for older browsers (like old Safari)
+            timeoutId = setTimeout(startBackgroundFetch, 2000);
+          }
         }
       } catch (error) {
         console.error("Error fetching categories:", error);
@@ -90,6 +105,13 @@ const Navbar = ({
     };
 
     getKategori();
+
+    return () => {
+      if (idleId && typeof window !== "undefined" && "cancelIdleCallback" in window) {
+        (window as any).cancelIdleCallback(idleId);
+      }
+      if (timeoutId) clearTimeout(timeoutId);
+    };
   }, [activeLang, fetchNewsForMegaMenu]);
 
   const handleMegaMenuCategoryHover = (categoryId: number) => {
