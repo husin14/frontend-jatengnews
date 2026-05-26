@@ -137,7 +137,7 @@ export default async function Home({
       <SliderSection carousels={slider.data} />
       {/* Content Section */}
       <section id="content">
-        <div className="content-wrap">
+        <div className="content-wrap pt-0 pt-md-5">
           <BeritaTerbaruSection
             Berita={beritaTerbaru?.data}
             jadwalAcara={jadwalTayang?.data}

@@ -19,6 +19,7 @@ const SliderSection: React.FC<SliderSectionProps> = ({ carousels }) => (
             .slider-16-9-mobile {
                 min-height: 56.25vw !important; /* 16:9 Aspect Ratio (9/16 = 0.5625) */
                 height: 56.25vw !important;
+                margin-bottom: 10px !important;
             }
         }
     `}} />
