@@ -28,7 +28,7 @@ export const BeritaTerbaruSection: React.FC<BeritaTerbaruSectionProps> = ({
   return (
     <div className="container">
       <div className="row rowjadwalsiar">
-        <div className="col-12 col-lg-6">
+        <div className="col-12 col-lg-6 mb-1 mb-lg-0">
           <div
             className="fslider flex-thumb-grid grid-6"
             data-speed="400"
