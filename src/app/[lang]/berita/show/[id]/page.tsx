@@ -1,7 +1,7 @@
 "use client";
 
 import React, { useEffect, useState } from "react";
-import { useParams } from "next/navigation";
+import { useParams, usePathname } from "next/navigation";
 import Link from "next/link";
 import Image from "next/image";
 import apiClient from "@/app/utils/apiClient";
@@ -14,6 +14,7 @@ import YtPreview from "@/app/components/yt-preview";
 
 export default function BeritaDetailPage() {
   const params = useParams();
+  const pathname = usePathname();
   const id = params.id as string;
   const lang = (params.lang as "id" | "en") || "id";
 
@@ -29,6 +30,9 @@ export default function BeritaDetailPage() {
   const frontendUrl = process.env.NEXT_PUBLIC_FRONTEND_URL || "https://tvku.tv";
   const langPrefix = lang === "id" ? "" : `/${lang}`;
 
+  // Automatically get the path for news links (e.g., /berita/show/ or /en/berita/show/)
+  const pathBerita = pathname.substring(0, pathname.lastIndexOf('/') + 1);
+
   useEffect(() => {
     setShowIklan(true);
   }, []);
@@ -43,17 +47,17 @@ export default function BeritaDetailPage() {
     const fetchData = async () => {
       setLoading(true);
       setError(null);
-      
+
       try {
         const beritaDetailUrl =
           lang === "en"
             ? `/berita-translations?language_code=en&id_berita_master=${id}`
             : `/berita/${id}`;
-        
+
         const dictionaryUrl = `/dictionaries/${lang}.json`;
 
         const [beritaResponse, dictionaryResponse] = await Promise.all([
-          apiClient.get(beritaDetailUrl),
+          apiClient.get(beritaDetailUrl, { params: { path_berita: pathBerita } }),
           fetch(dictionaryUrl).then(res => res.json()),
         ]);
 
