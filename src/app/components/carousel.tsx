@@ -163,12 +163,12 @@ const Carousel = () => {
                       </div>
                       <div className="entry-meta no-separator">
                         <ul>
-                          <li>
+                          <li style={{ color: "white" }}>
                             <i className="icon-time" />
                             {/* <a href={`/berita/show/${item.id}`}>{new Date().toLocaleDateString()}</a> */}
                             {new Date().toLocaleDateString()}
                           </li>
-                          <li>
+                          <li style={{ color: "white" }}>
                             <i className="icon-eye" />
                             {Math.floor(Math.random() * (999 - 200 + 1) + 200)}
                           </li>

@@ -116,10 +116,10 @@ export default async function BeritaPage({
                 </div>
                 <div className="entry-meta">
                   <ul>
-                    <li>
+                    <li style={{ color: "black" }}>
                       <i className="icon-calendar3" /> {formatDate(beritaTerbaru[0].waktu, lang)}
                     </li>
-                    <li>
+                    <li style={{ color: "black" }}>
                       <i className="icon-eye" /> {Math.floor(Math.random() * (999 - 200 + 1) + 200)}
                     </li>
                   </ul>
@@ -167,10 +167,10 @@ export default async function BeritaPage({
 
                     <div className="entry-meta">
                       <ul>
-                        <li>
+                        <li style={{ color: "black" }}>
                           <i className="icon-calendar3" /> {formatDate(item.waktu, lang)}
                         </li>
-                        <li>
+                        <li style={{ color: "black" }}>
                           <i className="icon-eye" /> {Math.floor(Math.random() * (999 - 200 + 1) + 200)}
                         </li>
                       </ul>
@@ -245,11 +245,11 @@ export default async function BeritaPage({
                       </div>
                       <div className="entry-meta">
                         <ul>
-                          <li>
+                          <li style={{ color: "black" }}>
                             <i className="icon-calendar3"></i>
                             {formatDate(data.waktu, lang)}
                           </li>
-                          <li>
+                          <li style={{ color: "black" }}>
                             <i className="icon-eye"></i>
                             {Math.floor(Math.random() * (999 - 200 + 1) + 200)}
                           </li>
@@ -288,11 +288,11 @@ export default async function BeritaPage({
                             </div>
                             <div className="entry-meta">
                               <ul>
-                                <li>
+                                <li style={{ color: "black" }}>
                                   <i className="icon-calendar3"></i>
                                   {formatDate(item.waktu, lang)}
                                 </li>
-                                <li>
+                                <li style={{ color: "black" }}>
                                   <i className="icon-eye"></i>
                                   {Math.floor(Math.random() * (999 - 200 + 1) + 200)}
                                 </li>
@@ -337,11 +337,11 @@ export default async function BeritaPage({
                           </div>
                           <div className="entry-meta">
                             <ul>
-                              <li>
+                              <li style={{ color: "black" }}>
                                 <i className="icon-calendar3"></i>
                                 {formatDate(item.waktu, lang)}
                               </li>
-                              <li>
+                              <li style={{ color: "black" }}>
                                 <i className="icon-eye"></i>
                                 {Math.floor(Math.random() * (999 - 200 + 1) + 200)}
                               </li>
@@ -383,11 +383,11 @@ export default async function BeritaPage({
                           </div>
                           <div className="entry-meta">
                             <ul>
-                              <li>
+                              <li style={{ color: "black" }}>
                                 <i className="icon-calendar3"></i>
                                 {formatDate(item.waktu, lang)}
                               </li>
-                              <li>
+                              <li style={{ color: "black" }}>
                                 <i className="icon-eye"></i>
                                 {Math.floor(Math.random() * (999 - 200 + 1) + 200)}
                               </li>
@@ -441,7 +441,7 @@ export default async function BeritaPage({
                         </div>
                         <div className="entry-meta">
                           <ul>
-                            <li>
+                            <li style={{ color: "black" }}>
                               <i className="icon-calendar3" />{" "}
                               {new Date(item.waktu_publish).toLocaleDateString(
                                 "id-ID",
@@ -452,7 +452,7 @@ export default async function BeritaPage({
                                 }
                               )}
                             </li>
-                            <li>
+                            <li style={{ color: "black" }}>
                               <i className="icon-eye" /> {Math.floor(Math.random() * (999 - 200 + 1) + 200)}
                             </li>
                           </ul>
@@ -482,7 +482,7 @@ export default async function BeritaPage({
                     >
                       <Link
                         href={`${langPrefix}/berita/show/${item.id_kategori}`}
-                        className="flex-fill"
+                        className="flex-fill text-black"
                       >
                         {item.nama}
                       </Link>
@@ -522,13 +522,16 @@ export default async function BeritaPage({
                           </div>
                           <div className="entry-meta">
                             <ul>
-                              <li>
+                              <li style={{ color: "black" }}>
                                 <i className="icon-calendar3"></i>
-                                <Link href={`${langPrefix}/berita/show/${item.id}`}>
+                                <Link
+                                  href={`${langPrefix}/berita/show/${item.id}`}
+                                  style={{ color: "black" }}
+                                >
                                   {formatDate(item.waktu, lang)}
                                 </Link>
                               </li>
-                              <li>
+                              <li style={{ color: "black" }}>
                                 <i className="icon-eye"></i>
                                 {Math.floor(Math.random() * (999 - 200 + 1) + 200)}
                               </li>

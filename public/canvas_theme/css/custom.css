@@ -5,6 +5,16 @@
 	Overwriting Default Theme Styles for Better Handling Updates
 -----------------------------------------------------------------*/
 
+body,
+h1,
+h2,
+h3,
+h4,
+h5,
+h6 {
+  color: #000000;
+}
+
 /* Arrows */
 .slick-prev,
 .slick-next {
@@ -49,6 +59,18 @@
   margin: 0 5px;
 }
 
+
+.menu-link {
+  color: #000000 !important;
+}
+
+.nav-link {
+  color: #000000 !important;
+}
+
+.nav-link.active {
+  color: #ffffff !important;
+}
 
 
 
@@ -396,6 +418,8 @@
   .our-program-beranda-slick .slick-list .slick-track .slick-slide div:hover {
     background-size: auto 104%;
   }
+
+  
 
 }
 

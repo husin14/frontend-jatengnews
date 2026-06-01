@@ -205,7 +205,7 @@ export default function BeritaDetailPage() {
             {berita.judul}
             </h2>
 
-          <div className="d-flex align-items-center text-muted mb-3 ms-2 small">
+          <div className="d-flex align-items-center mb-3 ms-2 small" style={{ color: "#000" }}>
             <div className="me-2 d-flex flex-column justify-content-center align-items-center">
               {/* Decorative dots */}
               <div className="rounded-circle bg-secondary" style={{ width: "2px", height: "2px", margin: "1px 0" }}></div>

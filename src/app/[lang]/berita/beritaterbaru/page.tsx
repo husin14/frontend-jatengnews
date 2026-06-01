@@ -172,7 +172,7 @@ export default function BeritaTerbaruPage() {
                         </div>
                         <div className="entry-meta">
                           <ul>
-                            <li>
+                            <li style={{ color: "black" }}>
                               <i className="icon-calendar3" />{" "}
                               {new Date(item.waktu_publish).toLocaleDateString(
                                 lang === "id" ? "id-ID" : "en-US",
@@ -183,7 +183,7 @@ export default function BeritaTerbaruPage() {
                                 }
                               )}
                             </li>
-                            <li>
+                            <li style={{ color: "black" }}>
                               <i className="icon-eye" /> {Math.floor(Math.random() * (999 - 200 + 1) + 200)}
                             </li>
                           </ul>
