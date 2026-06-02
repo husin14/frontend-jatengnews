@@ -6,6 +6,7 @@ import { kategori as KategoriType, berita as BeritaType } from "../types";
 import Link from "next/link";
 import Image from "next/image";
 import { usePathname, useRouter } from "next/navigation";
+import { formatDate } from "../utils/dateFormatter";
 
 interface NavbarProps {
   lang?: "id" | "en";
@@ -280,13 +281,11 @@ const Navbar = ({
                                           <ul>
                                             <li>
                                               <i className="icon-time"></i>
-                                              {new Date(
-                                                item.waktu_publish
-                                              ).toLocaleDateString("id-ID")}
+                                              {formatDate(item.waktu || item.waktu_publish, activeLang)}
                                             </li>
                                             <li>
                                               <i className="icon-eye"></i>
-                                              {Math.floor(Math.random() * (999 - 200 + 1) + 200)}
+                                              {item.views || Math.floor(Math.random() * (999 - 200 + 1) + 200)}
                                             </li>
                                           </ul>
                                         </div>

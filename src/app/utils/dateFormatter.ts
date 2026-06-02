@@ -14,25 +14,13 @@ export function formatDate(dateString: string, lang: "id" | "en" = "id"): string
     return dateString;
   }
 
-  const months_id = [
-    "Januari", "Februari", "Maret", "April", "Mei", "Juni",
-    "Juli", "Agustus", "September", "Oktober", "November", "Desember"
-  ];
-
-  const months_en = [
-    "January", "February", "March", "April", "May", "June",
-    "July", "August", "September", "October", "November", "December"
-  ];
-
-  const day = date.getDate();
-  const month = date.getMonth();
-  const year = date.getFullYear();
-
-  if (lang === "id") {
-    return `${day} ${months_id[month]} ${year}`;
-  } else {
-    return `${months_en[month]} ${day}, ${year}`;
-  }
+  // Use toLocaleDateString for consistent formatting (same as navbar)
+  const locale = lang === "id" ? "id-ID" : "en-US";
+  return date.toLocaleDateString(locale, {
+    year: "numeric",
+    month: "long",
+    day: "numeric",
+  });
 }
 
 /**

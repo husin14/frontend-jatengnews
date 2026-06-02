@@ -76,10 +76,10 @@ export const BeritaTerbaruSection: React.FC<BeritaTerbaruSectionProps> = ({
                         <div className="entry-meta mt-1">
                           <ul>
                             <li>
-                              <i className="icon-calendar3" /> {formatDate(item.waktu, lang)}
+                              <i className="icon-calendar3" /> {formatDate(item.waktu || item.waktu_publish, lang)}
                             </li>
                             <li>
-                              <i className="icon-eye me-1" /> {Math.floor(Math.random() * (999 - 200 + 1) + 200)}
+                              <i className="icon-eye me-1" /> {item.views || Math.floor(Math.random() * (999 - 200 + 1) + 200)}
                             </li>
                           </ul>
                         </div>
