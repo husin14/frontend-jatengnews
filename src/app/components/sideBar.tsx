@@ -3,6 +3,7 @@ import Link from "next/link";
 import Image from "next/image";
 import SocialMedia from "./socialMedia";
 import { berita } from "@/app/types";
+import { formatDate } from "@/app/utils/dateFormatter";
 
 interface SideBarProps {
   recentPosts?: berita[];
@@ -28,7 +29,7 @@ const SideBar: React.FC<SideBarProps> = ({ recentPosts, popularPosts, lang = "id
             <div className="posts-sm row col-mb-30">
               {recentPosts.map((item) => (
                 <div key={item.id} className="entry col-12">
-                  <div className="grid-inner row align-items-center g-0">
+                  <div className="grid-inner row align-items-start g-0">
                     <div className="col-auto">
                       <div className="entry-image mb-0">
                         <Link href={`${langPrefix}/berita/show/${item.id}`}>
@@ -55,14 +56,11 @@ const SideBar: React.FC<SideBarProps> = ({ recentPosts, popularPosts, lang = "id
                         <ul>
                           <li>
                             <i className="icon-calendar3"></i>{" "}
-                            {new Date(item.waktu_publish || item.waktu).toLocaleDateString(
-                              lang === "id" ? "id-ID" : "en-US",
-                              {
-                                year: "numeric",
-                                month: "long",
-                                day: "numeric",
-                              }
-                            )}
+                            {formatDate(item.waktu || item.waktu_publish, lang)}
+                          </li>
+                          <li>
+                            <i className="icon-eye"></i>{" "}
+                            {item.views || Math.floor(Math.random() * (999 - 200 + 1) + 200)}
                           </li>
                         </ul>
                       </div>
@@ -84,7 +82,7 @@ const SideBar: React.FC<SideBarProps> = ({ recentPosts, popularPosts, lang = "id
             <div className="posts-sm row col-mb-30">
               {popularPosts.map((item) => (
                 <div key={item.id} className="entry col-12">
-                  <div className="grid-inner row align-items-center g-0">
+                  <div className="grid-inner row align-items-start g-0">
                     <div className="col-auto">
                       <div className="entry-image mb-0">
                         <Link href={`${langPrefix}/berita/show/${item.id}`}>
@@ -111,14 +109,11 @@ const SideBar: React.FC<SideBarProps> = ({ recentPosts, popularPosts, lang = "id
                         <ul>
                           <li>
                             <i className="icon-calendar3"></i>{" "}
-                            {new Date(item.waktu_publish || item.waktu).toLocaleDateString(
-                              lang === "id" ? "id-ID" : "en-US",
-                              {
-                                year: "numeric",
-                                month: "long",
-                                day: "numeric",
-                              }
-                            )}
+                            {formatDate(item.waktu || item.waktu_publish, lang)}
+                          </li>
+                          <li>
+                            <i className="icon-eye"></i>{" "}
+                            {item.views || Math.floor(Math.random() * (999 - 200 + 1) + 200)}
                           </li>
                         </ul>
                       </div>

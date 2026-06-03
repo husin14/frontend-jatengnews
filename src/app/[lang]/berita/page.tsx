@@ -443,7 +443,7 @@ export default async function BeritaPage({
                           <ul>
                             <li style={{ color: "black" }}>
                               <i className="icon-calendar3" />{" "}
-                              {new Date(item.waktu_publish).toLocaleDateString(
+                              {new Date(item.waktu || item.waktu_publish).toLocaleDateString(
                                 "id-ID",
                                 {
                                   year: "numeric",

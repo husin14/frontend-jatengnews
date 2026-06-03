@@ -202,7 +202,7 @@ export default function KategoriBeritaPage() {
                           <ul>
                             <li>
                               <i className="icon-calendar3" />{" "}
-                              {new Date(item.waktu_publish).toLocaleDateString(
+                              {new Date(item.waktu || item.waktu_publish).toLocaleDateString(
                                 lang === "id" ? "id-ID" : "en-US",
                                 {
                                   year: "numeric",

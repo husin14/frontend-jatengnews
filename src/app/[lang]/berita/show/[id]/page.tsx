@@ -11,6 +11,7 @@ import Sidebar from "@/app/components/sideBar";
 import DisqusComment from "@/app/components/disqus";
 import PopupIklan from "@/app/components/popupIklan";
 import YtPreview from "@/app/components/yt-preview";
+import { formatDate } from "@/app/utils/dateFormatter";
 
 export default function BeritaDetailPage() {
   const params = useParams();
@@ -162,37 +163,17 @@ export default function BeritaDetailPage() {
     <>
       {showIklan && <PopupIklan onClose={handleCloseIklan} />}
       
-      {berita.cover ? (
-        <div className="entry-image mb-3" style={{ marginTop: "8px" }}>
-          <Image
-            src={berita.cover}
-            alt={berita.judul}
-            width={1200}
-            height={675}
-            style={{ width: "100%", height: "auto" }}
-            priority
-          />
-          {berita.kategori && (
-            <div className="entry-categories">
-              <Link href={`${langPrefix}/berita/${berita.kategori.id_kategori}`} className="bg-travel">
+      <div className="row clearfix" style={{ marginTop: "8px" }}>
+        <div className="col-lg-8">
+          {berita.kategori && !berita.cover && (
+            <div className="mb-3 ms-2">
+              <Link href={`${langPrefix}/berita/${berita.kategori.id_kategori}`} className="badge bg-secondary text-white p-2">
                 {berita.kategori.nama}
               </Link>
             </div>
           )}
-        </div>
-      ) : (
-        berita.kategori && (
-          <div className="mb-3 ms-2">
-            <Link href={`${langPrefix}/berita/${berita.kategori.id_kategori}`} className="badge bg-secondary text-white p-2">
-              {berita.kategori.nama}
-            </Link>
-          </div>
-        )
-      )}
 
-      <div className="row clearfix" style={{ marginTop: "8px" }}>
-        <div className="col-lg-8">
-            <h2
+          <h2
             className="fw-bold lh-sm mb-3"
             style={{
               fontSize: "2.5rem",
@@ -203,7 +184,7 @@ export default function BeritaDetailPage() {
               }}
               >
             {berita.judul}
-            </h2>
+          </h2>
 
           <div className="d-flex align-items-center mb-3 ms-2 small" style={{ color: "#000" }}>
             <div className="me-2 d-flex flex-column justify-content-center align-items-center">
@@ -213,19 +194,35 @@ export default function BeritaDetailPage() {
               <div className="rounded-circle bg-secondary" style={{ width: "2px", height: "2px", margin: "1px 0" }}></div>
             </div>
             <div className="d-flex align-items-center">
-              <i className="icon-time me-2"></i>
+              <i className="icon-calendar3 me-2"></i>
               {/* Format tanggal sesuai bahasa */}
-              {new Date(berita.waktu_publish).toLocaleDateString(lang === "id" ? "id-ID" : "en-US", {
-                year: "numeric",
-                month: "long",
-                day: "numeric",
-              })}
+              {formatDate(berita.waktu || berita.waktu_publish, lang)}
               <i className="icon-eye ms-3 me-2"></i>
-              {Math.floor(Math.random() * (999 - 200 + 1) + 200)}
+              {berita.views || Math.floor(Math.random() * (999 - 200 + 1) + 200)}
             </div>
           </div>
 
           <div className="entry">
+            {berita.cover && (
+              <div className="entry-image mb-3" style={{ marginTop: "8px" }}>
+                <Image
+                  src={berita.cover}
+                  alt={berita.judul}
+                  width={1200}
+                  height={675}
+                  style={{ width: "100%", height: "auto" }}
+                  priority
+                />
+                {berita.kategori && (
+                  <div className="entry-categories">
+                    <Link href={`${langPrefix}/berita/${berita.kategori.id_kategori}`} className="bg-travel">
+                      {berita.kategori.nama}
+                    </Link>
+                  </div>
+                )}
+              </div>
+            )}
+
             <div className="entry-content clearfix mt-4">
               <div
                 dangerouslySetInnerHTML={{ __html: berita.deskripsi }}
@@ -247,7 +244,7 @@ export default function BeritaDetailPage() {
               <div className="related-posts row posts-md col-mb-30">
                 {relatedBerita.map((item) => (
                   <div key={item.id} className="entry col-12 col-md-6">
-                    <div className="grid-inner row align-items-center gutter-20">
+                    <div className="grid-inner row align-items-start gutter-20">
                       <div className="col-4">
                         <div className="entry-image mb-0">
                           <Link href={`${langPrefix}/berita/show/${item.id}`}>
@@ -274,18 +271,11 @@ export default function BeritaDetailPage() {
                           <ul>
                             <li>
                               <i className="icon-calendar3"></i>{" "}
-                              {new Date(item.waktu_publish).toLocaleDateString(
-                                lang === "id" ? "id-ID" : "en-US",
-                                {
-                                  year: "numeric",
-                                  month: "long",
-                                  day: "numeric",
-                                }
-                              )}
+                              {formatDate(item.waktu || item.waktu_publish, lang)}
                             </li>
                             <li>
                               <i className="icon-eye"></i>{" "}
-                              {Math.floor(Math.random() * (999 - 200 + 1) + 200)}
+                              {item.views || Math.floor(Math.random() * (999 - 200 + 1) + 200)}
                             </li>
                           </ul>
                         </div>

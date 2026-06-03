@@ -81,6 +81,12 @@ export const BeritaTerbaruSection: React.FC<BeritaTerbaruSectionProps> = ({
                             <li style={{ color: "black" }}>
                               <i className="icon-eye me-1" /> {Math.floor(Math.random() * (999 - 200 + 1) + 200)}
                             </li>
+                            <li>
+                              <i className="icon-calendar3" /> {formatDate(item.waktu || item.waktu_publish, lang)}
+                            </li>
+                            <li>
+                              <i className="icon-eye me-1" /> {item.views || Math.floor(Math.random() * (999 - 200 + 1) + 200)}
+                            </li>
                           </ul>
                         </div>
                         <hr style={{ borderTop: "dashed 1px black" }} />

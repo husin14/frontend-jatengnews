@@ -4,20 +4,12 @@ import { useEffect, useState } from 'react'
 import { useParams } from 'next/navigation'
 import { berita } from '../types'
 import Image from 'next/image'
+import { formatDate } from "@/app/utils/dateFormatter";
 
 const BeritaDetail = () => {
   const { id } = useParams<{ id: string }>()
   const [berita, setBerita] = useState<berita | null>(null)
   const [loading, setLoading] = useState(true)
-
-  const formatTanggal = (dateString: string) => {
-    const options: Intl.DateTimeFormatOptions = {
-      day: '2-digit',
-      month: 'long',
-      year: 'numeric',
-    }
-    return new Date(dateString).toLocaleDateString('id-ID', options)
-  }
 
   useEffect(() => {
     const fetchData = async () => {
@@ -47,9 +39,9 @@ const BeritaDetail = () => {
               <div className="flex flex-col gap-2">
                 <h1 className="text-lg font-semibold">{berita.judul}</h1>
                 <span className="text-muted-foreground text-xs flex items-center gap-2">
-                  {formatTanggal(berita.waktu_publish)}
+                  {formatDate(berita.waktu || berita.waktu_publish, 'id')}
                   <span className="flex items-center gap-1">
-                    <i className="icon-eye" /> {Math.floor(Math.random() * (999 - 200 + 1) + 200)}
+                    <i className="icon-eye" /> {berita.views || Math.floor(Math.random() * (999 - 200 + 1) + 200)}
                   </span>
                 </span>
               </div>
