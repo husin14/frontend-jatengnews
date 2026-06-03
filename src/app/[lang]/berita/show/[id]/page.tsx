@@ -269,11 +269,11 @@ export default function BeritaDetailPage() {
                         </div>
                         <div className="entry-meta">
                           <ul>
-                            <li>
+                            <li style={{ color: "#000" }}>
                               <i className="icon-calendar3"></i>{" "}
                               {formatDate(item.waktu || item.waktu_publish, lang)}
                             </li>
-                            <li>
+                            <li style={{ color: "#000" }}>
                               <i className="icon-eye"></i>{" "}
                               {item.views || Math.floor(Math.random() * (999 - 200 + 1) + 200)}
                             </li>
