@@ -29,86 +29,81 @@ export default function ContactPage() {
       <section id="content">
         <div className="content-wrap">
           <div className="container clearfix">
-            <div className="row g-4">
-              {/* Email */}
-              <div className="col-md-6">
-                <div className="card text-center p-4">
-                  <div className="mb-3">
-                    <Image
-                      src="/icons/email.svg"
-                      alt="email icon"
-                      width={40}
-                      height={40}
-                    />
+
+            <div className="row col-mb-50">
+              <div className="col-lg-6">
+                <div className="feature-box fbox-center fbox-bg fbox-plain">
+                  <div className="fbox-icon">
+                    <a href="#">
+                      <i className="icon-email3 contact-icon" />
+                    </a>
                   </div>
-                  <h5 className="fw-bold">EMAIL</h5>
-                  <p
-                    className="
-                    mb-0"
-                  >
-                    tvku.semarang@tvku.tv
-                  </p>
+                  <div className="fbox-content">
+                    <h3>
+                      Email
+                      <span className="subtitle">
+                        tvku.semarang@tvku.tv
+                      </span>
+                    </h3>
+                  </div>
                 </div>
               </div>
-
-              {/* Telepon */}
-              <div className="col-md-6">
-                <div className="card text-center p-4">
-                  <div className="mb-3">
-                    <Image
-                      src="/icons/phone.svg"
-                      alt="phone icon"
-                      width={40}
-                      height={40}
-                    />
+              <div className="col-lg-6">
+                <div className="feature-box fbox-center fbox-bg fbox-plain">
+                  <div className="fbox-icon">
+                    <a href="#">
+                      <i className="icon-phone3 contact-icon" />
+                    </a>
                   </div>
-                  <h5 className="fw-bold">TELEPON</h5>
-                  <p
-                    className="
-                    mb-0"
-                  >
-                    024 - 3520334
-                  </p>
+                  <div className="fbox-content">
+                    <h3>
+                      Telepon
+                      <span className="subtitle">
+                        024 - 3520334
+                      </span>
+                    </h3>
+                  </div>
                 </div>
               </div>
-
-              {/* Alamat */}
-              <div className="col-md-6">
-                <div className="card text-center p-4">
-                  <div className="mb-3">
-                    <Image
-                      src="/icons/location.svg"
-                      alt="location icon"
-                      width={40}
-                      height={40}
-                    />
+              <div className="col-lg-6">
+                <div className="feature-box fbox-center fbox-bg fbox-plain">
+                  <div className="fbox-icon">
+                    <a href="#">
+                      <i className="icon-map contact-icon" />
+                    </a>
                   </div>
-                  <h5 className="fw-bold">ALAMAT</h5>
-                  <p className="mb-0">
-                    Nakula I 5–11, Semarang Tengah, E Building 2nd Floor,
-                    <br />
-                    Universitas Dian Nuswantoro Semarang
-                  </p>
+                  <div className="fbox-content">
+                    <h3>
+                      Alamat
+                      <span className="subtitle">
+                        Nakula I 5-11, Semarang Tengah, E Building 2nd Floor, Universitas Dian Nuswantoro Semarang
+                      </span>
+                    </h3>
+                  </div>
                 </div>
               </div>
-
-              {/* Contact Person */}
-              <div className="col-md-6">
-                <div className="card text-center p-4">
-                  <div className="mb-3">
-                    <Image
-                      src="/icons/whatsapp.svg"
-                      alt="whatsapp icon"
-                      width={40}
-                      height={40}
-                    />
+              <div className="col-lg-6">
+                <div className="feature-box fbox-center fbox-bg fbox-plain">
+                  <div className="fbox-icon">
+                    <a href="#">
+                      <i className="icon-whatsapp contact-icon" />
+                    </a>
                   </div>
-                  <h5 className="fw-bold">CONTACT PERSON</h5>
-                  <p className="mb-0">Bagus – +62 812-2811-5941</p>
-                  <p className="mb-0">Fitri – +62 812-2724-1195</p>
+                  <div className="fbox-content">
+                    <h3>
+                      Contact Person
+                      <span className="subtitle">
+                        Bagus - +62 812-2811-5941
+                        <br />
+                        Fitri - +62 812-2724-1195
+                      </span>
+                    </h3>
+                  </div>
                 </div>
               </div>
             </div>
+            {/* Contact Info End */}
+
           </div>
         </div>
       </section>

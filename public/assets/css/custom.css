@@ -299,6 +299,10 @@ body, h1, h2, h3, h4, h5, h6 {
   width: 50%;
 }
 
+.contact-icon {
+  color: #1B91CE !important;
+}
+
 
 /* mirip netflix */
 /* .myslick{ */
