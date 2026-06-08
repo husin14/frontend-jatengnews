@@ -1,15 +1,7 @@
 "use client";
 
-import Head from "next/head";
-import Script from "next/script";
 import { useEffect, useRef } from "react";
 import Hls from "hls.js";
-
-declare global {
-  interface Window {
-    videojs: any; //eslint-disable-line
-  }
-}
 
 export default function LiveStreamingPage() {
   const streamUrl = "https://tvku.tv/hlsstream/hls/live.m3u8";
@@ -22,9 +14,6 @@ export default function LiveStreamingPage() {
 
       if (video.canPlayType("application/vnd.apple.mpegurl")) {
         video.src = streamUrl;
-        video.addEventListener("loadedmetadata", () => {
-          video.play();
-        });
       } else if (Hls.isSupported()) {
         if (hlsRef.current) {
           hlsRef.current.destroy();
@@ -36,10 +25,6 @@ export default function LiveStreamingPage() {
 
         hls.loadSource(streamUrl);
         hls.attachMedia(video);
-
-        hls.on(Hls.Events.MANIFEST_PARSED, () => {
-          video.play();
-        });
 
         hlsRef.current = hls;
       }
@@ -55,16 +40,9 @@ export default function LiveStreamingPage() {
 
   return (
     <>
-      <Head>
-        <link
-          href="https://vjs.zencdn.net/8.10.0/video-js.css"
-          rel="stylesheet"
-        />
-      </Head>
-
-      <Script
-        src="https://cdn.jsdelivr.net/npm/hls.js@1.0.3-0.canary.7275/dist/hls.min.js"
-        strategy="beforeInteractive"
+      <link
+        href="https://vjs.zencdn.net/8.10.0/video-js.css"
+        rel="stylesheet"
       />
 
       <section id="page-title">
@@ -89,6 +67,7 @@ export default function LiveStreamingPage() {
                 <video
                   ref={videoRef}
                   id="video-player"
+                  className="video-js vjs-default-skin vjs-big-play-centered"
                   style={{ width: "100%", height: "540px" }}
                   controls
                   preload="auto"
