@@ -166,14 +166,24 @@ export default function Navbar({
                       </Link>
                     </li>
                     <li className="menu-item">
-                      <Link className="menu-link" href="">
+                      <a
+                        className="menu-link"
+                        href="http://tvku.tv/dma/"
+                        target="_blank"
+                        rel="noopener noreferrer"
+                      >
                         <div>Digital Marketing</div>
-                      </Link>
+                      </a>
                     </li>
                     <li className="menu-item">
-                      <Link className="menu-link" href="">
+                      <a
+                        className="menu-link"
+                        href="http://tvku.tv/marketing/"
+                        target="_blank"
+                        rel="noopener noreferrer"
+                      >
                         <div>Sales</div>
-                      </Link>
+                      </a>
                     </li>
                   </ul>
                 </li>
