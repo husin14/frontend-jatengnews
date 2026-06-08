@@ -147,7 +147,11 @@ export default function Page() {
                                 className="myslick-img"
                                 width={300}
                                 height={200}
-                                src={`https://tvku.tv/storage/sptudinus/${slide.thumbnail}`}
+                                src={
+                                  slide.thumbnail.startsWith("http")
+                                    ? slide.thumbnail
+                                    : `https://tvku.tv/storage/sptudinus/${slide.thumbnail}`
+                                }
                                 alt={slide.teks}
                               />
                               <div className="myslick-item-caption">
@@ -181,7 +185,7 @@ export default function Page() {
                               }
                             }}
                           >
-                            <i className="icon-align-right"></i>
+                            <i className="icon-angle-left"></i>
                           </button>
                           <button
                             className="slick-next"
@@ -209,7 +213,7 @@ export default function Page() {
                               }
                             }}
                           >
-                            <i className="icon-align-right"></i>
+                            <i className="icon-angle-right"></i>
                           </button>
                         </>
                       )}
