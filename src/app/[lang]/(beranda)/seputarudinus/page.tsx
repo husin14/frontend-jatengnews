@@ -4,7 +4,7 @@ import React, { useState, useEffect } from "react";
 import apiClient from "@/app/utils/apiClient";
 import Link from "next/link";
 import Image from "next/image";
-import { SeputarUdinusSlide, SeputarUdinusSlideTitle } from "@/app/types";
+import { SeputarUdinusSlide } from "@/app/types";
 
 interface CombinedSeputarDinus {
   id: number;
@@ -140,6 +140,7 @@ export default function Page() {
                                     : `https://tvku.tv/storage/sptudinus/${slide.thumbnail}`
                                 }
                                 alt={slide.teks}
+                                loading="lazy" // Native lazy loading for performance
                               />
                               <div className="myslick-item-caption">
                                 {slide.teks}
