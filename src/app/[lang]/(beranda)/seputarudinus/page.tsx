@@ -6,36 +6,24 @@ import Link from "next/link";
 import Image from "next/image";
 import { SeputarUdinusSlide, SeputarUdinusSlideTitle } from "@/app/types";
 
+interface CombinedSeputarDinus {
+  id: number;
+  judul: string;
+  sliders: SeputarUdinusSlide[];
+}
+
 async function getSeputarDinusDataWithAxios() {
   try {
-    const titlesPromise = apiClient.get(
-      `/seputar-dinus-slides-title?sort=id_asc`
-    );
-    const slidesPromise = apiClient.get(
-      `/seputar-dinus-slider?sort=id_asc`
-    );
-
-    const [titlesRes, slidesRes] = await Promise.all([
-      titlesPromise,
-      slidesPromise,
-    ]);
-
-    const slideTitles: SeputarUdinusSlideTitle[] = titlesRes.data.data;
-    const slides: SeputarUdinusSlide[] = slidesRes.data.data;
-
-    return { slideTitles, slides };
+    const res = await apiClient.get(`/seputar-dinus-combined`);
+    return res.data.data as CombinedSeputarDinus[];
   } catch (error) {
     console.error("Error fetching data:", error);
-    return {
-      slideTitles: [],
-      slides: [],
-    };
+    return [];
   }
 }
 
 export default function Page() {
-  const [slideTitles, setSlideTitles] = useState<SeputarUdinusSlideTitle[]>([]);
-  const [slides, setSlides] = useState<SeputarUdinusSlide[]>([]);
+  const [data, setData] = useState<CombinedSeputarDinus[]>([]);
   const [isLoading, setIsLoading] = useState(true);
   const [error, setError] = useState<string | null>(null);
 
@@ -44,9 +32,8 @@ export default function Page() {
       try {
         setIsLoading(true);
         setError(null);
-        const data = await getSeputarDinusDataWithAxios();
-        setSlideTitles(data.slideTitles);
-        setSlides(data.slides);
+        const combinedData = await getSeputarDinusDataWithAxios();
+        setData(combinedData);
       } catch (err) {
         setError(
           err instanceof Error
@@ -102,19 +89,19 @@ export default function Page() {
       <section id="content">
         <div className="content-wrap">
           <div className="container">
-            {slideTitles.map((title) => {
-              const relatedSlides = slides
-                .filter((slide) => slide.id_slides_title === title.id)
-                .slice(0, 7);
+            {data.map((item) => {
+              const relatedSlides = item.sliders.slice(0, 7);
+
+              if (relatedSlides.length === 0) return null;
 
               return (
-                <React.Fragment key={title.id}>
+                <React.Fragment key={item.id}>
                   <div className="row">
                     <div style={{ marginBottom: "10px" }}>
-                      <span className="myslick-title">{title.judul}</span>
+                      <span className="myslick-title">{item.judul}</span>
                       {" | "}
                       <Link
-                        href={`/seputarudinus/title/${title.id}`}
+                        href={`/seputarudinus/title/${item.id}`}
                         className="agrey"
                       >
                         more..
