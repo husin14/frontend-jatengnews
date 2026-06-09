@@ -2,11 +2,8 @@
 
 import React, { useEffect, useState } from "react";
 import { useParams } from "next/navigation";
-import Link from "next/link";
-import Image from "next/image";
 import apiClient from "@/app/utils/apiClient";
 import { SeputarUdinusSlide } from "@/app/types";
-import YtPreview from "@/app/components/yt-preview";
 
 export default function SeputarUdinusDetailPage() {
   const params = useParams();
@@ -25,7 +22,6 @@ export default function SeputarUdinusDetailPage() {
 
       try {
         const response = await apiClient.get(`/seputar-dinus-slider/${id}`);
-        // Assuming the API returns the object directly or wrapped in .data
         const data = response.data.data || response.data;
         setSlide(data);
       } catch (err) {
@@ -61,56 +57,49 @@ export default function SeputarUdinusDetailPage() {
     );
   }
 
-  const thumbnailUrl = slide.thumbnail.startsWith("http")
-    ? slide.thumbnail
-    : `https://tvku.tv/storage/sptudinus/${slide.thumbnail}`;
+  // Extract YouTube ID
+  let youtubeId = "aaa";
+  if (slide.link) {
+    const match = slide.link.match(
+      /(?:youtube(?:-nocookie)?\.com\/(?:[^\/]+\/.+\/|(?:v|e(?:mbed)?)\/|.*[?&]v=)|youtu\.be\/)([^"&?\/ ]{11})/i
+    );
+    if (match) {
+      youtubeId = match[1];
+    }
+  }
 
   return (
-    <>
-      <section id="page-title">
+    <section id="content">
+      <div className="content-wrap">
         <div className="container clearfix">
-          <h1>{slide.teks}</h1>
-          <ol className="breadcrumb">
-            <li className="breadcrumb-item">
-              <Link href="/">Home</Link>
-            </li>
-            <li className="breadcrumb-item">
-              <Link href="/seputarudinus">Seputar Udinus</Link>
-            </li>
-            <li className="breadcrumb-item active" aria-current="page">
-              Detail
-            </li>
-          </ol>
-        </div>
-      </section>
+          <div className="single-post mb-0">
+            <div className="entry clearfix">
+              <div className="entry-title">
+                <h2>{slide.teks}</h2>
+              </div>
 
-      <section id="content">
-        <div className="content-wrap">
-          <div className="container">
-            <div className="row">
-              <div className="col-lg-8">
-                <div className="entry-image mb-4">
-                  <Image
-                    src={thumbnailUrl}
-                    alt={slide.teks}
-                    width={1200}
-                    height={675}
-                    style={{ width: "100%", height: "auto" }}
-                    priority
-                  />
-                </div>
-                <div className="entry-content">
-                  <div
-                    dangerouslySetInnerHTML={{ __html: slide.deskripsi }}
-                    className="text-dark mb-4"
-                  />
-                  {slide.link && <YtPreview link={slide.link} />}
-                </div>
+              <div className="entry-meta">
+                {/* Meta list can be added here if needed in the future */}
+              </div>
+
+              <iframe
+                src={`https://www.youtube.com/embed/${youtubeId}?autoplay=1&`}
+                allow="autoplay"
+                allowFullScreen
+                style={{
+                  width: "100%",
+                  aspectRatio: "16 / 9",
+                  border: "none",
+                }}
+              ></iframe>
+
+              <div className="entry-content mt-4">
+                <div dangerouslySetInnerHTML={{ __html: slide.deskripsi }} />
               </div>
             </div>
           </div>
         </div>
-      </section>
-    </>
+      </div>
+    </section>
   );
 }
