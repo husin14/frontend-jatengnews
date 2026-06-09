@@ -176,7 +176,8 @@ body, h1, h2, h3, h4, h5, h6 {
 }
 
 .myslick-item-caption {
-  color: #444;
+  /* color: #444; */
+  color: #000;
   font-weight: 500;
   font-family: 'Poppins', sans-serif;
   font-size: 3vw;
