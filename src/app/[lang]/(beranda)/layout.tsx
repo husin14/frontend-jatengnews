@@ -3,6 +3,7 @@ import "@/app/globals.css";
 import Script from "next/script";
 import Navbar from "../../components/beranda/navbar";
 import Footer from "../../components/footer";
+import ChatWidget from "../../components/ChatWidget";
 
 export const metadata: Metadata = {
   title: "TVKU Semarang",
@@ -78,6 +79,7 @@ export default function RootLayout({
 
       </head>
       <body className="stretched">
+        <div id="chat-ai-tvku"></div>
         <div id="wrapper" className="clearfix">
           <Navbar />
           {children}
@@ -229,6 +231,7 @@ export default function RootLayout({
             });
           `}
         </Script>
+        <ChatWidget />
       </body>
     </html>
   );
