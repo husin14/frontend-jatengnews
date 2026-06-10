@@ -1,4 +1,5 @@
-import React from "react";
+"use client"
+import React, { useEffect, useRef } from "react";
 import Image from "next/image";
 
 const images = [
@@ -74,6 +75,84 @@ const images = [
 ];
 
 export const KerjasamaSection = () => {
+  const sliderRef = useRef<HTMLDivElement>(null);
+
+  useEffect(() => {
+    if (typeof window !== "undefined" && window.jQuery) {
+      const $ = window.jQuery;
+      const $slider = $(sliderRef.current);
+
+      if ($slider.length > 0) {
+        if ($slider.hasClass('slick-initialized')) {
+          $slider.slick('unslick');
+        }
+
+        $slider.slick({
+          infinite: true,
+          autoplay: true,
+          autoplaySpeed: 2000,
+          slidesToShow: 6,
+          slidesToScroll: 1,
+          prevArrow: "",
+          nextArrow: "",
+          responsive: [{
+            breakpoint: 1600,
+            settings: {
+              slidesToShow: 6,
+              slidesToScroll: 1
+            }
+          },
+          {
+            breakpoint: 1400,
+            settings: {
+              slidesToShow: 5,
+              slidesToScroll: 1
+            }
+          },
+          {
+            breakpoint: 1200,
+            settings: {
+              slidesToShow: 4,
+              slidesToScroll: 1
+            }
+          },
+          {
+            breakpoint: 992,
+            settings: {
+              slidesToShow: 3,
+              slidesToScroll: 3
+            }
+          },
+          {
+            breakpoint: 768,
+            settings: {
+              slidesToShow: 2,
+              slidesToScroll: 2
+            }
+          },
+          {
+            breakpoint: 576,
+            settings: {
+              slidesToShow: 1,
+              slidesToScroll: 1
+            }
+          }
+          ]
+        });
+      }
+    }
+
+    return () => {
+      if (typeof window !== "undefined" && window.jQuery) {
+        const $ = window.jQuery;
+        const $slider = $(sliderRef.current);
+        if ($slider.hasClass('slick-initialized')) {
+          $slider.slick('unslick');
+        }
+      }
+    };
+  }, []);
+
   return (
     <div className="section nobottommargin" style={{ paddingTop: 0 }}>
       <div className="container clear-bottommargin clearfix">
@@ -83,7 +162,7 @@ export const KerjasamaSection = () => {
           </div>
         </div>
         <div className="row">
-          <div className="kerjasamaterjalin">
+          <div ref={sliderRef} className="kerjasamaterjalin">
             {images.map((img, i) => (
               <a href="" key={i}>
                 <div>

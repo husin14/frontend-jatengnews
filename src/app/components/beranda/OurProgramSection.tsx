@@ -1,5 +1,5 @@
 "use client"
-import React from "react";
+import React, { useEffect, useRef } from "react";
 import { OurProgram } from "../../types";
 import Image from "next/image";
 
@@ -10,6 +10,71 @@ type OurProgramSectionProps = {
 export const OurProgramSection: React.FC<OurProgramSectionProps> = ({
   list_program,
 }) => {
+  const sliderRef = useRef<HTMLDivElement>(null);
+
+  useEffect(() => {
+    if (typeof window !== "undefined" && window.jQuery && list_program.length > 0) {
+      const $ = window.jQuery;
+      const $slider = $(sliderRef.current);
+
+      if ($slider.length > 0) {
+        // Destroy existing if any
+        if ($slider.hasClass('slick-initialized')) {
+          $slider.slick('unslick');
+        }
+
+        $slider.slick({
+          infinite: true,
+          slidesToScroll: 1,
+          variableWidth: false,
+          autoplay: true,
+          autoplaySpeed: 5000,
+          slidesToShow: 4,
+          prevArrow: "<button class='slick-prev slick-arrow' type='button'><i class='icon-angle-left'></i></button>",
+          nextArrow: "<button class='slick-next slick-arrow' type='button'><i class='icon-angle-right'></i></button>",
+          responsive: [{
+            breakpoint: 576,
+            settings: {
+              slidesToShow: 1,
+              slidesToScroll: 1,
+              prevArrow: "",
+              nextArrow: "",
+            }
+          },
+          {
+            breakpoint: 768,
+            settings: {
+              slidesToShow: 2,
+              slidesToScroll: 1,
+              prevArrow: "",
+              nextArrow: "",
+            }
+          },
+          {
+            breakpoint: 992,
+            settings: {
+              slidesToShow: 3,
+              slidesToScroll: 1,
+              prevArrow: "",
+              nextArrow: "",
+            }
+          },
+          ]
+        });
+      }
+    }
+
+    return () => {
+      if (typeof window !== "undefined" && window.jQuery) {
+        const $ = window.jQuery;
+        const $slider = $(sliderRef.current);
+        if ($slider.hasClass('slick-initialized')) {
+          $slider.slick('unslick');
+        }
+      }
+    };
+  }, [list_program]);
+
   return (
     <div
       className="container-fluid clearfix"
@@ -25,7 +90,7 @@ export const OurProgramSection: React.FC<OurProgramSectionProps> = ({
       </div>
       <div className="container">
         <div className="row">
-          <div className="our-program-beranda-slick">
+          <div ref={sliderRef} className="our-program-beranda-slick">
             {list_program.map((item) => (
               <a href="" key={item.id} onClick={(e) => e.preventDefault()}>
                 <div
@@ -34,13 +99,6 @@ export const OurProgramSection: React.FC<OurProgramSectionProps> = ({
                   }}
                 >
                   <img style={{ visibility: "hidden" }} src={item.thumbnail}></img>
-                  {/* <Image
-                    style={{ visibility: "hidden" }}
-                    src={item.thumbnail}
-                    alt={item.judul}
-                    width={100}
-                    height={100}
-                  /> */}
                 </div>
               </a>
             ))}
