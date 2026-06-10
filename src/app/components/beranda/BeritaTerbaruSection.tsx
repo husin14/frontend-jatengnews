@@ -1,9 +1,17 @@
-import React from "react";
+"use client"
+import React, { useEffect, useRef, useState } from "react";
 import { berita, jadwalAcara } from "../../types";
 import Image from "next/image";
 import Link from "next/link";
 import { formatDate } from "@/app/utils/dateFormatter";
 import { Locale } from "@/app/dictionaries";
+
+declare global {
+  interface Window {
+    SEMICOLON_flexSliderInit: any;
+    jQuery: any;
+  }
+}
 
 type BeritaTerbaruSectionProps = {
   Berita: berita[];
@@ -25,11 +33,30 @@ export const BeritaTerbaruSection: React.FC<BeritaTerbaruSectionProps> = ({
   activelang: lang,
 }) => {
   const langPrefix = lang === "id" ? "" : `/${lang}`;
+  const sliderRef = useRef<HTMLDivElement>(null);
+  const [isMounted, setIsMounted] = useState(false);
+
+  useEffect(() => {
+    setIsMounted(true);
+    if (typeof window !== "undefined" && window.jQuery && window.SEMICOLON_flexSliderInit) {
+      const $ = window.jQuery;
+      const $el = $(sliderRef.current);
+
+      if ($el.length > 0) {
+        // Delay slightly to ensure DOM is fully ready
+        setTimeout(() => {
+          window.SEMICOLON_flexSliderInit($el);
+        }, 150);
+      }
+    }
+  }, [Berita]);
+
   return (
     <div className="container">
       <div className="row rowjadwalsiar">
         <div className="col-12 col-lg-6 mb-1 mb-lg-0">
           <div
+            ref={sliderRef}
             className="fslider flex-thumb-grid grid-6"
             data-speed="400"
             data-arrows="true"
@@ -79,13 +106,13 @@ export const BeritaTerbaruSection: React.FC<BeritaTerbaruSectionProps> = ({
                               <i className="icon-calendar3" /> {formatDate(item.waktu, lang)}
                             </li>
                             <li style={{ color: "black" }}>
-                              <i className="icon-eye me-1" /> {Math.floor(Math.random() * (999 - 200 + 1) + 200)}
+                              <i className="icon-eye me-1" /> {isMounted ? (item.views || Math.floor(Math.random() * (999 - 200 + 1) + 200)) : "--"}
                             </li>
                             <li>
                               <i className="icon-calendar3" /> {formatDate(item.waktu || item.waktu_publish, lang)}
                             </li>
                             <li>
-                              <i className="icon-eye me-1" /> {item.views || Math.floor(Math.random() * (999 - 200 + 1) + 200)}
+                              <i className="icon-eye me-1" /> {isMounted ? (item.views || Math.floor(Math.random() * (999 - 200 + 1) + 200)) : "--"}
                             </li>
                           </ul>
                         </div>
