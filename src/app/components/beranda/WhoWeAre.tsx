@@ -1,25 +1,50 @@
-import React from "react";
+"use client"
+import React, { useEffect, useRef } from "react";
 import { HomeWhoWeAre } from "../../types";
 import Image from "next/image";
+
+declare global {
+  interface Window {
+    SEMICOLON_animationsInit: any;
+    jQuery: any;
+  }
+}
 
 type WhoWeAreProps = {
   data: HomeWhoWeAre;
 };
 
 export const WhoWeAre: React.FC<WhoWeAreProps> = ({ data }) => {
+  const animatedRef = useRef<HTMLImageElement>(null);
+
+  useEffect(() => {
+    if (typeof window !== "undefined" && window.jQuery && window.SEMICOLON_animationsInit) {
+      const $ = window.jQuery;
+      const $el = $(animatedRef.current);
+      
+      if ($el.length > 0) {
+        // Delay slightly to ensure DOM is fully ready and opacity:0 is applied by theme CSS
+        setTimeout(() => {
+          window.SEMICOLON_animationsInit($el);
+        }, 100);
+      }
+    }
+  }, []);
+
   return (
     <>
       <div className="container clearfix">
         <div className="row align-items-center col-mb-50">
-            <div className="col-md-12 col-lg-6 order-lg-2 center">
+          <div className="col-md-12 col-lg-6 order-lg-2 center">
             <Image
+              ref={animatedRef}
               src={typeof data.gambar === "string" && data.gambar.startsWith("/") ? data.gambar : "/images/TVKU.jpg"}
               data-animate="fadeInLeft"
               alt="Who We Are"
               width={700}
               height={420}
             />
-            </div>
+          </div>
           <div className="col-md-12 col-lg-6 order-lg-1 text-center text-md-start">
             <div className="heading-block">
               <h2>{data.judul || "Who We Are"}</h2>
