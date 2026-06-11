@@ -2,6 +2,7 @@
 
 import React, { useState, useEffect } from "react";
 import Image from "next/image";
+import { useRouter, useSearchParams } from "next/navigation";
 import apiClient from "@/app/utils/apiClient";
 import { OurProgram } from "@/app/types";
 
@@ -21,13 +22,30 @@ export default function Page({
 }: {
   params: Promise<{ lang: "id" | "en" }>;
 }) {
+  const router = useRouter();
+  const searchParams = useSearchParams();
+  const pageParam = searchParams.get("page");
+  
   const [programs, setPrograms] = useState<OurProgram[]>([]);
   const [loading, setLoading] = useState<boolean>(true);
   const [error, setError] = useState<string | null>(null);
-  const [currentPage, setCurrentPage] = useState<number>(1);
+  const [currentPage, setCurrentPage] = useState<number>(pageParam ? parseInt(pageParam) : 1);
   const [totalPages, setTotalPages] = useState<number>(1);
   const [lang, setLang] = useState<"id" | "en">("id");
   const [dictionary, setDictionary] = useState<Dictionary | null>(null);
+
+  // Sync state with URL parameter on mount or URL change
+  useEffect(() => {
+    const page = searchParams.get("page");
+    if (page) {
+      const pageNum = parseInt(page);
+      if (!isNaN(pageNum) && pageNum !== currentPage) {
+        setCurrentPage(pageNum);
+      }
+    } else if (currentPage !== 1) {
+      setCurrentPage(1);
+    }
+  }, [searchParams]);
 
   useEffect(() => {
     const getLangAndDictionary = async () => {
@@ -63,6 +81,7 @@ export default function Page({
     if (!lang) return;
 
     const getProgram = async () => {
+      setLoading(true);
       try {
         const apiUrl =
           lang === "en"
@@ -85,9 +104,22 @@ export default function Page({
   const handlePageChange = (page: number) => {
     if (page > 0 && page <= totalPages) {
       setCurrentPage(page);
+      
+      // Update URL
+      const params = new URLSearchParams(searchParams.toString());
+      if (page === 1) {
+        params.delete("page");
+      } else {
+        params.set("page", page.toString());
+      }
+      
+      const queryString = params.toString();
+      const url = `${window.location.pathname}${queryString ? "?" + queryString : ""}`;
+      router.push(url, { scroll: false });
+
+      // Scroll to content
       const contentElement = document.getElementById("content");
       if (contentElement) {
-        // Menggunakan offsetTop untuk mendapatkan posisi absolut dari atas dokumen
         const topOffset = contentElement.offsetTop;
         window.scrollTo({
           top: topOffset,
