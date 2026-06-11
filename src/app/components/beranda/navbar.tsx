@@ -1,6 +1,7 @@
 "use client";
 
 import { usePathname, useRouter } from "next/navigation";
+import React, { useEffect } from "react";
 import Image from "next/image";
 import Link from "next/link";
 import TvkuBlue from "../../../../public/beranda_assets/images/tvkublue2x.png";
@@ -8,6 +9,12 @@ import TvkuWhite from "../../../../public/beranda_assets/images/tvkuwhite2x.png"
 import { ChevronDown } from "lucide-react";
 import enDictionary from "../../../../public/dictionaries/en.json";
 import idDictionary from "../../../../public/dictionaries/id.json";
+
+declare global {
+  interface Window {
+    jQuery: any;
+  }
+}
 
 interface NavbarProps {
   lang?: "id" | "en";
@@ -27,6 +34,40 @@ export default function Navbar({
     propDictionary || (activeLang === "en" ? enDictionary : idDictionary);
 
   const langPrefix = activeLang === "id" ? "" : `/${activeLang}`;
+
+  useEffect(() => {
+    const handleLinkClick = () => {
+      if (typeof window !== "undefined" && window.jQuery) {
+        const $ = window.jQuery;
+        $("body").removeClass("primary-menu-open");
+        $(".primary-menu:not(.mobile-menu-off-canvas) .menu-container").hide();
+        $(".primary-menu.mobile-menu-off-canvas .menu-container").removeClass("d-block");
+      }
+    };
+
+    // Attach listener to all menu links
+    const menuLinks = document.querySelectorAll('.menu-link');
+    menuLinks.forEach(link => {
+      link.addEventListener('click', handleLinkClick);
+    });
+
+    // Cleanup
+    return () => {
+      menuLinks.forEach(link => {
+        link.removeEventListener('click', handleLinkClick);
+      });
+    };
+  }, []);
+
+  useEffect(() => {
+    // Close mobile menu on route change (already handled by link click for most cases, but good for direct router.push)
+    if (typeof window !== "undefined" && window.jQuery) {
+      const $ = window.jQuery;
+      $("body").removeClass("primary-menu-open");
+      $(".primary-menu:not(.mobile-menu-off-canvas) .menu-container").hide();
+      $(".primary-menu.mobile-menu-off-canvas .menu-container").removeClass("d-block");
+    }
+  }, [pathname]);
 
   const handleLanguageChange = (newLang: "id" | "en") => {
     const newPathname = pathname.startsWith(`/${activeLang}`)
