@@ -85,6 +85,15 @@ export default function Page({
   const handlePageChange = (page: number) => {
     if (page > 0 && page <= totalPages) {
       setCurrentPage(page);
+      const contentElement = document.getElementById("content");
+      if (contentElement) {
+        // Menggunakan offsetTop untuk mendapatkan posisi absolut dari atas dokumen
+        const topOffset = contentElement.offsetTop;
+        window.scrollTo({
+          top: topOffset,
+          behavior: "smooth",
+        });
+      }
     }
   };
 
