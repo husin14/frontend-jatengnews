@@ -148,7 +148,7 @@ export default async function Home({
             activelang={lang}
           />
           {/* Our Program */}
-          <OurProgramSection list_program={ourProgram?.data} />
+          <OurProgramSection list_program={ourProgram?.data} activelang={lang} />
           {/* Kerjasama */}
           <KerjasamaSection />
           {/* Who We Are */}

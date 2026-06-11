@@ -2,15 +2,19 @@
 import React, { useEffect, useRef } from "react";
 import { OurProgram } from "../../types";
 import Image from "next/image";
+import { Locale } from "@/app/dictionaries";
 
 type OurProgramSectionProps = {
   list_program: OurProgram[];
+  activelang: Locale;
 };
 
 export const OurProgramSection: React.FC<OurProgramSectionProps> = ({
   list_program,
+  activelang: lang,
 }) => {
   const sliderRef = useRef<HTMLDivElement>(null);
+  const langPrefix = lang === "id" ? "" : `/${lang}`;
 
   useEffect(() => {
     if (typeof window !== "undefined" && window.jQuery && list_program.length > 0) {
@@ -109,7 +113,7 @@ export const OurProgramSection: React.FC<OurProgramSectionProps> = ({
       <div className="container my-3 mt-0">
         <div className="col-md-12 text-center">
           <a
-            href=""
+            href={`${langPrefix}/program`}
             className="button button-border button-dark button-rounded button-large ms-0 topmargin-sm"
           >
             More Programs
