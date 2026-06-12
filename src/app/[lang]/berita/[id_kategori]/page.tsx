@@ -165,7 +165,7 @@ export default function KategoriBeritaPage() {
 
   return (
     <>
-      <div className="row clearfix" style={{ marginTop: "40px" }}>
+      <div className="row clearfix" style={{ marginTop: "0px" }}>
         <div className="col-lg-8">
           <div className="mt-0">
             <div className="row col-mb-50">

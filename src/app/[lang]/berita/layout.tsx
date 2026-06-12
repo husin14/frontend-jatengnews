@@ -90,7 +90,7 @@ export default async function RootLayout({
             <Header />
             <Navbar lang={lang} dictionary={dictionary} />
           </header>
-          <section id="content" style={{ marginTop: "20px" }}>
+          <section id="content" style={{ marginTop: "60px" }}>
             <div className="content-wrap pt-0">
               <div className="container clearfix">
                 <div className="row mt-0 clearfix">{children}</div>
