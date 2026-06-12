@@ -165,7 +165,7 @@ export default function KategoriBeritaPage() {
 
   return (
     <>
-      <div className="row clearfix">
+      <div className="row clearfix" style={{ marginTop: "40px" }}>
         <div className="col-lg-8">
           <div className="mt-0">
             <div className="row col-mb-50">
@@ -308,7 +308,7 @@ export default function KategoriBeritaPage() {
           </div>
         </div>
         {/* Menggunakan komponen Sidebar yang sama */}
-        <Sidebar />
+        <Sidebar marginTop="35.17px" />
       </div>
     </>
   );

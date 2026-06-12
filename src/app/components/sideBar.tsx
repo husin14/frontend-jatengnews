@@ -9,13 +9,14 @@ interface SideBarProps {
   recentPosts?: berita[];
   popularPosts?: berita[];
   lang?: "id" | "en";
+  marginTop?: string;
 }
 
-const SideBar: React.FC<SideBarProps> = ({ recentPosts, popularPosts, lang = "id" }) => {
+const SideBar: React.FC<SideBarProps> = ({ recentPosts, popularPosts, lang = "id", marginTop }) => {
   const langPrefix = lang === "id" ? "" : `/${lang}`;
 
   return (
-    <div className="col-lg-4 sticky-sidebar-wrap mt-5 mt-lg-0">
+    <div className={`col-lg-4 sticky-sidebar-wrap ${marginTop ? "" : "mt-5 mt-lg-0"}`} style={marginTop ? { marginTop: marginTop } : {}}>
       <div className="sticky-sidebar">
         <SocialMedia />
 
