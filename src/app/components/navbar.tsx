@@ -13,12 +13,51 @@ interface NavbarProps {
   dictionary?: any; // eslint-disable-line
 }
 
+declare global {
+  interface Window {
+    jQuery: any;
+  }
+}
+
 const Navbar = ({
   lang: propLang,
   dictionary: propDictionary,
 }: NavbarProps) => {
   const router = useRouter();
   const pathname = usePathname();
+
+  useEffect(() => {
+    const handleGlobalClick = (e: MouseEvent) => {
+      const target = e.target as HTMLElement;
+      const menuLink = target.closest('.menu-link');
+      
+      if (menuLink) {
+        if (typeof window !== "undefined" && window.jQuery) {
+          const $ = window.jQuery;
+          $("body").removeClass("primary-menu-open");
+          $(".primary-menu:not(.mobile-menu-off-canvas) .menu-container").hide();
+          $(".primary-menu.mobile-menu-off-canvas .menu-container").removeClass("d-block");
+        }
+      }
+    };
+
+    document.addEventListener('click', handleGlobalClick);
+
+    // Cleanup
+    return () => {
+      document.removeEventListener('click', handleGlobalClick);
+    };
+  }, []);
+
+  useEffect(() => {
+    // Close mobile menu on route change
+    if (typeof window !== "undefined" && window.jQuery) {
+      const $ = window.jQuery;
+      $("body").removeClass("primary-menu-open");
+      $(".primary-menu:not(.mobile-menu-off-canvas) .menu-container").hide();
+      $(".primary-menu.mobile-menu-off-canvas .menu-container").removeClass("d-block");
+    }
+  }, [pathname]);
 
   const activeLang = propLang || (pathname.startsWith("/en") ? "en" : "id");
 
