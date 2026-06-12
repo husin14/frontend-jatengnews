@@ -200,8 +200,8 @@ export default function KategoriBeritaPage() {
                         </div>
                         <div className="entry-meta">
                           <ul>
-                            <li>
-                              <i className="icon-calendar3" />{" "}
+                            <li style={{ color: "var(--entry-meta-color)" }}>
+                              <i className="icon-calendar3" style={{ color: "var(--entry-meta-color)" }} />{" "}
                               {new Date(item.waktu || item.waktu_publish).toLocaleDateString(
                                 lang === "id" ? "id-ID" : "en-US",
                                 {
@@ -211,8 +211,8 @@ export default function KategoriBeritaPage() {
                                 }
                               )}
                             </li>
-                            <li>
-                              <i className="icon-eye" /> {Math.floor(Math.random() * (999 - 200 + 1) + 200)}
+                            <li style={{ color: "var(--entry-meta-color)" }}>
+                              <i className="icon-eye" style={{ color: "var(--entry-meta-color)" }} /> {Math.floor(Math.random() * (999 - 200 + 1) + 200)}
                             </li>
                           </ul>
                         </div>
