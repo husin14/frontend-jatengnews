@@ -306,9 +306,10 @@ export default async function BeritaPage({
                     ))}
                   </div>
                 </div>
-                <div className="row col-mb-50 mb-0">
-                  {beritaTerbaru.slice(5, 7).map((item) => (
-                    <div key={item.id} className="col-md-6 mt-4 beritaterbaru2">
+              </div>
+              <div className="row justify-content-center col-mb-50 mb-0">
+                {beritaTerbaru.slice(5, 7).map((item) => (
+                    <div key={item.id} className="col-md-6 mt-4 beritaterbaru2 d-flex justify-content-center">
                       <div className="posts-md">
                         <div className="entry">
                           <div className="entry-image">
@@ -403,7 +404,6 @@ export default async function BeritaPage({
               </div>
             </div>
           </div>
-        </div>
         <Sidebar />
       </div>
 

@@ -75,5 +75,5 @@ a {
 }
 
 .device-xs #primary-menu-trigger {
-    margin-left: 0px;
+    margin-left: 0px !important;
 }
