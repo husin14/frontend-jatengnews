@@ -134,7 +134,7 @@ export default async function BeritaPage({
             )}
           </div>
         </div>
-        <div className="col-lg-4">
+        <div className="col-lg-4 berita-sidebar-column">
           <div className="posts-sm row col-mb-30">
             {beritaTerbaru.slice(1, 6).map((item) => (
               <div key={item.id} className="entry col-12 berita-sidebar-entry">
