@@ -265,7 +265,7 @@ export default async function BeritaPage({
                   <div className="posts-sm row col-mb-30">
                     {beritaTerbaru.slice(1, 5).map((item) => (
                       <div key={item.id} className="entry col-12">
-                        <div className="grid-inner row align-items-center g-0">
+                        <div className="grid-inner row align-items-start g-0">
                           <div className="col-auto">
                             <div className="entry-image">
                               <Link href={`${langPrefix}/berita/show/${item.id}`}>
@@ -362,7 +362,7 @@ export default async function BeritaPage({
                 <div className="posts-sm row col-mb-30">
                   {beritaTerbaru.slice(7, 11).map((item) => (
                     <div key={item.id} className="entry col-md-6">
-                      <div className="grid-inner row align-items-center no-gutter">
+                      <div className="grid-inner row align-items-start no-gutter">
                         <div className="col-auto">
                           <div className="entry-image">
                             <Link href={`${langPrefix}/berita/show/${item.id}`}>
@@ -501,7 +501,7 @@ export default async function BeritaPage({
                 <div className="posts-sm row col-mb-30">
                   {beritaTerbaru.slice(0, 4).map((item) => (
                     <div key={item.id} className="entry col-12">
-                      <div className="grid-inner row align-items-center g-0">
+                      <div className="grid-inner row align-items-start g-0">
                         <div className="col-auto">
                           <div className="entry-image">
                             <Link href={`${langPrefix}/berita/show/${item.id}`}>
@@ -516,7 +516,7 @@ export default async function BeritaPage({
                         </div>
                         <div className="col ps-3">
                           <div className="entry-title">
-                            <h4 className="fw-semibold">
+                            <h4 className="fw-semibold berita-sidebar-title">
                               <Link href={`${langPrefix}/berita/show/${item.id}`}>
                                 {item.judul}
                               </Link>
