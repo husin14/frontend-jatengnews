@@ -93,7 +93,7 @@ export default async function RootLayout({
           <section id="content" className="berita-content">
             <div className="content-wrap pt-0">
               <div className="container clearfix">
-                <div className="row mt-0 clearfix">{children}</div>
+                <div className="row mt-0 clearfix berita-row">{children}</div>
               </div>
             </div>
           </section>
