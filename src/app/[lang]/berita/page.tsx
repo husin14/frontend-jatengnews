@@ -83,7 +83,7 @@ export default async function BeritaPage({
   return (
     <>
       <div className="row col-mb-50 mb-0">
-        <div className="col-lg-8">
+        <div className="col-lg-8 berita-main-column">
           <div className="posts-md">
             {beritaTerbaru.length > 0 && (
               <div className="entry">
@@ -156,7 +156,7 @@ export default async function BeritaPage({
                   </div>
                   <div className="col ps-3">
                     <div className="entry-title">
-                      <h4>
+                      <h4 className="berita-sidebar-title">
                         <Link
                           href={`${langPrefix}/berita/show/${item.id}`}
                         >
@@ -280,8 +280,10 @@ export default async function BeritaPage({
                           </div>
                           <div className="col ps-3">
                             <div className="entry-title">
-                              <h4>
-                                <Link href={`${langPrefix}/berita/show/${item.id}`}>
+                              <h4 style={{ marginTop: '-5px' }}>
+                                <Link
+                                  href={`${langPrefix}/berita/show/${item.id}`}
+                                >
                                   {item.judul}
                                 </Link>
                               </h4>
