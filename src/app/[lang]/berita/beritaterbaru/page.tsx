@@ -136,7 +136,7 @@ export default function BeritaTerbaruPage() {
 
   return (
     <>
-      <div className="row clearfix">
+      <div className="row clearfix" style={{ marginTop: "0px" }}>
         <div className="col-lg-8">
           <div className="mt-0">
             <div className="row col-mb-50">
@@ -172,8 +172,8 @@ export default function BeritaTerbaruPage() {
                         </div>
                         <div className="entry-meta">
                           <ul>
-                            <li style={{ color: "black" }}>
-                              <i className="icon-calendar3" />{" "}
+                            <li style={{ color: "var(--entry-meta-color)" }}>
+                              <i className="icon-calendar3" style={{ color: "var(--entry-meta-color)" }} />{" "}
                               {new Date(item.waktu || item.waktu_publish).toLocaleDateString(
                                 lang === "id" ? "id-ID" : "en-US",
                                 {
@@ -183,8 +183,8 @@ export default function BeritaTerbaruPage() {
                                 }
                               )}
                             </li>
-                            <li style={{ color: "black" }}>
-                              <i className="icon-eye" /> {Math.floor(Math.random() * (999 - 200 + 1) + 200)}
+                            <li style={{ color: "var(--entry-meta-color)" }}>
+                              <i className="icon-eye" style={{ color: "var(--entry-meta-color)" }} /> {Math.floor(Math.random() * (999 - 200 + 1) + 200)}
                             </li>
                           </ul>
                         </div>
@@ -248,7 +248,7 @@ export default function BeritaTerbaruPage() {
             )}
           </div>
         </div>
-        <Sidebar />
+        <Sidebar marginTop="35.17px" />
       </div>
     </>
   );
