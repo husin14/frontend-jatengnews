@@ -21,6 +21,16 @@ body, h1, h2, h3, h4, h5, h6 {
   color: #FFFFFF !important;
 }
 
+@media (max-width: 991.98px) {
+  .transparent-header .menu-link {
+    color: #000 !important;
+  }
+
+  .transparent-header .svg-trigger path {
+    stroke: #000 !important;
+  }
+}
+
 .transparent-header .menu-link:hover {
   color: #1B91CE !important;
 }
