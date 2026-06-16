@@ -215,23 +215,22 @@ const Navbar = ({
                     </Link>
                   </li>
                 ))}
-                <li
-                  className="menu-item menu-color-home mega-menu"
-                  onMouseEnter={() => {
-                    const pendidikanCat = categories.find(
-                      (cat) =>
-                        cat.nama.toLowerCase() === "pendidikan" ||
-                        cat.id_kategori === 27
-                    );
-                    if (pendidikanCat) {
-                      setActiveMegaMenuCategory(pendidikanCat.id_kategori);
-                      fetchNewsForMegaMenu(pendidikanCat.id_kategori);
-                    }
-                  }}
-                >
-                  <a className="menu-link" href="#">
-                    <div className="dropdown-toggle">Lainnya</div>
-                  </a>
+                <li className="menu-item mega-menu menu-item-lainnya"
+                    onMouseEnter={() => {
+                      const pendidikanCat = categories.find(
+                        (cat) =>
+                          cat.nama.toLowerCase() === "pendidikan" ||
+                          cat.id_kategori === 27
+                      );
+                      if (pendidikanCat) {
+                        setActiveMegaMenuCategory(pendidikanCat.id_kategori);
+                        fetchNewsForMegaMenu(pendidikanCat.id_kategori);
+                      }
+                    }}
+                  >
+                    <a className="menu-link" href="#">
+                      <div className="dropdown-toggle">Lainnya</div>
+                    </a>
                   <div className="mega-menu-content mega-menu-style-2 border-top-0">
                     <div className="container">
                       <div className="row">

@@ -83,6 +83,10 @@
   top: 1px;
 }
 
+.menu-item-lainnya > .sub-menu-trigger {
+  display: none !important;
+}
+
 .entry-content-home {
   margin-top: 10px;
 }

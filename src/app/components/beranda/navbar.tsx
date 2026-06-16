@@ -189,7 +189,7 @@ export default function Navbar({
                     </li>
                   </ul>
                 </li> */}
-                <li className="menu-item">
+                <li className="menu-item menu-item-lainnya">
                   <Link className="menu-link" href="#lainnya">
                     <div>
                       Lainnya

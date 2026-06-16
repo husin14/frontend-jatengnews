@@ -64,6 +64,12 @@ h6 {
   color: #000000 !important;
 }
 
+@media (max-width: 991.98px) {
+  .primary-menu .menu-container .menu-item > .menu-link {
+    color: #000000 !important;
+  }
+}
+
 .nav-link {
   color: #000000 !important;
 }
@@ -103,6 +109,10 @@ h6 {
 #menu-lainnya {
   display: none;
   top: 1px;
+}
+
+.menu-item-lainnya > .sub-menu-trigger {
+  display: none !important;
 }
 
 .entry-content-home {
