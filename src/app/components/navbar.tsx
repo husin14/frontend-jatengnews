@@ -29,23 +29,37 @@ const Navbar = ({
   useEffect(() => {
     const handleGlobalClick = (e: MouseEvent) => {
       const target = e.target as HTMLElement;
-      const menuLink = target.closest('.menu-link');
-      
+      const menuLink = target.closest(".menu-link");
+
       if (menuLink) {
+        if (typeof window !== "undefined" && window.innerWidth < 992) {
+          const menuItem = menuLink.closest(".menu-item");
+          if (
+            menuItem &&
+            (menuItem.querySelector(".sub-menu-container") ||
+              menuItem.querySelector(".mega-menu-content"))
+          ) {
+            // If it's a mobile view and has sub-menu, don't close the menu
+            return;
+          }
+        }
+
         if (typeof window !== "undefined" && window.jQuery) {
           const $ = window.jQuery;
           $("body").removeClass("primary-menu-open");
           $(".primary-menu:not(.mobile-menu-off-canvas) .menu-container").hide();
-          $(".primary-menu.mobile-menu-off-canvas .menu-container").removeClass("d-block");
+          $(".primary-menu.mobile-menu-off-canvas .menu-container").removeClass(
+            "d-block"
+          );
         }
       }
     };
 
-    document.addEventListener('click', handleGlobalClick);
+    document.addEventListener("click", handleGlobalClick);
 
     // Cleanup
     return () => {
-      document.removeEventListener('click', handleGlobalClick);
+      document.removeEventListener("click", handleGlobalClick);
     };
   }, []);
 

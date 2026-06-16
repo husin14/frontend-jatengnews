@@ -36,25 +36,40 @@ export default function Navbar({
   const langPrefix = activeLang === "id" ? "" : `/${activeLang}`;
 
   useEffect(() => {
-    const handleLinkClick = () => {
+    const handleLinkClick = (e: Event) => {
+      if (typeof window !== "undefined" && window.innerWidth < 992) {
+        const target = e.currentTarget as HTMLElement;
+        const menuItem = target.closest(".menu-item");
+        if (
+          menuItem &&
+          (menuItem.querySelector(".sub-menu-container") ||
+            menuItem.querySelector(".mega-menu-content"))
+        ) {
+          // If it's a mobile view and has sub-menu, don't close the menu
+          return;
+        }
+      }
+
       if (typeof window !== "undefined" && window.jQuery) {
         const $ = window.jQuery;
         $("body").removeClass("primary-menu-open");
         $(".primary-menu:not(.mobile-menu-off-canvas) .menu-container").hide();
-        $(".primary-menu.mobile-menu-off-canvas .menu-container").removeClass("d-block");
+        $(".primary-menu.mobile-menu-off-canvas .menu-container").removeClass(
+          "d-block"
+        );
       }
     };
 
     // Attach listener to all menu links
-    const menuLinks = document.querySelectorAll('.menu-link');
-    menuLinks.forEach(link => {
-      link.addEventListener('click', handleLinkClick);
+    const menuLinks = document.querySelectorAll(".menu-link");
+    menuLinks.forEach((link) => {
+      link.addEventListener("click", handleLinkClick);
     });
 
     // Cleanup
     return () => {
-      menuLinks.forEach(link => {
-        link.removeEventListener('click', handleLinkClick);
+      menuLinks.forEach((link) => {
+        link.removeEventListener("click", handleLinkClick);
       });
     };
   }, []);
