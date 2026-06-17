@@ -54,6 +54,46 @@ export default function SeputarUdinusTitlePage() {
     fetchData();
   }, [id, page]);
 
+  const getPageRange = () => {
+    const pages: (number | string)[] = [];
+    const total_no_of_pages = pagination.lastPage;
+    const adjacents = 2;
+    const currPage = pagination.currentPage;
+
+    if (total_no_of_pages <= 10) {
+      for (let counter = 1; counter <= total_no_of_pages; counter++) {
+        pages.push(counter);
+      }
+    } else {
+      if (currPage <= 5) {
+        for (let counter = 1; counter < 9; counter++) {
+          pages.push(counter);
+        }
+        pages.push("...");
+      } else if (currPage > 5 && currPage < total_no_of_pages - 4) {
+        pages.push("...");
+        for (
+          let counter = currPage - adjacents;
+          counter <= currPage + adjacents;
+          counter++
+        ) {
+          pages.push(counter);
+        }
+        pages.push("...");
+      } else {
+        pages.push("...");
+        for (
+          let counter = total_no_of_pages - 6;
+          counter <= total_no_of_pages;
+          counter++
+        ) {
+          pages.push(counter);
+        }
+      }
+    }
+    return pages;
+  };
+
   if (loading) {
     return (
       <div className="container">
@@ -129,16 +169,76 @@ export default function SeputarUdinusTitlePage() {
               })}
             </div>
 
+            {/* Pagination Section */}
             {pagination.lastPage > 1 && (
-              <ul className="pagination mt-5">
-                {Array.from({ length: pagination.lastPage }, (_, i) => i + 1).map((p) => (
-                  <li key={p} className={`page-item ${p === pagination.currentPage ? 'active' : ''}`}>
-                    <Link href={`/seputarudinus/title/${id}/${p}`} className="page-link">
-                      {p}
+              <div className="pagination-container text-center mt-4">
+                <ul className="pagination pagination-rounded justify-content-center flex-wrap">
+                  {/* First Page */}
+                  <li className={`page-item ${pagination.currentPage <= 1 ? "disabled" : ""}`}>
+                    <Link
+                      className="page-link"
+                      href={`/seputarudinus/title/${id}/1`}
+                      aria-label="First"
+                    >
+                      <span aria-hidden="true">&laquo;</span>
                     </Link>
                   </li>
-                ))}
-              </ul>
+
+                  {/* Previous Page */}
+                  <li className={`page-item ${pagination.currentPage <= 1 ? "disabled" : ""}`}>
+                    <Link
+                      className="page-link"
+                      href={`/seputarudinus/title/${id}/${Math.max(1, pagination.currentPage - 1)}`}
+                      aria-label="Previous"
+                    >
+                      <span aria-hidden="true">&lsaquo;</span>
+                    </Link>
+                  </li>
+
+                  {/* Dynamic Page Numbers */}
+                  {getPageRange().map((pageNumber, index) => (
+                    <li
+                      key={index}
+                      className={`page-item ${
+                        pageNumber === pagination.currentPage ? "active" : ""
+                      } ${typeof pageNumber === "string" ? "disabled" : ""}`}
+                    >
+                      {typeof pageNumber === "number" ? (
+                        <Link
+                          href={`/seputarudinus/title/${id}/${pageNumber}`}
+                          className="page-link"
+                        >
+                          {pageNumber}
+                        </Link>
+                      ) : (
+                        <span className="page-link">{pageNumber}</span>
+                      )}
+                    </li>
+                  ))}
+
+                  {/* Next Page */}
+                  <li className={`page-item ${pagination.currentPage >= pagination.lastPage ? "disabled" : ""}`}>
+                    <Link
+                      className="page-link"
+                      href={`/seputarudinus/title/${id}/${Math.min(pagination.lastPage, pagination.currentPage + 1)}`}
+                      aria-label="Next"
+                    >
+                      <span aria-hidden="true">&rsaquo;</span>
+                    </Link>
+                  </li>
+
+                  {/* Last Page */}
+                  <li className={`page-item ${pagination.currentPage >= pagination.lastPage ? "disabled" : ""}`}>
+                    <Link
+                      className="page-link"
+                      href={`/seputarudinus/title/${id}/${pagination.lastPage}`}
+                      aria-label="Last"
+                    >
+                      <span aria-hidden="true">&raquo;</span>
+                    </Link>
+                  </li>
+                </ul>
+              </div>
             )}
           </div>
         </div>
