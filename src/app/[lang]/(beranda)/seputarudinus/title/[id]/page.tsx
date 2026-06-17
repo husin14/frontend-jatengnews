@@ -98,33 +98,30 @@ export default function SeputarUdinusTitlePage() {
       <section id="content">
         <div className="content-wrap">
           <div className="container">
-            <div className="row col-mb-50">
+            <div className="row justify-content-center col-mb-50">
               {slides.map((slide) => {
                 const thumbnailUrl = slide.thumbnail.startsWith("http")
                   ? slide.thumbnail
                   : `https://tvku.tv/storage/sptudinus/${slide.thumbnail}`;
                 
                 return (
-                  <div key={slide.id} className="col-md-4">
-                    <div className="entry">
-                      <div className="entry-image">
+                  <div key={slide.id} className="col-sm-12 col-md-6 col-lg-4">
+                    <div className="feature-box media-box">
+                      <div className="fbox-media">
                         <Link href={`/seputarudinus/content/${slide.id}`}>
                           <Image
                             src={thumbnailUrl}
                             alt={slide.teks}
-                            width={400}
-                            height={250}
-                            className="rounded"
-                            style={{ width: "100%", height: "auto" }}
+                            width={500}
+                            height={300}
                           />
                         </Link>
                       </div>
-                      <div className="entry-title">
-                        <h3>
-                          <Link href={`/seputarudinus/content/${slide.id}`}>
-                            {slide.teks}
-                          </Link>
-                        </h3>
+                      <div className="fbox-content px-0">
+                        <Link href={`/seputarudinus/content/${slide.id}`}>
+                          <h3>{slide.teks}</h3>
+                        </Link>
+                        
                       </div>
                     </div>
                   </div>
