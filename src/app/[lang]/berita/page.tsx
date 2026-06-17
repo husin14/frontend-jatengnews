@@ -483,12 +483,14 @@ export default async function BeritaPage({
                       className="d-flex align-items-center"
                     >
                       <Link
-                        href={`${langPrefix}/berita/show/${item.id_kategori}`}
+                        href={`${langPrefix}/berita/${item.id_kategori}`}
                         className="flex-fill text-black"
                       >
                         {item.nama}
                       </Link>
-                      <span className="badge text-light bg-sports">10</span>
+                      <span className="badge text-light bg-sports">
+                        {item.berita_count || 0}
+                      </span>
                     </li>
                   ))}
                 </ul>

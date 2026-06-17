@@ -3,6 +3,7 @@ export interface kategori {
   nama: string;
   slug: string;
   berita: berita;
+  berita_count?: number;
 }
 
 export interface recentPostFooter {
