@@ -18,7 +18,31 @@ body, h1, h2, h3, h4, h5, h6 {
 }
 
 .transparent-header .menu-link {
-  color: #FFFFFF !important;
+  color: #000000 !important;
+}
+
+@media (min-width: 992px) {
+  /* High specificity selectors to override theme dark/transparent logic */
+  #header.transparent-header.floating-header .primary-menu .menu-container > .menu-item > .menu-link,
+  #header.transparent-header .primary-menu .menu-container > .menu-item > .menu-link,
+  #header.dark.transparent-header .primary-menu .menu-container > .menu-item > .menu-link,
+  #header.dark .primary-menu .menu-container > .menu-item > .menu-link,
+  #header.sticky-header .primary-menu .menu-container > .menu-item > .menu-link,
+  .dark .primary-menu .menu-container > .menu-item > .menu-link,
+  .primary-menu .menu-container > .menu-item > .menu-link,
+  .primary-menu .menu-container > .menu-item.current > .menu-link,
+  .primary-menu .menu-container > .menu-item:active > .menu-link,
+  .primary-menu .menu-container > .menu-item:focus > .menu-link {
+    color: #000000 !important;
+    font-weight: 700 !important;
+    text-shadow: none !important;
+  }
+  
+  /* Ensure hover still works correctly */
+  #header .primary-menu .menu-container > .menu-item:hover > .menu-link,
+  .primary-menu .menu-container > .menu-item:hover > .menu-link {
+    color: #1B91CE !important;
+  }
 }
 
 @media (max-width: 991.98px) {

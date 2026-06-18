@@ -44,7 +44,7 @@ const Navbar = ({
           }
         }
 
-        if (typeof window !== "undefined" && window.jQuery) {
+        if (typeof window !== "undefined" && window.jQuery && window.innerWidth < 992) {
           const $ = window.jQuery;
           $("body").removeClass("primary-menu-open");
           $(".primary-menu:not(.mobile-menu-off-canvas) .menu-container").hide();
@@ -65,7 +65,7 @@ const Navbar = ({
 
   useEffect(() => {
     // Close mobile menu on route change
-    if (typeof window !== "undefined" && window.jQuery) {
+    if (typeof window !== "undefined" && window.jQuery && window.innerWidth < 992) {
       const $ = window.jQuery;
       $("body").removeClass("primary-menu-open");
       $(".primary-menu:not(.mobile-menu-off-canvas) .menu-container").hide();

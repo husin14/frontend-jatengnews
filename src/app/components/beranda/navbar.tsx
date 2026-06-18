@@ -50,7 +50,7 @@ export default function Navbar({
         }
       }
 
-      if (typeof window !== "undefined" && window.jQuery) {
+      if (typeof window !== "undefined" && window.jQuery && window.innerWidth < 992) {
         const $ = window.jQuery;
         $("body").removeClass("primary-menu-open");
         $(".primary-menu:not(.mobile-menu-off-canvas) .menu-container").hide();
@@ -76,7 +76,7 @@ export default function Navbar({
 
   useEffect(() => {
     // Close mobile menu on route change (already handled by link click for most cases, but good for direct router.push)
-    if (typeof window !== "undefined" && window.jQuery) {
+    if (typeof window !== "undefined" && window.jQuery && window.innerWidth < 992) {
       const $ = window.jQuery;
       $("body").removeClass("primary-menu-open");
       $(".primary-menu:not(.mobile-menu-off-canvas) .menu-container").hide();
