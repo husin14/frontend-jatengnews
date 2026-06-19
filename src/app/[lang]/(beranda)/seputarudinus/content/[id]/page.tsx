@@ -83,8 +83,8 @@ export default function SeputarUdinusDetailPage() {
               </div>
 
               <iframe
-                src={`https://www.youtube.com/embed/${youtubeId}?autoplay=1&`}
-                allow="autoplay"
+                src={`https://www.youtube.com/embed/${youtubeId}?autoplay=1`}
+                allow="autoplay; encrypted-media"
                 allowFullScreen
                 style={{
                   width: "100%",

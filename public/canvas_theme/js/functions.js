@@ -1982,8 +1982,8 @@ window.scwEvents = window.scwEvents || {};
 				}
 			}
 
-			$body.off( 'click' ).on( 'click', 'a[href*="#"]', function() {
-				$window.on('beforeunload', function() {
+			$body.off( 'click.scwHashScroll' ).on( 'click.scwHashScroll', 'a[href*="#"]', function() {
+				$window.on('beforeunload.scwHashScroll', function() {
 					$window.scrollTop(0);
 				});
 			});
