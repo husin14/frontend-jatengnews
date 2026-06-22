@@ -398,13 +398,27 @@ const Navbar = ({
               </ul>
             </nav>
             {/* #primary-menu end */}
-            <form className="top-search-form" action="search.html" method="get">
+            <form
+              className="top-search-form"
+              onSubmit={(e) => {
+                e.preventDefault();
+                const formData = new FormData(e.currentTarget);
+                const query = formData.get("search") as string;
+                if (query && query.trim()) {
+                  const langPrefix = activeLang === "id" ? "" : `/${activeLang}`;
+                  router.push(`${langPrefix}/berita/search?search=${encodeURIComponent(query.trim())}`);
+                  if (typeof window !== "undefined" && window.jQuery) {
+                    window.jQuery("body").removeClass("top-search-open");
+                  }
+                }
+              }}
+            >
               <input
                 type="text"
-                name="q"
+                name="search"
                 className="form-control"
                 defaultValue=""
-                placeholder="Type & Hit Enter.."
+                placeholder={activeLang === "en" ? "Type & Hit Enter.." : "Ketik & Tekan Enter.."}
                 autoComplete="off"
               />
             </form>
