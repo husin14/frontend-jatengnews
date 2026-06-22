@@ -2,13 +2,13 @@
 
 import React, { useEffect, useState } from "react";
 import { useParams, useSearchParams } from "next/navigation";
-import Link from "next/link";
-import Image from "next/image";
 import apiClient from "@/app/utils/apiClient";
 import { convert } from "html-to-text";
 
 import { berita, kategori, apiResponse } from "@/app/types";
 import Sidebar from "@/app/components/sideBar";
+import NewsList from "@/app/components/NewsList";
+import Pagination from "@/app/components/Pagination";
 
 export default function KategoriBeritaPage() {
   const params = useParams();
@@ -45,7 +45,6 @@ export default function KategoriBeritaPage() {
         
         const dictionaryUrl = `/dictionaries/${lang}.json`;
 
-        // Use native fetch for local dictionary and apiClient for external API
         const [beritaResponse, kategoriResponse, dictionaryResponse] =
           await Promise.all([
             apiClient.get(beritaUrl),
@@ -86,45 +85,6 @@ export default function KategoriBeritaPage() {
     fetchData();
   }, [lang, id_kategori, currentPage]);
 
-  const getPageRange = () => {
-    const pages: (number | string)[] = [];
-    const total_no_of_pages = beritaApiResponse?.last_page || 1;
-    const adjacents = 2;
-
-    if (total_no_of_pages <= 10) {
-      for (let counter = 1; counter <= total_no_of_pages; counter++) {
-        pages.push(counter);
-      }
-    } else {
-      if (currentPage <= 5) {
-        for (let counter = 1; counter < 9; counter++) {
-          pages.push(counter);
-        }
-        pages.push("...");
-      } else if (currentPage > 5 && currentPage < total_no_of_pages - 4) {
-        pages.push("...");
-        for (
-          let counter = currentPage - adjacents;
-          counter <= currentPage + adjacents;
-          counter++
-        ) {
-          pages.push(counter);
-        }
-        pages.push("...");
-      } else {
-        pages.push("...");
-        for (
-          let counter = total_no_of_pages - 6;
-          counter <= total_no_of_pages;
-          counter++
-        ) {
-          pages.push(counter);
-        }
-      }
-    }
-    return pages;
-  };
-
   if (loading || !dictionary) {
     return <div className="text-center p-5">Loading...</div>;
   }
@@ -153,15 +113,6 @@ export default function KategoriBeritaPage() {
   const langPrefix = lang === "id" ? "" : `/${lang}`;
   const total_no_of_pages = beritaApiResponse.last_page;
   const baseUrlLink = `${langPrefix}/berita/${id_kategori}`;
-  const displayedPages = getPageRange();
-
-  const firstpage_class = currentPage > 1 ? "" : "disabled";
-  const previouspage_class = currentPage <= 1 ? "disabled" : "";
-  const nextpage_class = currentPage >= total_no_of_pages ? "disabled" : "";
-  const lastpage_class = currentPage < total_no_of_pages ? "" : "disabled";
-
-  const previous_page = Math.max(1, currentPage - 1);
-  const next_page = Math.min(total_no_of_pages, currentPage + 1);
 
   return (
     <>
@@ -174,140 +125,16 @@ export default function KategoriBeritaPage() {
                   <h3>{kategori.nama}</h3>
                   <div className="line line-xs line-sports"></div>
                 </div>
-                {beritaApiResponse.data.map((item) => (
-                  <div key={item.id} className="posts-md">
-                    <div className="entry row mb-5">
-                      <div className="col-md-6">
-                        <div className="entry-image">
-                          <Link href={`${langPrefix}/berita/show/${item.id}`}>
-                            <Image
-                              src={item.cover}
-                              alt={item.judul}
-                              width={600}
-                              height={300}
-                              className="rounded"
-                            />
-                          </Link>
-                        </div>
-                      </div>
-                      <div className="col-md-6 mt-3 mt-md-0">
-                        <div className="entry-title title-sm nott">
-                          <h3>
-                            <Link href={`${langPrefix}/berita/show/${item.id}`}>
-                              {item.judul}
-                            </Link>
-                          </h3>
-                        </div>
-                        <div className="entry-meta">
-                          <ul>
-                            <li style={{ color: "var(--entry-meta-color)" }}>
-                              <i className="icon-calendar3" style={{ color: "var(--entry-meta-color)" }} />{" "}
-                              {new Date(item.waktu || item.waktu_publish).toLocaleDateString(
-                                lang === "id" ? "id-ID" : "en-US",
-                                {
-                                  year: "numeric",
-                                  month: "long",
-                                  day: "numeric",
-                                }
-                              )}
-                            </li>
-                            <li style={{ color: "var(--entry-meta-color)" }}>
-                              <i className="icon-eye" style={{ color: "var(--entry-meta-color)" }} /> {Math.floor(Math.random() * (999 - 200 + 1) + 200)}
-                            </li>
-                          </ul>
-                        </div>
-                        <div className="entry-content">
-                          <p className="mb-0 line-clamp-3">{item.deskripsi}</p>
-                        </div>
-                      </div>
-                    </div>
-                  </div>
-                ))}
+                <NewsList news={beritaApiResponse.data} lang={lang} />
               </div>
             </div>
-            {total_no_of_pages > 1 && (
-              <div className="row col-md-12 mt-5">
-                <div className="text-center">
-                  <ul className="pagination pagination-rounded flex-wrap justify-center">
-                    {/* First Page */}
-                    <li className={`page-item ${firstpage_class}`}>
-                      <Link
-                        className="page-link"
-                        href={`${baseUrlLink}?page=1`}
-                        aria-label="First"
-                        tabIndex={currentPage === 1 ? -1 : undefined}
-                      >
-                        <span aria-hidden="true">&laquo;</span>
-                      </Link>
-                    </li>
-
-                    {/* Previous Page */}
-                    <li className={`page-item ${previouspage_class}`}>
-                      <Link
-                        className="page-link"
-                        href={`${baseUrlLink}?page=${previous_page}`}
-                        aria-label="Previous"
-                        tabIndex={currentPage <= 1 ? -1 : undefined}
-                      >
-                        <span aria-hidden="true">&lsaquo;</span>
-                      </Link>
-                    </li>
-
-                    {/* Nomor Halaman Dinamis */}
-                    {displayedPages.map((pageNumber, index) => (
-                      <li
-                        key={index}
-                        className={`page-item ${
-                          pageNumber === currentPage ? "active" : ""
-                        } ${typeof pageNumber === "string" ? "disabled" : ""}`}
-                      >
-                        {typeof pageNumber === "number" ? (
-                          <Link
-                            href={`${baseUrlLink}?page=${pageNumber}`}
-                            className="page-link"
-                          >
-                            {pageNumber}
-                          </Link>
-                        ) : (
-                          <span className="page-link">{pageNumber}</span>
-                        )}
-                      </li>
-                    ))}
-
-                    {/* Next Page */}
-                    <li className={`page-item ${nextpage_class}`}>
-                      <Link
-                        className="page-link"
-                        href={`${baseUrlLink}?page=${next_page}`}
-                        aria-label="Next"
-                        tabIndex={
-                          currentPage >= total_no_of_pages ? -1 : undefined
-                        }
-                      >
-                        <span aria-hidden="true">&rsaquo;</span>
-                      </Link>
-                    </li>
-
-                    {/* Last Page */}
-                    <li className={`page-item ${lastpage_class}`}>
-                      <Link
-                        className="page-link"
-                        href={`${baseUrlLink}?page=${total_no_of_pages}`}
-                        aria-label="Last"
-                        tabIndex={
-                          currentPage >= total_no_of_pages ? -1 : undefined
-                        }
-                      >
-                        <span aria-hidden="true">&raquo;</span>
-                      </Link>
-                    </li>
-                  </ul>
-                </div>
-              </div>
-            )}
+            <Pagination
+              currentPage={currentPage}
+              lastPage={total_no_of_pages}
+              getPageUrl={(page) => `${baseUrlLink}?page=${page}`}
+            />
           </div>
         </div>
-        {/* Menggunakan komponen Sidebar yang sama */}
         <Sidebar marginTop="35.17px" />
       </div>
     </>
