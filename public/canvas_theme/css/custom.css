@@ -78,6 +78,21 @@ h6 {
   color: #ffffff !important;
 }
 
+.main-content .entry-title {
+  margin-top: -5.5px;
+}
+
+.main-content .entry-title h3 {
+  margin-bottom: 1px !important;
+}
+
+.main-content .posts-md .entry-content, .main-content .posts-sm .entry-content {
+  margin-top: 3px;
+}
+
+.main-content .entry-content p {
+  line-height: 1.5 !important;
+}
 
 
 /* screen with <573px width */
@@ -324,7 +339,6 @@ h6 {
 .our-program-beranda-slick .slick-arrow {
   top: 50%;
 }
-
 
 
 @media only screen and (min-width: 456px) {

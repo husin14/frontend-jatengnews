@@ -16,7 +16,7 @@ export const NewsLayout: React.FC<NewsLayoutProps> = ({
 }) => {
   return (
     <div className="row clearfix" style={{ marginTop: "0px" }}>
-      <div className="col-lg-8">
+      <div className="col-lg-8 main-content">
         <div className="mt-0">
           <div className="row col-mb-50">
             <div className="col-12">
