@@ -6,7 +6,7 @@ import apiClient from "@/app/utils/apiClient";
 import { convert } from "html-to-text";
 
 import { berita, apiResponse } from "@/app/types";
-import Sidebar from "@/app/components/sideBar";
+import NewsLayout from "@/app/components/NewsLayout";
 import NewsList from "@/app/components/NewsList";
 import Pagination from "@/app/components/Pagination";
 
@@ -87,28 +87,18 @@ export default function BeritaTerbaruPage() {
   const baseUrlLink = `${langPrefix}/berita/beritaterbaru`;
 
   return (
-    <>
-      <div className="row clearfix" style={{ marginTop: "0px" }}>
-        <div className="col-lg-8">
-          <div className="mt-0">
-            <div className="row col-mb-50">
-              <div className="col-12">
-                <div className="mb-2 ls1 text-uppercase fw-bold">
-                  <h3>{dictionary.berita_page.latest_news}</h3>
-                  <div className="line line-xs line-sports"></div>
-                </div>
-                <NewsList news={beritaApiResponse.data} lang={lang} />
-              </div>
-            </div>
-            <Pagination
-              currentPage={currentPage}
-              lastPage={total_no_of_pages}
-              getPageUrl={(page) => `${baseUrlLink}?page=${page}`}
-            />
-          </div>
-        </div>
-        <Sidebar marginTop="35.17px" />
-      </div>
-    </>
+    <NewsLayout
+      title={dictionary.berita_page.latest_news}
+      lang={lang}
+      pagination={
+        <Pagination
+          currentPage={currentPage}
+          lastPage={total_no_of_pages}
+          getPageUrl={(page) => `${baseUrlLink}?page=${page}`}
+        />
+      }
+    >
+      <NewsList news={beritaApiResponse.data} lang={lang} />
+    </NewsLayout>
   );
 }

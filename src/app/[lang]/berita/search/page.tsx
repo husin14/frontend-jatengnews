@@ -6,7 +6,7 @@ import apiClient from "@/app/utils/apiClient";
 import { convert } from "html-to-text";
 
 import { berita, apiResponse } from "@/app/types";
-import Sidebar from "@/app/components/sideBar";
+import NewsLayout from "@/app/components/NewsLayout";
 import NewsList from "@/app/components/NewsList";
 import Pagination from "@/app/components/Pagination";
 
@@ -84,38 +84,28 @@ export default function BeritaSearchPage() {
       : `Hasil Pencarian untuk "${searchQuery}"`;
 
   return (
-    <>
-      <div className="row clearfix" style={{ marginTop: "0px" }}>
-        <div className="col-lg-8">
-          <div className="mt-0">
-            <div className="row col-mb-50">
-              <div className="col-12">
-                <div className="mb-2 ls1 text-uppercase fw-bold">
-                  <h3>{titleText}</h3>
-                  <div className="line line-xs line-sports"></div>
-                </div>
-                {!beritaApiResponse || beritaApiResponse.data.length === 0 ? (
-                  <div className="text-center p-5">
-                    {lang === "en"
-                      ? "No news found matching your query."
-                      : "Tidak ada berita yang cocok dengan pencarian Anda."}
-                  </div>
-                ) : (
-                  <NewsList news={beritaApiResponse.data} lang={lang} />
-                )}
-              </div>
-            </div>
-            <Pagination
-              currentPage={currentPage}
-              lastPage={total_no_of_pages}
-              getPageUrl={(page) =>
-                `${baseUrlLink}?search=${encodeURIComponent(searchQuery)}&page=${page}`
-              }
-            />
-          </div>
+    <NewsLayout
+      title={titleText}
+      lang={lang}
+      pagination={
+        <Pagination
+          currentPage={currentPage}
+          lastPage={total_no_of_pages}
+          getPageUrl={(page) =>
+            `${baseUrlLink}?search=${encodeURIComponent(searchQuery)}&page=${page}`
+          }
+        />
+      }
+    >
+      {!beritaApiResponse || beritaApiResponse.data.length === 0 ? (
+        <div className="text-center p-5">
+          {lang === "en"
+            ? "No news found matching your query."
+            : "Tidak ada berita yang cocok dengan pencarian Anda."}
         </div>
-        <Sidebar marginTop="35.17px" />
-      </div>
-    </>
+      ) : (
+        <NewsList news={beritaApiResponse.data} lang={lang} />
+      )}
+    </NewsLayout>
   );
 }
