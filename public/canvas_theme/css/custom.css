@@ -82,6 +82,10 @@ h6 {
   margin-top: -5.5px;
 }
 
+.mb-custom {
+  margin-bottom: 30px !important;
+}
+
 .main-content .entry-title h3 {
   margin-bottom: 1px !important;
 }

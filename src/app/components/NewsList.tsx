@@ -18,7 +18,7 @@ export const NewsList: React.FC<NewsListProps> = ({ news, lang }) => {
     <>
       {news.map((item) => (
         <div key={item.id} className="posts-md">
-          <div className="entry row mb-5">
+          <div className="entry row mb-custom">
             <div className="col-md-6">
               <div className="entry-image">
                 <Link href={`${langPrefix}/berita/show/${item.id}`}>
