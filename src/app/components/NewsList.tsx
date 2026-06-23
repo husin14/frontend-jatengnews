@@ -8,6 +8,9 @@ interface NewsListProps {
   lang: "id" | "en";
 }
 
+const truncate = (text: string, max: number) =>
+  text.length > max ? text.slice(0, max) + "..." : text;
+
 export const NewsList: React.FC<NewsListProps> = ({ news, lang }) => {
   const langPrefix = lang === "id" ? "" : `/${lang}`;
 
@@ -56,7 +59,7 @@ export const NewsList: React.FC<NewsListProps> = ({ news, lang }) => {
                 </ul>
               </div>
               <div className="entry-content">
-                <p className="mb-0 line-clamp-3">{item.deskripsi}</p>
+                <p className="mb-0 line-clamp-3">{truncate(item.deskripsi, 188)}</p>
               </div>
             </div>
           </div>
