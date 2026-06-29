@@ -104,7 +104,7 @@ const Navbar = ({
         const url =
           activeLang === "en"
             ? `/kategori-translations?language_code=en&kategori_id=${categoryId}`
-            : `/berita?id_kategori=${categoryId}`;
+            : `/berita-public?id_kategori=${categoryId}`;
         const res = await apiClient.get(url);
         setMegaMenuNews(res.data.data);
       } catch (error) {

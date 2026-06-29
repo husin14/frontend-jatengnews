@@ -15,7 +15,7 @@ function Footer() {
   useEffect(() => {
     const getBerita = async () => {
       try {
-        const res = await apiClient.get(`/berita`);
+        const res = await apiClient.get(`/berita-public`);
         const data: recentPostFooter[] = res.data.data;
 
         const cleaned = data.map((item: recentPostFooter) => ({

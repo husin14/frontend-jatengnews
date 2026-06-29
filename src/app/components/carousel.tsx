@@ -27,7 +27,7 @@ const Carousel = () => {
 
     const fetchBerita = async () => {
       try {
-        const res = await apiClient.get(`/berita?sort=populer`);
+        const res = await apiClient.get(`/berita-public?sort=populer`);
         setBerita(res.data.data);
         console.log(res.data.data);
       } catch (error) {

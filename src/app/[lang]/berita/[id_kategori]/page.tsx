@@ -36,7 +36,7 @@ export default function KategoriBeritaPage() {
         const beritaUrl =
           lang === "en"
             ? `/berita-translations?language_code=en&id_kategori=${id_kategori}&current_page=${currentPage}`
-            : `/berita?id_kategori=${id_kategori}&current_page=${currentPage}`;
+            : `/berita-public?id_kategori=${id_kategori}&current_page=${currentPage}`;
 
         const kategoriUrl =
           lang === "en"

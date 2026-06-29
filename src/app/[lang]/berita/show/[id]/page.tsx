@@ -53,7 +53,7 @@ export default function BeritaDetailPage() {
         const beritaDetailUrl =
           lang === "en"
             ? `/berita-translations?language_code=en&id_berita_master=${id}`
-            : `/berita/${id}`;
+            : `/berita-public/${id}`;
 
         const dictionaryUrl = `/dictionaries/${lang}.json`;
 
@@ -96,7 +96,7 @@ export default function BeritaDetailPage() {
         const relatedUrl =
           lang === "en"
             ? `/berita-translations?language_code=en&id_kategori=${idKategori}&current_page=1`
-            : `/berita?id_kategori=${idKategori}&current_page=1`;
+            : `/berita-public?id_kategori=${idKategori}&current_page=1`;
 
         const response = await apiClient.get(relatedUrl);
         const items = response.data?.data || [];
@@ -123,12 +123,12 @@ export default function BeritaDetailPage() {
         const recentUrl =
           lang === "en"
             ? `/berita-translations?language_code=en`
-            : `/berita`;
+            : `/berita-public`;
 
         const popularUrl =
           lang === "en"
             ? `/berita-translations?language_code=en&sort=populer`
-            : `/berita?sort=populer`;
+            : `/berita-public?sort=populer`;
 
         const [recentRes, popularRes] = await Promise.all([
           apiClient.get(recentUrl),

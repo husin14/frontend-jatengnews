@@ -31,7 +31,7 @@ export default function BeritaSearchPage() {
       setError(null);
 
       try {
-        const beritaUrl = `/berita?search=${encodeURIComponent(searchQuery)}&current_page=${currentPage}`;
+        const beritaUrl = `/berita-public?search=${encodeURIComponent(searchQuery)}&current_page=${currentPage}`;
         const dictionaryUrl = `/dictionaries/${lang}.json`;
 
         const [beritaResponse, dictionaryResponse] = await Promise.all([

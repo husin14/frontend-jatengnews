@@ -25,7 +25,7 @@ export default async function BeritaPage({
 
   try {
     const beritaUrl =
-      lang === "en" ? `/berita-translations?language_code=en` : `/berita`;
+      lang === "en" ? `/berita-translations?language_code=en` : `/berita-public`;
 
     const featureUrl =
       lang === "en"

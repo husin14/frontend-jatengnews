@@ -26,7 +26,7 @@ export default async function Home({
   const beritaUrl =
     lang === "en"
       ? `/berita-translations?per_page=6`
-      : `/berita?per_page=6`;
+      : `/berita-public?per_page=6`;
 
   const ourExpertise1Url =
     lang === "en"

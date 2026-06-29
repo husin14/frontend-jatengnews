@@ -33,7 +33,7 @@ export default function BeritaTerbaruPage() {
         const beritaUrl =
           lang === "en"
             ? `/berita-translations?language_code=en&current_page=${currentPage}`
-            : `/berita?current_page=${currentPage}`;
+            : `/berita-public?current_page=${currentPage}`;
         
         const dictionaryUrl = `/dictionaries/${lang}.json`;
 
