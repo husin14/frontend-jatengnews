@@ -1,9 +1,8 @@
 "use client";
 
-import { usePathname, useRouter } from "next/navigation";
+import { usePathname } from "next/navigation";
 import React, { useEffect } from "react";
 import Image from "next/image";
-import Link from "next/link";
 import TvkuBlue from "../../../../public/beranda_assets/images/tvkublue2x.png";
 import TvkuWhite from "../../../../public/beranda_assets/images/tvkuwhite2x.png";
 import { ChevronDown } from "lucide-react";
@@ -25,7 +24,6 @@ export default function Navbar({
   lang: propLang,
   dictionary: propDictionary,
 }: NavbarProps) {
-  const router = useRouter();
   const pathname = usePathname();
 
   const activeLang = propLang || (pathname.startsWith("/en") ? "en" : "id");
@@ -88,7 +86,7 @@ export default function Navbar({
     const newPathname = pathname.startsWith(`/${activeLang}`)
       ? pathname.replace(`/${activeLang}`, newLang === "id" ? "" : `/${newLang}`)
       : newLang === "id" ? pathname : `/${newLang}${pathname}`;
-    router.push(newPathname || "/");
+    window.location.href = newPathname || "/";
   };
 
   return (
@@ -140,9 +138,9 @@ export default function Navbar({
             <nav className="primary-menu">
               <ul className="menu-container">
                 <li className="menu-item">
-                  <Link className="menu-link" href={`${langPrefix}/`}>
+                  <a className="menu-link" href={`${langPrefix}/`}>
                     <div>{dictionary.navbar.home}</div>
-                  </Link>
+                  </a>
                 </li>
                 <li className="menu-item">
                   <a className="menu-link" href={`${langPrefix}/berita`}>
@@ -150,25 +148,25 @@ export default function Navbar({
                   </a>
                 </li>
                 <li className="menu-item">
-                  <Link className="menu-link" href={`${langPrefix}/program`}>
+                  <a className="menu-link" href={`${langPrefix}/program`}>
                     <div>Program</div>
-                  </Link>
+                  </a>
                 </li>
                 <li className="menu-item">
-                  <Link
+                  <a
                     className="menu-link"
                     href={`${langPrefix}/seputarudinus`}
                   >
                     <div>{dictionary.navbar.seputar_udinus} </div>
-                  </Link>
+                  </a>
                 </li>
                 <li className="menu-item">
-                  <Link
+                  <a
                     className="menu-link"
                     href={`${langPrefix}/livestream`}
                   >
                     <div>Live Streaming</div>
-                  </Link>
+                  </a>
                 </li>
                 {/* <li className="menu-item">
                   <div className="menu-link" style={{ cursor: "pointer" }}>
@@ -179,7 +177,7 @@ export default function Navbar({
                   </div>
                   <ul className="sub-menu-container">
                     <li className="menu-item">
-                      <Link
+                      <a
                         className="menu-link"
                         href="#"
                         onClick={(e) => {
@@ -188,10 +186,10 @@ export default function Navbar({
                         }}
                       >
                         <div>{dictionary.navbar.indonesia}</div>
-                      </Link>
+                      </a>
                     </li>
                     <li className="menu-item">
-                      <Link
+                      <a
                         className="menu-link"
                         href="#"
                         onClick={(e) => {
@@ -200,26 +198,26 @@ export default function Navbar({
                         }}
                       >
                         <div>{dictionary.navbar.english}</div>
-                      </Link>
+                      </a>
                     </li>
                   </ul>
                 </li> */}
                 <li className="menu-item menu-item-lainnya">
-                  <Link className="menu-link" href="#lainnya">
+                  <a className="menu-link" href="#lainnya">
                     <div>
                       Lainnya
                       <ChevronDown id="menu-lainnya" />
                       {/*<i id="menu-lainnya" className="icon-angle-down"></i>*/}
                     </div>
-                  </Link>
+                  </a>
                   <ul className="sub-menu-container">
                     <li className="menu-item">
-                      <Link
+                      <a
                         className="menu-link"
                         href={`${langPrefix}/contact`}
                       >
                         <div>Contact</div>
-                      </Link>
+                      </a>
                     </li>
                     <li className="menu-item">
                       <a

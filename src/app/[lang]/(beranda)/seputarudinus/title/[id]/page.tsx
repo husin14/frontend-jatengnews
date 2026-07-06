@@ -2,7 +2,6 @@
 
 import React, { useEffect, useState } from "react";
 import { useParams } from "next/navigation";
-import Link from "next/link";
 import Image from "next/image";
 import apiClient from "@/app/utils/apiClient";
 import { SeputarUdinusSlide, SeputarUdinusSlideTitle, ApiSlideResponse } from "@/app/types";
@@ -123,10 +122,10 @@ export default function SeputarUdinusTitlePage() {
           <h1>{title.judul}</h1>
           <ol className="breadcrumb">
             <li className="breadcrumb-item">
-              <Link href="/">Home</Link>
+              <a href="/">Home</a>
             </li>
             <li className="breadcrumb-item">
-              <Link href="/seputarudinus">Seputar Udinus</Link>
+              <a href="/seputarudinus">Seputar Udinus</a>
             </li>
             <li className="breadcrumb-item active" aria-current="page">
               {title.judul}
@@ -148,19 +147,19 @@ export default function SeputarUdinusTitlePage() {
                   <div key={slide.id} className="col-sm-12 col-md-6 col-lg-4">
                     <div className="feature-box media-box">
                       <div className="fbox-media">
-                        <Link href={`/seputarudinus/content/${slide.id}`}>
+                        <a href={`/seputarudinus/content/${slide.id}`}>
                           <Image
                             src={thumbnailUrl}
                             alt={slide.teks}
                             width={500}
                             height={300}
                           />
-                        </Link>
+                        </a>
                       </div>
                       <div className="fbox-content px-0">
-                        <Link href={`/seputarudinus/content/${slide.id}`}>
+                        <a href={`/seputarudinus/content/${slide.id}`}>
                           <h3>{slide.teks}</h3>
-                        </Link>
+                        </a>
                         
                       </div>
                     </div>
@@ -175,24 +174,24 @@ export default function SeputarUdinusTitlePage() {
                 <ul className="pagination pagination-rounded justify-content-center flex-wrap">
                   {/* First Page */}
                   <li className={`page-item ${pagination.currentPage <= 1 ? "disabled" : ""}`}>
-                    <Link
+                    <a
                       className="page-link"
                       href={`/seputarudinus/title/${id}/1`}
                       aria-label="First"
                     >
                       <span aria-hidden="true">&laquo;</span>
-                    </Link>
+                    </a>
                   </li>
 
                   {/* Previous Page */}
                   <li className={`page-item ${pagination.currentPage <= 1 ? "disabled" : ""}`}>
-                    <Link
+                    <a
                       className="page-link"
                       href={`/seputarudinus/title/${id}/${Math.max(1, pagination.currentPage - 1)}`}
                       aria-label="Previous"
                     >
                       <span aria-hidden="true">&lsaquo;</span>
-                    </Link>
+                    </a>
                   </li>
 
                   {/* Dynamic Page Numbers */}
@@ -204,12 +203,12 @@ export default function SeputarUdinusTitlePage() {
                       } ${typeof pageNumber === "string" ? "disabled" : ""}`}
                     >
                       {typeof pageNumber === "number" ? (
-                        <Link
+                        <a
                           href={`/seputarudinus/title/${id}/${pageNumber}`}
                           className="page-link"
                         >
                           {pageNumber}
-                        </Link>
+                        </a>
                       ) : (
                         <span className="page-link">{pageNumber}</span>
                       )}
@@ -218,24 +217,24 @@ export default function SeputarUdinusTitlePage() {
 
                   {/* Next Page */}
                   <li className={`page-item ${pagination.currentPage >= pagination.lastPage ? "disabled" : ""}`}>
-                    <Link
+                    <a
                       className="page-link"
                       href={`/seputarudinus/title/${id}/${Math.min(pagination.lastPage, pagination.currentPage + 1)}`}
                       aria-label="Next"
                     >
                       <span aria-hidden="true">&rsaquo;</span>
-                    </Link>
+                    </a>
                   </li>
 
                   {/* Last Page */}
                   <li className={`page-item ${pagination.currentPage >= pagination.lastPage ? "disabled" : ""}`}>
-                    <Link
+                    <a
                       className="page-link"
                       href={`/seputarudinus/title/${id}/${pagination.lastPage}`}
                       aria-label="Last"
                     >
                       <span aria-hidden="true">&raquo;</span>
-                    </Link>
+                    </a>
                   </li>
                 </ul>
               </div>

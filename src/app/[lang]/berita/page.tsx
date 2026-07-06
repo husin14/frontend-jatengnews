@@ -1,5 +1,4 @@
 import React from "react";
-import Link from "next/link";
 import Image from "next/image";
 import apiClient from "@/app/utils/apiClient";
 import { convert } from "html-to-text";
@@ -88,7 +87,7 @@ export default async function BeritaPage({
             {beritaTerbaru.length > 0 && (
               <div className="entry">
                 <div className="entry-image">
-                  <Link
+                  <a
                     href={`${langPrefix}/berita/show/${beritaTerbaru[0].id
                       }`}
                   >
@@ -102,16 +101,16 @@ export default async function BeritaPage({
                       height={300}
                       priority
                     />
-                  </Link>
+                  </a>
                 </div>
                 <div className="entry-title title-sm">
                   <h3 style={{ marginBottom: '0px' }}>
-                    <Link
+                    <a
                       href={`${langPrefix}/berita/show/${beritaTerbaru[0].id
                         }`}
                     >
                       {beritaTerbaru[0].judul}
-                    </Link>
+                    </a>
                   </h3>
                 </div>
                 <div className="entry-meta">
@@ -141,7 +140,7 @@ export default async function BeritaPage({
                 <div className="grid-inner row g-0">
                   <div className="col-auto">
                     <div className="entry-image">
-                      <Link href={`${langPrefix}/berita/show/${item.id}`}>
+                      <a href={`${langPrefix}/berita/show/${item.id}`}>
                         <Image
                           src={
                             item.cover ||
@@ -151,17 +150,17 @@ export default async function BeritaPage({
                           width={100}
                           height={100}
                         />
-                      </Link>
+                      </a>
                     </div>
                   </div>
                   <div className="col ps-3">
                     <div className="entry-title">
                       <h4 className="berita-sidebar-title">
-                        <Link
+                        <a
                           href={`${langPrefix}/berita/show/${item.id}`}
                         >
                           {item.judul}
-                        </Link>
+                        </a>
                       </h4>
                     </div>
 
@@ -192,7 +191,7 @@ export default async function BeritaPage({
             <h4 className="mb-0 pe-2 ls1 text-uppercase fw-bold">
               {dictionary.berita_page.latest_news}
             </h4>
-            | <Link href={`${langPrefix}/berita/beritaterbaru`}>more..</Link>
+            | <a href={`${langPrefix}/berita/beritaterbaru`}>more..</a>
             <button
               className="navbar-toggler"
               style={{ visibility: "hidden" }}
@@ -220,7 +219,7 @@ export default async function BeritaPage({
                   <div className="posts-md">
                     <div className="entry">
                       <div className="entry-image">
-                        <Link href={`${langPrefix}/berita/show/${data.id}`}>
+                        <a href={`${langPrefix}/berita/show/${data.id}`}>
                           <Image
                             src={data.cover}
                             alt={data.judul}
@@ -228,19 +227,19 @@ export default async function BeritaPage({
                             height={200}
                             style={{ width: "416px", height: "233px" }}
                           />
-                        </Link>
+                        </a>
                         <div className="entry-categories">
-                          <Link
+                          <a
                             href={`${langPrefix}/berita/show/${data.id}`}
                             className="bg-travel"
                           >
                             {data.kategori?.nama || "Uncategorized"}
-                          </Link>
+                          </a>
                         </div>
                       </div>
                       <div className="entry-title nott">
                         <h3 className="mb-2">
-                          <Link href={`${langPrefix}/berita/show/${data.id}`}>{data.judul}</Link>
+                          <a href={`${langPrefix}/berita/show/${data.id}`}>{data.judul}</a>
                         </h3>
                       </div>
                       <div className="entry-meta">
@@ -268,24 +267,24 @@ export default async function BeritaPage({
                         <div className="grid-inner row align-items-start g-0">
                           <div className="col-auto">
                             <div className="entry-image">
-                              <Link href={`${langPrefix}/berita/show/${item.id}`}>
+                              <a href={`${langPrefix}/berita/show/${item.id}`}>
                                 <Image
                                   src={item.cover}
                                   alt={item.judul}
                                   width={400}
                                   height={200}
                                 />
-                              </Link>
+                              </a>
                             </div>
                           </div>
                           <div className="col ps-3">
                             <div className="entry-title">
                               <h4 style={{ marginTop: '-5px' }}>
-                                <Link
+                                <a
                                   href={`${langPrefix}/berita/show/${item.id}`}
                                 >
                                   {item.judul}
-                                </Link>
+                                </a>
                               </h4>
                             </div>
                             <div className="entry-meta">
@@ -313,7 +312,7 @@ export default async function BeritaPage({
                       <div className="posts-md">
                         <div className="entry">
                           <div className="entry-image">
-                            <Link href={`${langPrefix}/berita/show/${item.id}`}>
+                            <a href={`${langPrefix}/berita/show/${item.id}`}>
                               <Image
                                 src={item.cover}
                                 alt={item.judul}
@@ -321,21 +320,21 @@ export default async function BeritaPage({
                                 height={200}
                                 style={{ width: "416px", height: "233px" }}
                               />
-                            </Link>
+                            </a>
                             <div className="entry-categories">
-                              <Link
+                              <a
                                 href={`${langPrefix}/berita/show/${item.id}`}
                                 className="bg-lifestyle"
                               >
                                 {item.kategori?.nama || "Uncategorized"}
-                              </Link>
+                              </a>
                             </div>
                           </div>
                           <div className="entry-title title-sm nott">
                             <h3 className="mb-2">
-                              <Link href={`${langPrefix}/berita/show/${item.id}`}>
+                              <a href={`${langPrefix}/berita/show/${item.id}`}>
                                 {item.judul}
-                              </Link>
+                              </a>
                             </h3>
                           </div>
                           <div className="entry-meta">
@@ -366,22 +365,22 @@ export default async function BeritaPage({
                       <div className="grid-inner row align-items-start no-gutter">
                         <div className="col-auto">
                           <div className="entry-image">
-                            <Link href={`${langPrefix}/berita/show/${item.id}`}>
+                            <a href={`${langPrefix}/berita/show/${item.id}`}>
                               <Image
                                 src={item.cover}
                                 alt={item.judul}
                                 width={400}
                                 height={200}
                               />
-                            </Link>
+                            </a>
                           </div>
                         </div>
                         <div className="col ps-3">
                           <div className="entry-title">
                             <h4 className="fw-medium">
-                              <Link href={`${langPrefix}/berita/show/${item.id}`}>
+                              <a href={`${langPrefix}/berita/show/${item.id}`}>
                                 {item.judul}
-                              </Link>
+                              </a>
                             </h4>
                           </div>
                           <div className="entry-meta">
@@ -422,7 +421,7 @@ export default async function BeritaPage({
                     <div className="entry row mb-5">
                       <div className="col-md-6">
                         <div className="entry-image">
-                          <Link href={`${langPrefix}/berita/show/${item.id}`}>
+                          <a href={`${langPrefix}/berita/show/${item.id}`}>
                             <Image
                               src={item.cover}
                               alt={item.judul}
@@ -430,15 +429,15 @@ export default async function BeritaPage({
                               height={300}
                               className="rounded"
                             />
-                          </Link>
+                          </a>
                         </div>
                       </div>
                       <div className="col-md-6 mt-3 mt-md-0">
                         <div className="entry-title title-sm nott">
                           <h3>
-                            <Link href={`${langPrefix}/berita/show/${item.id}`}>
+                            <a href={`${langPrefix}/berita/show/${item.id}`}>
                               {item.judul}
-                            </Link>
+                            </a>
                           </h3>
                         </div>
                         <div className="entry-meta">
@@ -482,12 +481,12 @@ export default async function BeritaPage({
                       key={item.id_kategori}
                       className="d-flex align-items-center"
                     >
-                      <Link
+                      <a
                         href={`${langPrefix}/berita/${item.id_kategori}`}
                         className="flex-fill text-black"
                       >
                         {item.nama}
-                      </Link>
+                      </a>
                       <span className="badge text-light bg-sports">
                         {item.berita_count || 0}
                       </span>
@@ -506,34 +505,34 @@ export default async function BeritaPage({
                       <div className="grid-inner row align-items-start g-0">
                         <div className="col-auto">
                           <div className="entry-image">
-                            <Link href={`${langPrefix}/berita/show/${item.id}`}>
+                            <a href={`${langPrefix}/berita/show/${item.id}`}>
                               <Image
                                 src={item.cover}
                                 alt={item.judul}
                                 width={400}
                                 height={200}
                               />
-                            </Link>
+                            </a>
                           </div>
                         </div>
                         <div className="col ps-3">
                           <div className="entry-title">
                             <h4 className="fw-semibold berita-sidebar-title">
-                              <Link href={`${langPrefix}/berita/show/${item.id}`}>
+                              <a href={`${langPrefix}/berita/show/${item.id}`}>
                                 {item.judul}
-                              </Link>
+                              </a>
                             </h4>
                           </div>
                           <div className="entry-meta">
                             <ul>
                               <li style={{ color: "black" }}>
                                 <i className="icon-calendar3"></i>
-                                <Link
+                                <a
                                   href={`${langPrefix}/berita/show/${item.id}`}
                                   style={{ color: "black" }}
                                 >
                                   {formatDate(item.waktu, lang)}
-                                </Link>
+                                </a>
                               </li>
                               <li style={{ color: "black" }}>
                                 <i className="icon-eye"></i>

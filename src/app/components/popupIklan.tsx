@@ -1,6 +1,5 @@
 import React from "react";
 import Image from "next/image";
-import Link from "next/link";
 
 const PopupIklan = ({ onClose }: { onClose: () => void }) => {
   return (
@@ -14,7 +13,7 @@ const PopupIklan = ({ onClose }: { onClose: () => void }) => {
       >
         <div className="modal-dialog modal-lg">
           <div className="modal-content">
-            <Link
+            <a
               href="https://tvku.tv/advertisement/uploads/Iklan_25-03-05-11-01-35.jpeg"
               target="_blank"
               className="bunga-center"
@@ -27,7 +26,7 @@ const PopupIklan = ({ onClose }: { onClose: () => void }) => {
                 style={{ width: "100%", height: "auto" }}
                 className="bunga-center"
               ></Image>
-            </Link>
+            </a>
             <br />
             <button
               onClick={onClose}

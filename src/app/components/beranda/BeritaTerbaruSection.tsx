@@ -2,7 +2,6 @@
 import React, { useEffect, useRef, useState } from "react";
 import { berita, jadwalAcara } from "../../types";
 import Image from "next/image";
-import Link from "next/link";
 import { formatDate } from "@/app/utils/dateFormatter";
 import { Locale } from "@/app/dictionaries";
 

@@ -1,5 +1,4 @@
 import React from "react";
-import Link from "next/link";
 import Image from "next/image";
 import SocialMedia from "./socialMedia";
 import { berita } from "@/app/types";
@@ -33,7 +32,7 @@ const SideBar: React.FC<SideBarProps> = ({ recentPosts, popularPosts, lang = "id
                   <div className="grid-inner row align-items-start g-0">
                     <div className="col-auto">
                       <div className="entry-image mb-0">
-                        <Link href={`${langPrefix}/berita/show/${item.id}`}>
+                        <a href={`${langPrefix}/berita/show/${item.id}`}>
                           <Image
                             src={item.cover}
                             alt={item.judul}
@@ -42,15 +41,15 @@ const SideBar: React.FC<SideBarProps> = ({ recentPosts, popularPosts, lang = "id
                             className="rounded"
                             style={{ width: "80px", height: "50px", objectFit: "cover" }}
                           />
-                        </Link>
+                        </a>
                       </div>
                     </div>
                     <div className="col ps-3">
                       <div className="entry-title">
                         <h4 className="fw-semibold mb-1" style={{ fontSize: "0.95rem", lineHeight: "1.3" }}>
-                          <Link href={`${langPrefix}/berita/show/${item.id}`} className="text-dark">
+                          <a href={`${langPrefix}/berita/show/${item.id}`} className="text-dark">
                             {item.judul}
-                          </Link>
+                          </a>
                         </h4>
                       </div>
                       <div className="entry-meta">
@@ -86,7 +85,7 @@ const SideBar: React.FC<SideBarProps> = ({ recentPosts, popularPosts, lang = "id
                   <div className="grid-inner row align-items-start g-0">
                     <div className="col-auto">
                       <div className="entry-image mb-0">
-                        <Link href={`${langPrefix}/berita/show/${item.id}`}>
+                        <a href={`${langPrefix}/berita/show/${item.id}`}>
                           <Image
                             src={item.cover}
                             alt={item.judul}
@@ -95,15 +94,15 @@ const SideBar: React.FC<SideBarProps> = ({ recentPosts, popularPosts, lang = "id
                             className="rounded"
                             style={{ width: "80px", height: "50px", objectFit: "cover" }}
                           />
-                        </Link>
+                        </a>
                       </div>
                     </div>
                     <div className="col ps-3">
                       <div className="entry-title">
                         <h4 className="fw-semibold mb-1" style={{ fontSize: "0.95rem", lineHeight: "1.3" }}>
-                          <Link href={`${langPrefix}/berita/show/${item.id}`} className="text-dark">
+                          <a href={`${langPrefix}/berita/show/${item.id}`} className="text-dark">
                             {item.judul}
-                          </Link>
+                          </a>
                         </h4>
                       </div>
                       <div className="entry-meta">

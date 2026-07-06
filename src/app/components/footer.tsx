@@ -3,7 +3,6 @@
 import React, { useEffect, useState } from "react";
 import apiClient from "../utils/apiClient";
 import { recentPostFooter, kategori } from "../types";
-import Link from "next/link";
 import Image from "next/image";
 import { htmlToText } from "html-to-text";
 

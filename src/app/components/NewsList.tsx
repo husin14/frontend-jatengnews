@@ -1,5 +1,4 @@
 import React from "react";
-import Link from "next/link";
 import Image from "next/image";
 import { berita } from "@/app/types";
 
@@ -21,7 +20,7 @@ export const NewsList: React.FC<NewsListProps> = ({ news, lang }) => {
           <div className="entry row mb-custom">
             <div className="col-md-6">
               <div className="entry-image">
-                <Link href={`${langPrefix}/berita/show/${item.id}`}>
+                <a href={`${langPrefix}/berita/show/${item.id}`}>
                   <Image
                     src={item.cover}
                     alt={item.judul}
@@ -29,15 +28,15 @@ export const NewsList: React.FC<NewsListProps> = ({ news, lang }) => {
                     height={300}
                     className="rounded"
                   />
-                </Link>
+                </a>
               </div>
             </div>
             <div className="col-md-6 mt-3 mt-md-0">
               <div className="entry-title title-sm nott">
                 <h3>
-                  <Link href={`${langPrefix}/berita/show/${item.id}`}>
+                  <a href={`${langPrefix}/berita/show/${item.id}`}>
                     {item.judul}
-                  </Link>
+                  </a>
                 </h3>
               </div>
               <div className="entry-meta">

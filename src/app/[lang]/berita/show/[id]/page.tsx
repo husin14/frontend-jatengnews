@@ -2,7 +2,6 @@
 
 import React, { useEffect, useState } from "react";
 import { useParams, usePathname } from "next/navigation";
-import Link from "next/link";
 import Image from "next/image";
 import apiClient from "@/app/utils/apiClient";
 
@@ -167,9 +166,9 @@ export default function BeritaDetailPage() {
         <div className="col-lg-8">
           {berita.kategori && !berita.cover && (
             <div className="mb-3 ms-2">
-              <Link href={`${langPrefix}/berita/${berita.kategori.id_kategori}`} className="badge bg-secondary text-white p-2">
+              <a href={`${langPrefix}/berita/${berita.kategori.id_kategori}`} className="badge bg-secondary text-white p-2">
                 {berita.kategori.nama}
-              </Link>
+              </a>
             </div>
           )}
 
@@ -215,9 +214,9 @@ export default function BeritaDetailPage() {
                 />
                 {berita.kategori && (
                   <div className="entry-categories">
-                    <Link href={`${langPrefix}/berita/${berita.kategori.id_kategori}`} className="bg-travel">
+                    <a href={`${langPrefix}/berita/${berita.kategori.id_kategori}`} className="bg-travel">
                       {berita.kategori.nama}
-                    </Link>
+                    </a>
                   </div>
                 )}
               </div>
@@ -247,7 +246,7 @@ export default function BeritaDetailPage() {
                     <div className="grid-inner row align-items-start gutter-20">
                       <div className="col-4">
                         <div className="entry-image mb-0">
-                          <Link href={`${langPrefix}/berita/show/${item.id}`}>
+                          <a href={`${langPrefix}/berita/show/${item.id}`}>
                             <Image
                               src={item.cover}
                               alt={item.judul}
@@ -256,15 +255,15 @@ export default function BeritaDetailPage() {
                               className="rounded"
                               style={{ width: "100%", height: "auto" }}
                             />
-                          </Link>
+                          </a>
                         </div>
                       </div>
                       <div className="col-8">
                         <div className="entry-title title-xs mb-2">
                           <h3 className="mb-0">
-                            <Link href={`${langPrefix}/berita/show/${item.id}`}>
+                            <a href={`${langPrefix}/berita/show/${item.id}`}>
                               {item.judul}
-                            </Link>
+                            </a>
                           </h3>
                         </div>
                         <div className="entry-meta">

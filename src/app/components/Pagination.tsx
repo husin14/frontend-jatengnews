@@ -1,5 +1,4 @@
 import React from "react";
-import Link from "next/link";
 
 interface PaginationProps {
   currentPage: number;
@@ -66,15 +65,15 @@ export const Pagination: React.FC<PaginationProps> = ({
       <div className="text-center">
         <ul className="pagination pagination-rounded flex-wrap justify-center">
           <li className={`page-item ${firstpage_class}`}>
-            <Link className="page-link" href={getPageUrl(1)} aria-label="First">
+            <a className="page-link" href={getPageUrl(1)} aria-label="First">
               <span aria-hidden="true">&laquo;</span>
-            </Link>
+            </a>
           </li>
 
           <li className={`page-item ${previouspage_class}`}>
-            <Link className="page-link" href={getPageUrl(previous_page)} aria-label="Previous">
+            <a className="page-link" href={getPageUrl(previous_page)} aria-label="Previous">
               <span aria-hidden="true">&lsaquo;</span>
-            </Link>
+            </a>
           </li>
 
           {displayedPages.map((pageNumber, index) => (
@@ -85,9 +84,9 @@ export const Pagination: React.FC<PaginationProps> = ({
               } ${typeof pageNumber === "string" ? "disabled" : ""}`}
             >
               {typeof pageNumber === "number" ? (
-                <Link href={getPageUrl(pageNumber)} className="page-link">
+                <a href={getPageUrl(pageNumber)} className="page-link">
                   {pageNumber}
-                </Link>
+                </a>
               ) : (
                 <span className="page-link">{pageNumber}</span>
               )}
@@ -95,15 +94,15 @@ export const Pagination: React.FC<PaginationProps> = ({
           ))}
 
           <li className={`page-item ${nextpage_class}`}>
-            <Link className="page-link" href={getPageUrl(next_page)} aria-label="Next">
+            <a className="page-link" href={getPageUrl(next_page)} aria-label="Next">
               <span aria-hidden="true">&rsaquo;</span>
-            </Link>
+            </a>
           </li>
 
           <li className={`page-item ${lastpage_class}`}>
-            <Link className="page-link" href={getPageUrl(lastPage)} aria-label="Last">
+            <a className="page-link" href={getPageUrl(lastPage)} aria-label="Last">
               <span aria-hidden="true">&raquo;</span>
-            </Link>
+            </a>
           </li>
         </ul>
       </div>

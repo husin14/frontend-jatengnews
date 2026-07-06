@@ -2,7 +2,6 @@
 
 import React, { useState, useEffect, useRef, useCallback } from "react";
 import apiClient from "@/app/utils/apiClient";
-import Link from "next/link";
 import Image from "next/image";
 import { SeputarUdinusSlide } from "@/app/types";
 
@@ -87,12 +86,12 @@ function SliderRow({ item }: SliderRowProps) {
         <div style={{ marginBottom: "10px" }}>
           <span className="myslick-title">{item.judul}</span>
           {" | "}
-          <Link
+          <a
             href={`/seputarudinus/title/${item.id}`}
             className="agrey"
           >
             more..
-          </Link>
+          </a>
         </div>
 
         <div
@@ -117,7 +116,7 @@ function SliderRow({ item }: SliderRowProps) {
               }}
             >
               {relatedSlides.map((slide, index) => (
-                <Link
+                <a
                   key={slide.id}
                   href={`/seputarudinus/content/${slide.id}`}
                   className="myslick-a text-decoration-none"
@@ -141,7 +140,7 @@ function SliderRow({ item }: SliderRowProps) {
                       {slide.teks}
                     </div>
                   </div>
-                </Link>
+                </a>
               ))}
             </div>
           </div>
@@ -229,7 +228,7 @@ export default function Page() {
           <h1>Seputar Udinus</h1>
           <ol className="breadcrumb">
             <li className="breadcrumb-item">
-              <Link href="/">Home</Link>
+              <a href="/">Home</a>
             </li>
             <li className="breadcrumb-item active" aria-current="page">
               Seputar Udinus

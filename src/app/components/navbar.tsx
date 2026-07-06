@@ -3,9 +3,8 @@
 import React, { useEffect, useState, useCallback } from "react";
 import apiClient from "../utils/apiClient";
 import { kategori as KategoriType, berita as BeritaType } from "../types";
-import Link from "next/link";
 import Image from "next/image";
-import { usePathname, useRouter } from "next/navigation";
+import { usePathname } from "next/navigation";
 import { formatDate } from "../utils/dateFormatter";
 
 interface NavbarProps {
@@ -23,7 +22,6 @@ const Navbar = ({
   lang: propLang,
   dictionary: propDictionary,
 }: NavbarProps) => {
-  const router = useRouter();
   const pathname = usePathname();
 
   useEffect(() => {
@@ -184,9 +182,9 @@ const Navbar = ({
     const newPrefix = newLang === "id" ? "" : `/${newLang}`;
     if (pathname.startsWith(`/${activeLang}/berita`)) {
       const newPathname = pathname.replace(`/${activeLang}/`, `${newPrefix}/`);
-      router.push(newPathname);
+      window.location.href = newPathname;
     } else {
-      router.push(`${newPrefix}/berita`);
+      window.location.href = `${newPrefix}/berita`;
     }
   };
 
@@ -221,12 +219,12 @@ const Navbar = ({
                 </li>
                 {categories.slice(0, 5).map((item, idx) => (
                   <li key={idx} className="menu-item menu-color-home">
-                    <Link
+                    <a
                       className="menu-link"
                       href={`${langPrefix}/berita/${item.id_kategori}`}
                     >
                       <div>{item.nama}</div>
-                    </Link>
+                    </a>
                   </li>
                 ))}
                 <li className="menu-item mega-menu menu-item-lainnya"
@@ -263,7 +261,7 @@ const Navbar = ({
                               }}
                             >
                               {categories.slice(5, 16).map((item) => (
-                                <Link
+                                <a
                                   key={item.id_kategori}
                                   className={`nav-link bg-color-home ${
                                     activeMegaMenuCategory === item.id_kategori
@@ -278,7 +276,7 @@ const Navbar = ({
                                   href={`${langPrefix}/berita/${item.id_kategori}`}
                                 >
                                   {item.nama}
-                                </Link>
+                                </a>
                               ))}
                             </div>
                           </li>
@@ -300,7 +298,7 @@ const Navbar = ({
                                     <div className="col-4" key={item.id}>
                                       <div className="entry">
                                         <div className="entry-image mb-3">
-                                          <Link
+                                          <a
                                             href={`${langPrefix}/berita/show/${item.id}`}
                                           >
                                             <Image
@@ -310,23 +308,23 @@ const Navbar = ({
                                               height={200}
                                               objectFit="fill"
                                             />
-                                          </Link>
+                                          </a>
                                           <div className="entry-categories">
-                                            <Link
+                                            <a
                                               href={`${langPrefix}/berita/${item.kategori?.id_kategori}`}
                                               className="bg-lifestyle"
                                             >
                                               {item.kategori?.nama}
-                                            </Link>
+                                            </a>
                                           </div>
                                         </div>
                                         <div className="entry-title title-xs nott">
                                           <h3 className="mb-1">
-                                            <Link
+                                            <a
                                               href={`${langPrefix}/berita/show/${item.id}`}
                                             >
                                               {item.judul}
-                                            </Link>
+                                            </a>
                                           </h3>
                                         </div>
                                         <div className="entry-meta">
@@ -406,7 +404,7 @@ const Navbar = ({
                 const query = formData.get("search") as string;
                 if (query && query.trim()) {
                   const langPrefix = activeLang === "id" ? "" : `/${activeLang}`;
-                  router.push(`${langPrefix}/berita/search?search=${encodeURIComponent(query.trim())}`);
+                  window.location.href = `${langPrefix}/berita/search?search=${encodeURIComponent(query.trim())}`;
                   if (typeof window !== "undefined" && window.jQuery) {
                     window.jQuery("body").removeClass("top-search-open");
                   }
