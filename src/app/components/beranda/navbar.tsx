@@ -89,10 +89,12 @@ export default function Navbar({
     window.location.href = newPathname || "/";
   };
 
+  const isHomepage = pathname === "/" || pathname === "/en";
+
   return (
     <header
       id="header"
-      className="full-header transparent-header"
+      className={`full-header transparent-header${isHomepage ? " navbar-home" : ""}`}
       data-sticky-class="not-dark"
     >
       <div id="header-wrap">

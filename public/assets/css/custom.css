@@ -21,6 +21,19 @@ body, h1, h2, h3, h4, h5, h6 {
   color: #000000 !important;
 }
 
+/* Homepage: white navbar text when transparent (non-sticky) */
+.navbar-home.transparent-header:not(.sticky-header) .menu-link {
+  color: #ffffff !important;
+}
+
+.navbar-home.transparent-header:not(.sticky-header) .menu-link:hover {
+  color: #1B91CE !important;
+}
+
+.navbar-home.transparent-header:not(.sticky-header) .svg-trigger path {
+  stroke: #ffffff !important;
+}
+
 @media (min-width: 992px) {
   /* High specificity selectors to override theme dark/transparent logic */
   #header.transparent-header.floating-header .primary-menu .menu-container > .menu-item > .menu-link,
@@ -43,6 +56,15 @@ body, h1, h2, h3, h4, h5, h6 {
   .primary-menu .menu-container > .menu-item:hover > .menu-link {
     color: #1B91CE !important;
   }
+
+  /* Homepage: override the high-specificity black with white */
+  #header.navbar-home.transparent-header:not(.sticky-header) .primary-menu .menu-container > .menu-item > .menu-link {
+    color: #ffffff !important;
+  }
+
+  #header.navbar-home.transparent-header:not(.sticky-header) .primary-menu .menu-container > .menu-item:hover > .menu-link {
+    color: #1B91CE !important;
+  }
 }
 
 @media (max-width: 991.98px) {
@@ -50,7 +72,15 @@ body, h1, h2, h3, h4, h5, h6 {
     color: #000 !important;
   }
 
+  .navbar-home.transparent-header:not(.sticky-header) .menu-link {
+    color: #000 !important;
+  }
+
   .transparent-header .svg-trigger path {
+    stroke: #000 !important;
+  }
+
+  .navbar-home.transparent-header:not(.sticky-header) .svg-trigger path {
     stroke: #000 !important;
   }
 }
