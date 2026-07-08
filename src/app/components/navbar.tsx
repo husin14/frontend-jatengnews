@@ -1,6 +1,6 @@
 "use client";
 
-import React, { useEffect, useState, useCallback } from "react";
+import React, { useEffect, useState, useCallback, useMemo } from "react";
 import apiClient from "../utils/apiClient";
 import { kategori as KategoriType, berita as BeritaType } from "../types";
 import Image from "next/image";
@@ -79,6 +79,28 @@ const Navbar = ({
     number | null
   >(null);
   const [loadingMegaMenuNews, setLoadingMegaMenuNews] = useState(false);
+
+  const sortedCategories = useMemo(() => {
+    const moveToFront = ["pendidikan", "kesehatan"];
+    const moveToBack = ["pemilu", "liputan khusus"];
+
+    const frontItems: KategoriType[] = [];
+    const backItems: KategoriType[] = [];
+    const middleItems: KategoriType[] = [];
+
+    categories.forEach((cat) => {
+      const name = cat.nama.toLowerCase();
+      if (moveToFront.includes(name)) {
+        frontItems.push(cat);
+      } else if (moveToBack.includes(name)) {
+        backItems.push(cat);
+      } else {
+        middleItems.push(cat);
+      }
+    });
+
+    return [...frontItems, ...middleItems, ...backItems];
+  }, [categories]);
 
   const dictionary = propDictionary || {
     Navbar: {
@@ -217,7 +239,7 @@ const Navbar = ({
                     <div>Beranda</div>
                   </a>
                 </li>
-                {categories.slice(0, 5).map((item, idx) => (
+                {sortedCategories.slice(0, 5).map((item, idx) => (
                   <li key={idx} className="menu-item menu-color-home">
                     <a
                       className="menu-link"
@@ -260,7 +282,7 @@ const Navbar = ({
                                 gap: "5px 10px",
                               }}
                             >
-                              {categories.slice(5, 16).map((item) => (
+                              {sortedCategories.slice(5, 16).map((item) => (
                                 <a
                                   key={item.id_kategori}
                                   className={`nav-link bg-color-home ${
