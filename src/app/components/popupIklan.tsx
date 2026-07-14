@@ -60,7 +60,6 @@ const PopupIklan = ({ onClose }: { onClose: () => void }) => {
                   background: "none",
                   border: "none",
                   cursor: "pointer",
-                  padding: "8px",
                 }}
               >
                 <svg
@@ -80,14 +79,7 @@ const PopupIklan = ({ onClose }: { onClose: () => void }) => {
               </button>
             </div>
 
-            <div
-              className="video-wrapper"
-              style={{
-                width: "100%",
-                aspectRatio: "16 / 9",
-                margin: "0 auto",
-              }}
-            >
+            <div className="video-wrapper">
               <iframe
                 ref={iframeRef}
                 id="ytplayer"

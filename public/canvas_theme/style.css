@@ -16852,7 +16852,7 @@ label.checkbox { padding-left: 20px; }
     margin: auto;
     padding: 0;
     border: none;
-    width: 95%;
+    width: fit-content;
     border-radius: 10px;
   }
 
@@ -16879,16 +16879,19 @@ label.checkbox { padding-left: 20px; }
   }
 
   #buttonclosemodal{
-    margin-top: 10px;
+    margin-top: 0;
+    padding: 0;
   }
 
   .modal-header-custom {
     display: flex;
     justify-content: flex-end;
+    padding: 4px 8px 0;
   }
 
   .video-wrapper {
-    width: 100%;
+    width: 80vw;
+    max-width: 9000px;
     aspect-ratio: 16/9;
     margin: 0 auto;
   }
@@ -16920,6 +16923,6 @@ label.checkbox { padding-left: 20px; }
     }
 
     .modal-content {
-      width: 80%;
+      width: fit-content;
     }
   }
