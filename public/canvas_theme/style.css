@@ -16833,10 +16833,9 @@ label.checkbox { padding-left: 20px; }
   
   /* The Modal (background) */
   .modal {
-    display: block; /* Hidden by default */
+    display: flex; /* Flexbox for centering */
     position: fixed; /* Stay in place */
     z-index: 300; /* Sit on top */
-    padding-top: 70px; /* Location of the box */
     left: 0;
     top: 0;
     width: 100%; /* Full width */
@@ -16844,16 +16843,32 @@ label.checkbox { padding-left: 20px; }
     overflow: auto; /* Enable scroll if needed */
     background-color: rgb(0,0,0); /* Fallback color */
     background-color: rgba(0,0,0,0.4); /* Black w/ opacity */
+    justify-content: center; /* Center horizontally */
+    align-items: center; /* Center vertically */
   }
 
   /* Modal Content */
   .modal-content {
     background-color: #fefefe;
-    margin: auto;
+    margin: 0;
     padding: 0;
     border: none;
     width: fit-content;
     border-radius: 10px;
+  }
+
+  /* Modal wrapper for flex centering */
+  .bs-example-modal-lg {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+  }
+
+  .modal-dialog {
+    margin: 0;
+    display: flex;
+    justify-content: center;
+    align-items: center;
   }
 
   /* The Close Button */
@@ -16916,10 +16931,6 @@ label.checkbox { padding-left: 20px; }
     .icon-close {
       width: 20px !important;
       height: 20px !important;
-    }
-
-    .modal {
-      padding-top: 10px;
     }
 
     .modal-content {
