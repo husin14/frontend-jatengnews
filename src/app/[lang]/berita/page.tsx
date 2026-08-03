@@ -29,7 +29,7 @@ export default async function BeritaPage({
     const featureUrl =
       lang === "en"
         ? `/berita-translations?language_code=en&id_kategori=19`
-        : `/berita?id_kategori=19`;
+        : `/berita-public?id_kategori=19`;
 
     const [beritaResponse, featureResponse, kategoriResponse, dictionaryResponse] =
       await Promise.all([
