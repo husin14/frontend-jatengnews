@@ -18,6 +18,13 @@ const nextConfig: NextConfig = {
     remotePatterns: [
       {
         protocol: 'https',
+        hostname: 'api.tvku.tv',
+        port: '',
+        pathname: '/**',
+        search: '',
+      },
+      {
+        protocol: 'https',
         hostname: 'apidev.tvku.tv',
         port: '',
         pathname: '/**',

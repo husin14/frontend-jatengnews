@@ -11,6 +11,7 @@ import DisqusComment from "@/app/components/disqus";
 import PopupIklan from "@/app/components/popupIklan";
 import YtPreview from "@/app/components/yt-preview";
 import { formatDate } from "@/app/utils/dateFormatter";
+import useBannerImpression from "@/app/hooks/useBannerImpression";
 
 export default function BeritaDetailPage() {
   const params = useParams();
@@ -36,6 +37,8 @@ export default function BeritaDetailPage() {
   useEffect(() => {
     setShowIklan(true);
   }, []);
+
+  useBannerImpression(berita);
 
   const handleCloseIklan = () => {
     setShowIklan(false);
