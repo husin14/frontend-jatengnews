@@ -54,7 +54,7 @@ export default function useBannerImpression(trigger?: unknown) {
           Math.max(0, Math.min(rect.bottom, vh) - Math.max(rect.top, 0));
         const ratio = Math.min(1, visibleHeight / rect.height);
 
-        if (ratio >= 0.85) {
+        if (ratio >= 0.7) {
           log(`banner ${id}: ratio=${ratio.toFixed(2)}, starting 1s timer`);
           timers.set(
             id,
