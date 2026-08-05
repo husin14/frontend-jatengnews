@@ -2,36 +2,12 @@
 
 import { useEffect } from "react";
 import apiClient from "@/app/utils/apiClient";
-
-// Prefix key localStorage untuk menyimpan waktu impresi terakhir per banner
-const STORAGE_PREFIX = "tvku_ads_impression_";
-// Jika refresh dan banner yang sama sudah tercatat dalam 30 detik terakhir,
-// impresi baru tidak dihitung (dedup antar refresh).
-const DEDUP_WINDOW_MS = 30_000;
-
-// Ambil timestamp impresi terakhir untuk sebuah banner (0 = belum pernah)
-const readLastImpression = (id: string): number => {
-  try {
-    const raw = window.localStorage.getItem(STORAGE_PREFIX + id);
-    return raw ? Number(raw) || 0 : 0;
-  } catch {
-    return 0;
-  }
-};
-
-// Simpan timestamp impresi terakhir untuk sebuah banner
-const saveImpression = (id: string) => {
-  try {
-    window.localStorage.setItem(STORAGE_PREFIX + id, String(Date.now()));
-  } catch {}
-};
-
-// Hapus timestamp impresi sebuah banner
-const clearImpression = (id: string) => {
-  try {
-    window.localStorage.removeItem(STORAGE_PREFIX + id);
-  } catch {}
-};
+import {
+  STORAGE_PREFIX_IMPRESSION,
+  saveRecorded,
+  clearRecorded,
+  isWithinWindow,
+} from "@/app/utils/adsCounterStorage";
 
 /**
  * Hook untuk mencatat "impression" banner iklan.
@@ -79,13 +55,13 @@ export default function useBannerImpression(trigger?: unknown) {
         .post("/ads-impression", { ads_id: Number(id) })
         .then(() => {
           // simpan waktu impresi agar tidak dihitung lagi bila refresh < 30 detik
-          saveImpression(id);
+          saveRecorded(STORAGE_PREFIX_IMPRESSION, id);
           log(`recorded impression for banner ${id}`);
         })
         .catch((err) => {
           // gagal dikirim -> hapus dari counted & riwayat agar bisa dicoba lagi
           counted.delete(id);
-          clearImpression(id);
+          clearRecorded(STORAGE_PREFIX_IMPRESSION, id);
           console.error(`[banner-impression] failed to record banner ${id}`, err);
         });
     };
@@ -115,8 +91,7 @@ export default function useBannerImpression(trigger?: unknown) {
         if (counted.has(id) || timers.has(id)) return;
 
         // dedup antar refresh: banner yang sama tercatat < 30 detik lalu -> skip
-        const lastImpression = readLastImpression(id);
-        if (lastImpression > 0 && Date.now() - lastImpression < DEDUP_WINDOW_MS) {
+        if (isWithinWindow(STORAGE_PREFIX_IMPRESSION, id)) {
           counted.add(id);
           log(`banner ${id}: impresi baru di-skip (masih dalam jendela 30 detik)`);
           return;

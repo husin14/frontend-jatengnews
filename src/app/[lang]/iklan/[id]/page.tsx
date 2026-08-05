@@ -3,6 +3,12 @@
 import React, { useEffect, useRef, useState } from "react";
 import { useParams } from "next/navigation";
 import apiClient from "@/app/utils/apiClient";
+import {
+  STORAGE_PREFIX_CLICK,
+  saveRecorded,
+  clearRecorded,
+  isWithinWindow,
+} from "@/app/utils/adsCounterStorage";
 
 interface IklanData {
   id: number;
@@ -16,7 +22,6 @@ interface IklanData {
 export default function IklanDetailPage() {
   const params = useParams();
   const id = params.id as string;
-  const lang = (params.lang as "id" | "en") || "id";
 
   const [iklan, setIklan] = useState<IklanData | null>(null);
   const [loading, setLoading] = useState(true);
@@ -45,13 +50,27 @@ export default function IklanDetailPage() {
 
   useEffect(() => {
     if (!id || clickRecorded.current) return;
+
+    // rate-limit klik: iklan yang sama sudah diklik < 30 detik lalu -> jangan dicatat
+    if (isWithinWindow(STORAGE_PREFIX_CLICK, id)) {
+      clickRecorded.current = true;
+      console.log(
+        `[ads-click] di-skip untuk iklan ${id} (masih dalam jendela 30 detik)`
+      );
+      return;
+    }
+
     clickRecorded.current = true;
 
     apiClient
       .post("/ads-click", { ads_id: Number(id) })
-      .then(() => console.log("[ads-click] recorded for iklan", id))
+      .then(() => {
+        saveRecorded(STORAGE_PREFIX_CLICK, id);
+        console.log("[ads-click] recorded for iklan", id);
+      })
       .catch((err) => {
         clickRecorded.current = false;
+        clearRecorded(STORAGE_PREFIX_CLICK, id);
         console.error("[ads-click] gagal mencatat klik", err);
       });
   }, [id]);
