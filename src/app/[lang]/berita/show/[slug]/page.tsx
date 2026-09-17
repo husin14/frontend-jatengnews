@@ -16,7 +16,7 @@ import useBannerImpression from "@/app/hooks/useBannerImpression";
 export default function BeritaDetailPage() {
   const params = useParams();
   const pathname = usePathname();
-  const id = params.id as string;
+  const slug = params.slug as string;
   const lang = (params.lang as "id" | "en") || "id";
 
   const [berita, setBerita] = useState<berita | null>(null);
@@ -45,7 +45,7 @@ export default function BeritaDetailPage() {
   };
 
   useEffect(() => {
-    if (!id || !lang) return;
+    if (!slug || !lang) return;
 
     const fetchData = async () => {
       setLoading(true);
@@ -54,13 +54,18 @@ export default function BeritaDetailPage() {
       try {
         const beritaDetailUrl =
           lang === "en"
-            ? `/berita-translations?language_code=en&id_berita_master=${id}`
-            : `/berita-public/${id}`;
+            ? `/berita-translations`
+            : `/berita-public/${slug}`;
+
+        const beritaDetailParams =
+          lang === "en"
+            ? { language_code: "en", berita_slug: slug, path_berita: pathBerita }
+            : { path_berita: pathBerita };
 
         const dictionaryUrl = `/dictionaries/${lang}.json`;
 
         const [beritaResponse, dictionaryResponse] = await Promise.all([
-          apiClient.get(beritaDetailUrl, { params: { path_berita: pathBerita } }),
+          apiClient.get(beritaDetailUrl, { params: beritaDetailParams }),
           fetch(dictionaryUrl).then(res => res.json()),
         ]);
 
@@ -85,7 +90,7 @@ export default function BeritaDetailPage() {
     };
 
     fetchData();
-  }, [id, lang]);
+  }, [slug, lang]);
 
   useEffect(() => {
     if (!berita || !lang) return;
@@ -159,7 +164,7 @@ export default function BeritaDetailPage() {
   }
 
   // URL kanonis untuk Disqus dan social share
-  const pageUrl = `${frontendUrl}${langPrefix}/berita/show/${id}`;
+  const pageUrl = `${frontendUrl}${langPrefix}/berita/show/${slug}`;
 
   return (
     <>
@@ -236,8 +241,8 @@ export default function BeritaDetailPage() {
           
           <DisqusComment
             url={pageUrl}
-            identifier={id} 
-            shortname="tvku" 
+            identifier={String(berita.id)}
+            shortname="tvku"
           />
 
           {relatedBerita.length > 0 && (
@@ -249,7 +254,7 @@ export default function BeritaDetailPage() {
                     <div className="grid-inner row align-items-start gutter-20">
                       <div className="col-4">
                         <div className="entry-image mb-0">
-                          <a href={`${langPrefix}/berita/show/${item.id}`}>
+                          <a href={`${langPrefix}/berita/show/${item.slug || item.id}`}>
                             <Image
                               src={item.cover}
                               alt={item.judul}
@@ -264,7 +269,7 @@ export default function BeritaDetailPage() {
                       <div className="col-8">
                         <div className="entry-title title-xs mb-2">
                           <h3 className="mb-0">
-                            <a href={`${langPrefix}/berita/show/${item.id}`}>
+                            <a href={`${langPrefix}/berita/show/${item.slug || item.id}`}>
                               {item.judul}
                             </a>
                           </h3>

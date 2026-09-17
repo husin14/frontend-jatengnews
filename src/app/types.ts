@@ -17,6 +17,7 @@ export interface recentPostFooter {
 export interface berita {
   id: number;
   judul: string;
+  slug: string;
   cover: string;
   deskripsi: string;
   waktu_publish: string; 

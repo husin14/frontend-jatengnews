@@ -88,7 +88,7 @@ export default async function BeritaPage({
               <div className="entry">
                 <div className="entry-image">
                   <a
-                    href={`${langPrefix}/berita/show/${beritaTerbaru[0].id
+                    href={`${langPrefix}/berita/show/${beritaTerbaru[0].slug || beritaTerbaru[0].id
                       }`}
                   >
                     <Image
@@ -106,7 +106,7 @@ export default async function BeritaPage({
                 <div className="entry-title title-sm">
                   <h3 style={{ marginBottom: '0px' }}>
                     <a
-                      href={`${langPrefix}/berita/show/${beritaTerbaru[0].id
+                      href={`${langPrefix}/berita/show/${beritaTerbaru[0].slug || beritaTerbaru[0].id
                         }`}
                     >
                       {beritaTerbaru[0].judul}
@@ -140,7 +140,7 @@ export default async function BeritaPage({
                 <div className="grid-inner row g-0">
                   <div className="col-auto">
                     <div className="entry-image">
-                      <a href={`${langPrefix}/berita/show/${item.id}`}>
+                      <a href={`${langPrefix}/berita/show/${item.slug || item.id}`}>
                         <Image
                           src={
                             item.cover ||
@@ -157,7 +157,7 @@ export default async function BeritaPage({
                     <div className="entry-title">
                       <h4 className="berita-sidebar-title">
                         <a
-                          href={`${langPrefix}/berita/show/${item.id}`}
+                          href={`${langPrefix}/berita/show/${item.slug || item.id}`}
                         >
                           {item.judul}
                         </a>
@@ -219,7 +219,7 @@ export default async function BeritaPage({
                   <div className="posts-md">
                     <div className="entry">
                       <div className="entry-image">
-                        <a href={`${langPrefix}/berita/show/${data.id}`}>
+                        <a href={`${langPrefix}/berita/show/${data.slug || data.id}`}>
                           <Image
                             src={data.cover}
                             alt={data.judul}
@@ -230,7 +230,7 @@ export default async function BeritaPage({
                         </a>
                         <div className="entry-categories">
                           <a
-                            href={`${langPrefix}/berita/show/${data.id}`}
+                            href={`${langPrefix}/berita/show/${data.slug || data.id}`}
                             className="bg-travel"
                           >
                             {data.kategori?.nama || "Uncategorized"}
@@ -239,7 +239,7 @@ export default async function BeritaPage({
                       </div>
                       <div className="entry-title nott">
                         <h3 className="mb-2">
-                          <a href={`${langPrefix}/berita/show/${data.id}`}>{data.judul}</a>
+                          <a href={`${langPrefix}/berita/show/${data.slug || data.id}`}>{data.judul}</a>
                         </h3>
                       </div>
                       <div className="entry-meta">
@@ -267,7 +267,7 @@ export default async function BeritaPage({
                         <div className="grid-inner row align-items-start g-0">
                           <div className="col-auto">
                             <div className="entry-image">
-                              <a href={`${langPrefix}/berita/show/${item.id}`}>
+                              <a href={`${langPrefix}/berita/show/${item.slug || item.id}`}>
                                 <Image
                                   src={item.cover}
                                   alt={item.judul}
@@ -281,7 +281,7 @@ export default async function BeritaPage({
                             <div className="entry-title">
                               <h4 style={{ marginTop: '-5px' }}>
                                 <a
-                                  href={`${langPrefix}/berita/show/${item.id}`}
+                                  href={`${langPrefix}/berita/show/${item.slug || item.id}`}
                                 >
                                   {item.judul}
                                 </a>
@@ -312,7 +312,7 @@ export default async function BeritaPage({
                       <div className="posts-md">
                         <div className="entry">
                           <div className="entry-image">
-                            <a href={`${langPrefix}/berita/show/${item.id}`}>
+                            <a href={`${langPrefix}/berita/show/${item.slug || item.id}`}>
                               <Image
                                 src={item.cover}
                                 alt={item.judul}
@@ -323,7 +323,7 @@ export default async function BeritaPage({
                             </a>
                             <div className="entry-categories">
                               <a
-                                href={`${langPrefix}/berita/show/${item.id}`}
+                                href={`${langPrefix}/berita/show/${item.slug || item.id}`}
                                 className="bg-lifestyle"
                               >
                                 {item.kategori?.nama || "Uncategorized"}
@@ -332,7 +332,7 @@ export default async function BeritaPage({
                           </div>
                           <div className="entry-title title-sm nott">
                             <h3 className="mb-2">
-                              <a href={`${langPrefix}/berita/show/${item.id}`}>
+                              <a href={`${langPrefix}/berita/show/${item.slug || item.id}`}>
                                 {item.judul}
                               </a>
                             </h3>
@@ -365,7 +365,7 @@ export default async function BeritaPage({
                       <div className="grid-inner row align-items-start no-gutter">
                         <div className="col-auto">
                           <div className="entry-image">
-                            <a href={`${langPrefix}/berita/show/${item.id}`}>
+                            <a href={`${langPrefix}/berita/show/${item.slug || item.id}`}>
                               <Image
                                 src={item.cover}
                                 alt={item.judul}
@@ -378,7 +378,7 @@ export default async function BeritaPage({
                         <div className="col ps-3">
                           <div className="entry-title">
                             <h4 className="fw-medium">
-                              <a href={`${langPrefix}/berita/show/${item.id}`}>
+                              <a href={`${langPrefix}/berita/show/${item.slug || item.id}`}>
                                 {item.judul}
                               </a>
                             </h4>
@@ -421,7 +421,7 @@ export default async function BeritaPage({
                     <div className="entry row mb-5">
                       <div className="col-md-6">
                         <div className="entry-image">
-                          <a href={`${langPrefix}/berita/show/${item.id}`}>
+                          <a href={`${langPrefix}/berita/show/${item.slug || item.id}`}>
                             <Image
                               src={item.cover}
                               alt={item.judul}
@@ -435,7 +435,7 @@ export default async function BeritaPage({
                       <div className="col-md-6 mt-3 mt-md-0">
                         <div className="entry-title title-sm nott">
                           <h3>
-                            <a href={`${langPrefix}/berita/show/${item.id}`}>
+                            <a href={`${langPrefix}/berita/show/${item.slug || item.id}`}>
                               {item.judul}
                             </a>
                           </h3>
@@ -505,7 +505,7 @@ export default async function BeritaPage({
                       <div className="grid-inner row align-items-start g-0">
                         <div className="col-auto">
                           <div className="entry-image">
-                            <a href={`${langPrefix}/berita/show/${item.id}`}>
+                            <a href={`${langPrefix}/berita/show/${item.slug || item.id}`}>
                               <Image
                                 src={item.cover}
                                 alt={item.judul}
@@ -518,7 +518,7 @@ export default async function BeritaPage({
                         <div className="col ps-3">
                           <div className="entry-title">
                             <h4 className="fw-semibold berita-sidebar-title">
-                              <a href={`${langPrefix}/berita/show/${item.id}`}>
+                              <a href={`${langPrefix}/berita/show/${item.slug || item.id}`}>
                                 {item.judul}
                               </a>
                             </h4>
@@ -528,7 +528,7 @@ export default async function BeritaPage({
                               <li style={{ color: "black" }}>
                                 <i className="icon-calendar3"></i>
                                 <a
-                                  href={`${langPrefix}/berita/show/${item.id}`}
+                                  href={`${langPrefix}/berita/show/${item.slug || item.id}`}
                                   style={{ color: "black" }}
                                 >
                                   {formatDate(item.waktu, lang)}

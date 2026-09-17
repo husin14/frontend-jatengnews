@@ -20,7 +20,7 @@ export const NewsList: React.FC<NewsListProps> = ({ news, lang }) => {
           <div className="entry row mb-custom">
             <div className="col-md-6">
               <div className="entry-image">
-                <a href={`${langPrefix}/berita/show/${item.id}`}>
+                <a href={`${langPrefix}/berita/show/${item.slug || item.id}`}>
                   <Image
                     src={item.cover}
                     alt={item.judul}
@@ -34,7 +34,7 @@ export const NewsList: React.FC<NewsListProps> = ({ news, lang }) => {
             <div className="col-md-6 mt-3 mt-md-0">
               <div className="entry-title title-sm nott">
                 <h3>
-                  <a href={`${langPrefix}/berita/show/${item.id}`}>
+                  <a href={`${langPrefix}/berita/show/${item.slug || item.id}`}>
                     {item.judul}
                   </a>
                 </h3>

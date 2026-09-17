@@ -321,7 +321,7 @@ const Navbar = ({
                                       <div className="entry">
                                         <div className="entry-image mb-3">
                                           <a
-                                            href={`${langPrefix}/berita/show/${item.id}`}
+                                            href={`${langPrefix}/berita/show/${item.slug || item.id}`}
                                           >
                                             <Image
                                               src={item.cover}
@@ -343,7 +343,7 @@ const Navbar = ({
                                         <div className="entry-title title-xs nott">
                                           <h3 className="mb-1">
                                             <a
-                                              href={`${langPrefix}/berita/show/${item.id}`}
+                                              href={`${langPrefix}/berita/show/${item.slug || item.id}`}
                                             >
                                               {item.judul}
                                             </a>

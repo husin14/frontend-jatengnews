@@ -32,7 +32,7 @@ const SideBar: React.FC<SideBarProps> = ({ recentPosts, popularPosts, lang = "id
                   <div className="grid-inner row align-items-start g-0">
                     <div className="col-auto">
                       <div className="entry-image mb-0">
-                        <a href={`${langPrefix}/berita/show/${item.id}`}>
+                        <a href={`${langPrefix}/berita/show/${item.slug || item.id}`}>
                           <Image
                             src={item.cover}
                             alt={item.judul}
@@ -47,7 +47,7 @@ const SideBar: React.FC<SideBarProps> = ({ recentPosts, popularPosts, lang = "id
                     <div className="col ps-3">
                       <div className="entry-title">
                         <h4 className="fw-semibold mb-1" style={{ fontSize: "0.95rem", lineHeight: "1.3" }}>
-                          <a href={`${langPrefix}/berita/show/${item.id}`} className="text-dark">
+                          <a href={`${langPrefix}/berita/show/${item.slug || item.id}`} className="text-dark">
                             {item.judul}
                           </a>
                         </h4>
@@ -85,7 +85,7 @@ const SideBar: React.FC<SideBarProps> = ({ recentPosts, popularPosts, lang = "id
                   <div className="grid-inner row align-items-start g-0">
                     <div className="col-auto">
                       <div className="entry-image mb-0">
-                        <a href={`${langPrefix}/berita/show/${item.id}`}>
+                        <a href={`${langPrefix}/berita/show/${item.slug || item.id}`}>
                           <Image
                             src={item.cover}
                             alt={item.judul}
@@ -100,7 +100,7 @@ const SideBar: React.FC<SideBarProps> = ({ recentPosts, popularPosts, lang = "id
                     <div className="col ps-3">
                       <div className="entry-title">
                         <h4 className="fw-semibold mb-1" style={{ fontSize: "0.95rem", lineHeight: "1.3" }}>
-                          <a href={`${langPrefix}/berita/show/${item.id}`} className="text-dark">
+                          <a href={`${langPrefix}/berita/show/${item.slug || item.id}`} className="text-dark">
                             {item.judul}
                           </a>
                         </h4>
