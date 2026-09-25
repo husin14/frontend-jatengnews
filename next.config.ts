@@ -44,6 +44,13 @@ const nextConfig: NextConfig = {
         pathname: '/**',
         search: '',
       },
+      {
+        protocol: 'https',
+        hostname: 'storagetest.tvku.tv',
+        port: '',
+        pathname: '/**',
+        search: '',
+      },
     ],
   }
 };
