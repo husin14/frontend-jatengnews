@@ -33,6 +33,8 @@ export default function Navbar({
 
   const langPrefix = activeLang === "id" ? "" : `/${activeLang}`;
 
+  const dmadUrl = process.env.NEXT_PUBLIC_DMAD_URL || "https://dmadev.tvku.tv/";
+
   useEffect(() => {
     const handleLinkClick = (e: Event) => {
       if (typeof window !== "undefined" && window.innerWidth < 992) {
@@ -224,7 +226,7 @@ export default function Navbar({
                     <li className="menu-item">
                       <a
                         className="menu-link"
-                        href="http://tvku.tv/dma/"
+                        href={dmadUrl}
                         target="_blank"
                         rel="noopener noreferrer"
                       >
