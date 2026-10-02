@@ -135,13 +135,13 @@ export default async function BeritaPage({
                 </div>
                 <div className="entry-meta">
                   <ul>
-                    <li style={{ color: "black" }}>
+                    <li style={{ color: "black", fontSize: "0.75rem" }}>
                       {getKategoriName(beritaTerbaru[0], lang)}
                     </li>
-                    <li style={{ color: "black" }}>
+                    <li style={{ color: "black", fontSize: "0.75rem" }}>
                       <i className="icon-calendar3" /> {formatDate(beritaTerbaru[0].waktu, lang)}
                     </li>
-                    <li style={{ color: "black" }}>
+                    <li style={{ color: "black", fontSize: "0.75rem" }}>
                       <i className="icon-eye" /> {Math.floor(Math.random() * (999 - 200 + 1) + 200)}
                     </li>
                   </ul>
@@ -189,13 +189,13 @@ export default async function BeritaPage({
 
                     <div className="entry-meta">
                       <ul>
-                        <li style={{ color: "black" }}>
+                        <li style={{ color: "black", fontSize: "0.75rem" }}>
                           {getKategoriName(item, lang)}
                         </li>
-                        <li style={{ color: "black" }}>
+                        <li style={{ color: "black", fontSize: "0.75rem" }}>
                           <i className="icon-calendar3" /> {formatDate(item.waktu, lang)}
                         </li>
-                        <li style={{ color: "black" }}>
+                        <li style={{ color: "black", fontSize: "0.75rem" }}>
                           <i className="icon-eye" /> {Math.floor(Math.random() * (999 - 200 + 1) + 200)}
                         </li>
                       </ul>
