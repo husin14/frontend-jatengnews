@@ -1,9 +1,18 @@
+export interface kategoriTranslation {
+  nama: string;
+  slug: string;
+  translation?: {
+    code?: string;
+  };
+}
+
 export interface kategori {
   id_kategori: number;
   nama: string;
   slug: string;
   berita: berita;
   berita_count?: number;
+  translations?: kategoriTranslation[];
 }
 
 export interface recentPostFooter {
@@ -24,6 +33,9 @@ export interface berita {
   waktu: string; 
   kategori: kategori;
   kategori_slug: string;
+  berita?: {
+    kategori?: kategori;
+  };
   path_media: string;
   filename?: string;
   link?: string; 

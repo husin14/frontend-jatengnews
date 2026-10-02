@@ -1,5 +1,6 @@
 # run di local 
 npm run dev -- -H 192.168.2.139 -p 3000
+npm run dev -- -p 3000
 
 # docker single
 ## linux:

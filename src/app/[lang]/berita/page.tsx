@@ -8,6 +8,26 @@ import Carousel from "@/app/components/carousel";
 import { formatDate } from "@/app/utils/dateFormatter";
 import { getDictionary, Locale } from "@/app/dictionaries";
 
+function getKategori(item: berita): kategori | undefined {
+  return item.berita?.kategori ?? item.kategori;
+}
+
+function getKategoriName(item: berita, lang: Locale): string {
+  const kategoriItem = getKategori(item);
+
+  if (!kategoriItem) return "Uncategorized";
+
+  if (lang === "en") {
+    const translated = kategoriItem.translations?.find(
+      (item) => item.translation?.code === "en" && item.nama
+    );
+
+    if (translated?.nama) return translated.nama;
+  }
+
+  return kategoriItem.nama || "Uncategorized";
+}
+
 export default async function BeritaPage({
   params,
 }: {
@@ -116,6 +136,9 @@ export default async function BeritaPage({
                 <div className="entry-meta">
                   <ul>
                     <li style={{ color: "black" }}>
+                      {getKategoriName(beritaTerbaru[0], lang)}
+                    </li>
+                    <li style={{ color: "black" }}>
                       <i className="icon-calendar3" /> {formatDate(beritaTerbaru[0].waktu, lang)}
                     </li>
                     <li style={{ color: "black" }}>
@@ -166,6 +189,9 @@ export default async function BeritaPage({
 
                     <div className="entry-meta">
                       <ul>
+                        <li style={{ color: "black" }}>
+                          {getKategoriName(item, lang)}
+                        </li>
                         <li style={{ color: "black" }}>
                           <i className="icon-calendar3" /> {formatDate(item.waktu, lang)}
                         </li>
@@ -233,7 +259,7 @@ export default async function BeritaPage({
                             href={`${langPrefix}/berita/show/${data.slug || data.id}`}
                             className="bg-travel"
                           >
-                            {data.kategori?.nama || "Uncategorized"}
+                            {getKategoriName(data, lang)}
                           </a>
                         </div>
                       </div>
@@ -308,101 +334,101 @@ export default async function BeritaPage({
               </div>
               <div className="row justify-content-center col-mb-50 mb-0">
                 {beritaTerbaru.slice(5, 7).map((item) => (
-                    <div key={item.id} className="col-md-6 mt-4 beritaterbaru2 d-flex justify-content-center">
-                      <div className="posts-md">
-                        <div className="entry">
-                          <div className="entry-image">
-                            <a href={`${langPrefix}/berita/show/${item.slug || item.id}`}>
-                              <Image
-                                src={item.cover}
-                                alt={item.judul}
-                                width={400}
-                                height={200}
-                                style={{ width: "416px", height: "233px" }}
-                              />
-                            </a>
-                            <div className="entry-categories">
-                              <a
-                                href={`${langPrefix}/berita/show/${item.slug || item.id}`}
-                                className="bg-lifestyle"
-                              >
-                                {item.kategori?.nama || "Uncategorized"}
-                              </a>
-                            </div>
-                          </div>
-                          <div className="entry-title title-sm nott">
-                            <h3 className="mb-2">
-                              <a href={`${langPrefix}/berita/show/${item.slug || item.id}`}>
-                                {item.judul}
-                              </a>
-                            </h3>
-                          </div>
-                          <div className="entry-meta">
-                            <ul>
-                              <li style={{ color: "black" }}>
-                                <i className="icon-calendar3"></i>
-                                {formatDate(item.waktu, lang)}
-                              </li>
-                              <li style={{ color: "black" }}>
-                                <i className="icon-eye"></i>
-                                {Math.floor(Math.random() * (999 - 200 + 1) + 200)}
-                              </li>
-                            </ul>
-                          </div>
-                          <div className="entry-content clearfix">
-                            <p className="line-clamp-2 mb-0">
-                              {item.deskripsi}
-                            </p>
-                          </div>
-                        </div>
-                      </div>
-                    </div>
-                  ))}
-                </div>
-                <div className="posts-sm row col-mb-30">
-                  {beritaTerbaru.slice(7, 11).map((item) => (
-                    <div key={item.id} className="entry col-md-6">
-                      <div className="grid-inner row align-items-start no-gutter">
-                        <div className="col-auto">
-                          <div className="entry-image">
-                            <a href={`${langPrefix}/berita/show/${item.slug || item.id}`}>
-                              <Image
-                                src={item.cover}
-                                alt={item.judul}
-                                width={400}
-                                height={200}
-                              />
+                  <div key={item.id} className="col-md-6 mt-4 beritaterbaru2 d-flex justify-content-center">
+                    <div className="posts-md">
+                      <div className="entry">
+                        <div className="entry-image">
+                          <a href={`${langPrefix}/berita/show/${item.slug || item.id}`}>
+                            <Image
+                              src={item.cover}
+                              alt={item.judul}
+                              width={400}
+                              height={200}
+                              style={{ width: "416px", height: "233px" }}
+                            />
+                          </a>
+                          <div className="entry-categories">
+                            <a
+                              href={`${langPrefix}/berita/show/${item.slug || item.id}`}
+                              className="bg-lifestyle"
+                            >
+                              {getKategoriName(item, lang)}
                             </a>
                           </div>
                         </div>
-                        <div className="col ps-3">
-                          <div className="entry-title">
-                            <h4 className="fw-medium">
-                              <a href={`${langPrefix}/berita/show/${item.slug || item.id}`}>
-                                {item.judul}
-                              </a>
-                            </h4>
-                          </div>
-                          <div className="entry-meta">
-                            <ul>
-                              <li style={{ color: "black" }}>
-                                <i className="icon-calendar3"></i>
-                                {formatDate(item.waktu, lang)}
-                              </li>
-                              <li style={{ color: "black" }}>
-                                <i className="icon-eye"></i>
-                                {Math.floor(Math.random() * (999 - 200 + 1) + 200)}
-                              </li>
-                            </ul>
-                          </div>
+                        <div className="entry-title title-sm nott">
+                          <h3 className="mb-2">
+                            <a href={`${langPrefix}/berita/show/${item.slug || item.id}`}>
+                              {item.judul}
+                            </a>
+                          </h3>
+                        </div>
+                        <div className="entry-meta">
+                          <ul>
+                            <li style={{ color: "black" }}>
+                              <i className="icon-calendar3"></i>
+                              {formatDate(item.waktu, lang)}
+                            </li>
+                            <li style={{ color: "black" }}>
+                              <i className="icon-eye"></i>
+                              {Math.floor(Math.random() * (999 - 200 + 1) + 200)}
+                            </li>
+                          </ul>
+                        </div>
+                        <div className="entry-content clearfix">
+                          <p className="line-clamp-2 mb-0">
+                            {item.deskripsi}
+                          </p>
                         </div>
                       </div>
                     </div>
-                  ))}
-                </div>
+                  </div>
+                ))}
+              </div>
+              <div className="posts-sm row col-mb-30">
+                {beritaTerbaru.slice(7, 11).map((item) => (
+                  <div key={item.id} className="entry col-md-6">
+                    <div className="grid-inner row align-items-start no-gutter">
+                      <div className="col-auto">
+                        <div className="entry-image">
+                          <a href={`${langPrefix}/berita/show/${item.slug || item.id}`}>
+                            <Image
+                              src={item.cover}
+                              alt={item.judul}
+                              width={400}
+                              height={200}
+                            />
+                          </a>
+                        </div>
+                      </div>
+                      <div className="col ps-3">
+                        <div className="entry-title">
+                          <h4 className="fw-medium">
+                            <a href={`${langPrefix}/berita/show/${item.slug || item.id}`}>
+                              {item.judul}
+                            </a>
+                          </h4>
+                        </div>
+                        <div className="entry-meta">
+                          <ul>
+                            <li style={{ color: "black" }}>
+                              <i className="icon-calendar3"></i>
+                              {formatDate(item.waktu, lang)}
+                            </li>
+                            <li style={{ color: "black" }}>
+                              <i className="icon-eye"></i>
+                              {Math.floor(Math.random() * (999 - 200 + 1) + 200)}
+                            </li>
+                          </ul>
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+                ))}
               </div>
             </div>
           </div>
+        </div>
         <Sidebar />
       </div>
 
