@@ -126,7 +126,7 @@ const SideBar: React.FC<SideBarProps> = ({ recentPosts, popularPosts, lang = "id
         )}
 
         {/* Newsletter Subscription Card */}
-        <div className="widget clearfix">
+        {/* <div className="widget clearfix">
           <div className="card">
             <div className="card-body">
               <form className="form-signin">
@@ -166,7 +166,7 @@ const SideBar: React.FC<SideBarProps> = ({ recentPosts, popularPosts, lang = "id
               </form>
             </div>
           </div>
-        </div>
+        </div> */}
 
       </div>
     </div>

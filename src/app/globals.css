@@ -50,6 +50,10 @@ a {
     margin-top: -5px !important;
 }
 
+.entry-meta.berita-meta-compact {
+    font-size: 0.75rem !important;
+}
+
 @media (max-width: 767.98px) {
     .berita-content {
         margin-top: 25px !important;

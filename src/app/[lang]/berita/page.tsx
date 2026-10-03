@@ -133,18 +133,19 @@ export default async function BeritaPage({
                     </a>
                   </h3>
                 </div>
-                <div className="entry-meta">
-                  <ul>
-                    <li style={{ color: "black", fontSize: "0.75rem" }}>
+                <div className="entry-meta berita-meta-compact">
+                  {/* <ul>
+                    <li style={{ color: "black" }}>
                       {getKategoriName(beritaTerbaru[0], lang)}
                     </li>
-                    <li style={{ color: "black", fontSize: "0.75rem" }}>
+                    <li style={{ color: "black" }}>
                       <i className="icon-calendar3" /> {formatDate(beritaTerbaru[0].waktu, lang)}
                     </li>
-                    <li style={{ color: "black", fontSize: "0.75rem" }}>
+                    <li style={{ color: "black" }}>
                       <i className="icon-eye" /> {Math.floor(Math.random() * (999 - 200 + 1) + 200)}
                     </li>
-                  </ul>
+                  </ul> */}
+                  {getKategoriName(beritaTerbaru[0], lang)} | <i className="icon-calendar3" /> {formatDate(beritaTerbaru[0].waktu, lang)} | <i className="icon-eye" /> {Math.floor(Math.random() * (999 - 200 + 1) + 200)}
                 </div>
 
                 <div className="entry-content" style={{ marginTop: '0px' }}>
@@ -187,18 +188,19 @@ export default async function BeritaPage({
                       </h4>
                     </div>
 
-                    <div className="entry-meta">
-                      <ul>
-                        <li style={{ color: "black", fontSize: "0.75rem" }}>
+                    <div className="entry-meta berita-meta-compact">
+                      {/* <ul>
+                        <li style={{ color: "black" }}>
                           {getKategoriName(item, lang)}
                         </li>
-                        <li style={{ color: "black", fontSize: "0.75rem" }}>
+                        <li style={{ color: "black" }}>
                           <i className="icon-calendar3" /> {formatDate(item.waktu, lang)}
                         </li>
-                        <li style={{ color: "black", fontSize: "0.75rem" }}>
+                        <li style={{ color: "black" }}>
                           <i className="icon-eye" /> {Math.floor(Math.random() * (999 - 200 + 1) + 200)}
                         </li>
-                      </ul>
+                      </ul> */}
+                      {getKategoriName(item, lang)} | <i className="icon-calendar3" /> {formatDate(item.waktu, lang)} | <i className="icon-eye" /> {Math.floor(Math.random() * (999 - 200 + 1) + 200)}
                     </div>
                   </div>
                 </div>
