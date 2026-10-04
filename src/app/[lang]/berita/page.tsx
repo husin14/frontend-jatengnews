@@ -38,6 +38,7 @@ export default async function BeritaPage({
 
   let kategoriData: kategori[] = [];
   let beritaTerbaru: berita[] = [];
+  let beritaEnam: berita[] = [];
   let featureData: berita[] = [];
   let dictionary: any = null;
   let error: string | null = null;
@@ -51,12 +52,20 @@ export default async function BeritaPage({
         ? `/berita-translations?language_code=en&id_kategori=19`
         : `/berita-public?id_kategori=19`;
 
-    const [beritaResponse, featureResponse, kategoriResponse, dictionaryResponse] =
+    const perKategoriUrl = `/berita-latest-per-kategori`;
+
+    const [beritaResponse, featureResponse, kategoriResponse, dictionaryResponse, perKategoriResponse] =
       await Promise.all([
         apiClient.get(beritaUrl),
         apiClient.get(featureUrl),
         apiClient.get(`/kategori`),
         getDictionary(lang),
+        apiClient.get(perKategoriUrl, {
+          params: {
+            limit: 6,
+            ...(lang === "en" ? { language_code: "en" } : {}),
+          },
+        }),
       ]);
 
     beritaTerbaru = beritaResponse.data.data.map((item: berita) => ({
@@ -75,6 +84,14 @@ export default async function BeritaPage({
 
     kategoriData = kategoriResponse.data.data;
     dictionary = dictionaryResponse;
+
+    // API sudah mengembalikan 1 berita terbaru per kategori, ready tampil.
+    beritaEnam = perKategoriResponse.data.data.map((item: berita) => ({
+      ...item,
+      deskripsi: convert(item.deskripsi, {
+        selectors: [{ selector: "img", format: "skip" }],
+      }),
+    }));
   } catch (err) {
     console.error("Failed to fetch data:", err);
     error = "Gagal memuat data. Silakan coba lagi nanti.";
@@ -97,6 +114,7 @@ export default async function BeritaPage({
   }
 
   const data = beritaTerbaru[0];
+  const beritaUtama = beritaEnam[0];
   const langPrefix = lang === "id" ? "" : `/${lang}`;
 
   return (
@@ -104,19 +122,19 @@ export default async function BeritaPage({
       <div className="row col-mb-50 mb-0">
         <div className="col-lg-8 berita-main-column">
           <div className="posts-md">
-            {beritaTerbaru.length > 0 && (
+            {beritaUtama && (
               <div className="entry">
                 <div className="entry-image">
                   <a
-                    href={`${langPrefix}/berita/show/${beritaTerbaru[0].slug || beritaTerbaru[0].id
+                    href={`${langPrefix}/berita/show/${beritaUtama.slug || beritaUtama.id
                       }`}
                   >
                     <Image
                       src={
-                        beritaTerbaru[0].cover ||
-                        `https://apidev.tvku.tv/storage/${beritaTerbaru[0].cover}`
+                        beritaUtama.cover ||
+                        `https://apidev.tvku.tv/storage/${beritaUtama.cover}`
                       }
-                      alt={beritaTerbaru[0].judul}
+                      alt={beritaUtama.judul}
                       width={600}
                       height={300}
                       priority
@@ -126,31 +144,31 @@ export default async function BeritaPage({
                 <div className="entry-title title-sm">
                   <h3 style={{ marginBottom: '0px' }}>
                     <a
-                      href={`${langPrefix}/berita/show/${beritaTerbaru[0].slug || beritaTerbaru[0].id
+                      href={`${langPrefix}/berita/show/${beritaUtama.slug || beritaUtama.id
                         }`}
                     >
-                      {beritaTerbaru[0].judul}
+                      {beritaUtama.judul}
                     </a>
                   </h3>
                 </div>
                 <div className="entry-meta berita-meta-compact">
                   {/* <ul>
                     <li style={{ color: "black" }}>
-                      {getKategoriName(beritaTerbaru[0], lang)}
+                      {getKategoriName(beritaUtama, lang)}
                     </li>
                     <li style={{ color: "black" }}>
-                      <i className="icon-calendar3" /> {formatDate(beritaTerbaru[0].waktu, lang)}
+                      <i className="icon-calendar3" /> {formatDate(beritaUtama.waktu, lang)}
                     </li>
                     <li style={{ color: "black" }}>
                       <i className="icon-eye" /> {Math.floor(Math.random() * (999 - 200 + 1) + 200)}
                     </li>
                   </ul> */}
-                  {getKategoriName(beritaTerbaru[0], lang)} | <i className="icon-calendar3" /> {formatDate(beritaTerbaru[0].waktu, lang)} | <i className="icon-eye" /> {Math.floor(Math.random() * (999 - 200 + 1) + 200)}
+                  {getKategoriName(beritaUtama, lang)} | <i className="icon-calendar3" /> {formatDate(beritaUtama.waktu, lang)} | <i className="icon-eye" /> {Math.floor(Math.random() * (999 - 200 + 1) + 200)}
                 </div>
 
                 <div className="entry-content" style={{ marginTop: '0px' }}>
                   <p className="line-clamp-2 mb-0">
-                    {beritaTerbaru[0].deskripsi}
+                    {beritaUtama.deskripsi}
                   </p>
                 </div>
               </div>
@@ -159,7 +177,7 @@ export default async function BeritaPage({
         </div>
         <div className="col-lg-4 berita-sidebar-column">
           <div className="posts-sm row col-mb-30">
-            {beritaTerbaru.slice(1, 6).map((item) => (
+            {beritaEnam.slice(1, 6).map((item) => (
               <div key={item.id} className="entry col-12 berita-sidebar-entry">
                 <div className="grid-inner row g-0">
                   <div className="col-auto">
