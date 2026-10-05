@@ -41,7 +41,7 @@ const BeritaDetail = () => {
                 <span className="text-muted-foreground text-xs flex items-center gap-2">
                   {formatDate(berita.waktu || berita.waktu_publish, 'id')}
                   <span className="flex items-center gap-1">
-                    <i className="icon-eye" /> {berita.views || Math.floor(Math.random() * (999 - 200 + 1) + 200)}
+                    <i className="icon-eye" /> {berita.open ?? 0}
                   </span>
                 </span>
               </div>

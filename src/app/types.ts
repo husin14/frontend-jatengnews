@@ -40,7 +40,7 @@ export interface berita {
   filename?: string;
   link?: string; 
   author?: string;
-  views?: number;
+  open?: number;
   status?: string;
 }
 

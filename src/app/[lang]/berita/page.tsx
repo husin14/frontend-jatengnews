@@ -160,10 +160,10 @@ export default async function BeritaPage({
                       <i className="icon-calendar3" /> {formatDate(beritaUtama.waktu, lang)}
                     </li>
                     <li style={{ color: "black" }}>
-                      <i className="icon-eye" /> {Math.floor(Math.random() * (999 - 200 + 1) + 200)}
+                      <i className="icon-eye" /> {beritaUtama.open ?? 0}
                     </li>
                   </ul> */}
-                  {getKategoriName(beritaUtama, lang)} | <i className="icon-calendar3" /> {formatDate(beritaUtama.waktu, lang)} | <i className="icon-eye" /> {Math.floor(Math.random() * (999 - 200 + 1) + 200)}
+                  {getKategoriName(beritaUtama, lang)} | <i className="icon-calendar3" /> {formatDate(beritaUtama.waktu, lang)} | <i className="icon-eye" /> {beritaUtama.open ?? 0}
                 </div>
 
                 <div className="entry-content" style={{ marginTop: '0px' }}>
@@ -215,10 +215,10 @@ export default async function BeritaPage({
                           <i className="icon-calendar3" /> {formatDate(item.waktu, lang)}
                         </li>
                         <li style={{ color: "black" }}>
-                          <i className="icon-eye" /> {Math.floor(Math.random() * (999 - 200 + 1) + 200)}
+                          <i className="icon-eye" /> {item.open ?? 0}
                         </li>
                       </ul> */}
-                      {getKategoriName(item, lang)} | <i className="icon-calendar3" /> {formatDate(item.waktu, lang)} | <i className="icon-eye" /> {Math.floor(Math.random() * (999 - 200 + 1) + 200)}
+                      {getKategoriName(item, lang)} | <i className="icon-calendar3" /> {formatDate(item.waktu, lang)} | <i className="icon-eye" /> {item.open ?? 0}
                     </div>
                   </div>
                 </div>
@@ -296,7 +296,7 @@ export default async function BeritaPage({
                           </li>
                           <li style={{ color: "black" }}>
                             <i className="icon-eye"></i>
-                            {Math.floor(Math.random() * (999 - 200 + 1) + 200)}
+                            {data.open ?? 0}
                           </li>
                         </ul>
                       </div>
@@ -341,7 +341,7 @@ export default async function BeritaPage({
                                 </li>
                                 <li style={{ color: "black" }}>
                                   <i className="icon-eye"></i>
-                                  {Math.floor(Math.random() * (999 - 200 + 1) + 200)}
+                                  {item.open ?? 0}
                                 </li>
                               </ul>
                             </div>
@@ -391,7 +391,7 @@ export default async function BeritaPage({
                             </li>
                             <li style={{ color: "black" }}>
                               <i className="icon-eye"></i>
-                              {Math.floor(Math.random() * (999 - 200 + 1) + 200)}
+                              {item.open ?? 0}
                             </li>
                           </ul>
                         </div>
@@ -437,7 +437,7 @@ export default async function BeritaPage({
                             </li>
                             <li style={{ color: "black" }}>
                               <i className="icon-eye"></i>
-                              {Math.floor(Math.random() * (999 - 200 + 1) + 200)}
+                              {item.open ?? 0}
                             </li>
                           </ul>
                         </div>
@@ -500,7 +500,7 @@ export default async function BeritaPage({
                               )}
                             </li>
                             <li style={{ color: "black" }}>
-                              <i className="icon-eye" /> {Math.floor(Math.random() * (999 - 200 + 1) + 200)}
+                              <i className="icon-eye" /> {item.open ?? 0}
                             </li>
                           </ul>
                         </div>
@@ -582,7 +582,7 @@ export default async function BeritaPage({
                               </li>
                               <li style={{ color: "black" }}>
                                 <i className="icon-eye"></i>
-                                {Math.floor(Math.random() * (999 - 200 + 1) + 200)}
+                                {item.open ?? 0}
                               </li>
                             </ul>
                           </div>

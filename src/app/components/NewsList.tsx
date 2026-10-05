@@ -53,7 +53,7 @@ export const NewsList: React.FC<NewsListProps> = ({ news, lang }) => {
                     )}
                   </li>
                   <li style={{ color: "var(--entry-meta-color)" }}>
-                    <i className="icon-eye" style={{ color: "var(--entry-meta-color)" }} /> {Math.floor(Math.random() * (999 - 200 + 1) + 200)}
+                    <i className="icon-eye" style={{ color: "var(--entry-meta-color)" }} /> {item.open ?? 0}
                   </li>
                 </ul>
               </div>

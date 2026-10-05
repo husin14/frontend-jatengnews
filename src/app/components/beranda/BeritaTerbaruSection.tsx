@@ -1,5 +1,5 @@
 "use client"
-import React, { useEffect, useRef, useState } from "react";
+import React, { useEffect, useRef } from "react";
 import { berita, jadwalAcara } from "../../types";
 import Image from "next/image";
 import { formatDate } from "@/app/utils/dateFormatter";
@@ -33,10 +33,8 @@ export const BeritaTerbaruSection: React.FC<BeritaTerbaruSectionProps> = ({
 }) => {
   const langPrefix = lang === "id" ? "" : `/${lang}`;
   const sliderRef = useRef<HTMLDivElement>(null);
-  const [isMounted, setIsMounted] = useState(false);
 
   useEffect(() => {
-    setIsMounted(true);
     if (typeof window !== "undefined" && window.jQuery && window.SEMICOLON_flexSliderInit) {
       const $ = window.jQuery;
       const $el = $(sliderRef.current);
@@ -105,7 +103,7 @@ export const BeritaTerbaruSection: React.FC<BeritaTerbaruSectionProps> = ({
                               <i className="icon-calendar3" /> {formatDate(item.waktu, lang)}
                             </li>
                             <li style={{ color: "black" }}>
-                              <i className="icon-eye me-1" /> {isMounted ? (item.views || Math.floor(Math.random() * (999 - 200 + 1) + 200)) : "--"}
+                              <i className="icon-eye me-1" /> {item.open ?? 0}
                             </li>
                           </ul>
                         </div>

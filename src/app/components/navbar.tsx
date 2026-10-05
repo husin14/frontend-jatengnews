@@ -357,7 +357,7 @@ const Navbar = ({
                                             </li>
                                             <li>
                                               <i className="icon-eye"></i>
-                                              {item.views || Math.floor(Math.random() * (999 - 200 + 1) + 200)}
+                                              {item.open ?? 0}
                                             </li>
                                           </ul>
                                         </div>

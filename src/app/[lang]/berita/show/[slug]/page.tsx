@@ -205,7 +205,7 @@ export default function BeritaDetailPage() {
               {/* Format tanggal sesuai bahasa */}
               {formatDate(berita.waktu || berita.waktu_publish, lang)}
               <i className="icon-eye ms-3 me-2"></i>
-              {berita.views || Math.floor(Math.random() * (999 - 200 + 1) + 200)}
+              {berita.open ?? 0}
             </div>
           </div>
 
@@ -282,7 +282,7 @@ export default function BeritaDetailPage() {
                             </li>
                             <li style={{ color: "#000" }}>
                               <i className="icon-eye"></i>{" "}
-                              {item.views || Math.floor(Math.random() * (999 - 200 + 1) + 200)}
+                              {item.open ?? 0}
                             </li>
                           </ul>
                         </div>

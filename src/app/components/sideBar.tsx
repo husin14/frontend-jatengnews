@@ -60,7 +60,7 @@ const SideBar: React.FC<SideBarProps> = ({ recentPosts, popularPosts, lang = "id
                           </li>
                           <li style={{ color: "#000" }}>
                             <i className="icon-eye"></i>{" "}
-                            {item.views || Math.floor(Math.random() * (999 - 200 + 1) + 200)}
+                            {item.open ?? 0}
                           </li>
                         </ul>
                       </div>
@@ -113,7 +113,7 @@ const SideBar: React.FC<SideBarProps> = ({ recentPosts, popularPosts, lang = "id
                           </li>
                           <li style={{ color: "#000" }}>
                             <i className="icon-eye"></i>{" "}
-                            {item.views || Math.floor(Math.random() * (999 - 200 + 1) + 200)}
+                            {item.open ?? 0}
                           </li>
                         </ul>
                       </div>

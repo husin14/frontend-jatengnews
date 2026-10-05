@@ -170,7 +170,7 @@ const Carousel = () => {
                           </li>
                           <li style={{ color: "white" }}>
                             <i className="icon-eye" />
-                            {Math.floor(Math.random() * (999 - 200 + 1) + 200)}
+                            {item.open ?? 0}
                           </li>
                         </ul>
                       </div>
