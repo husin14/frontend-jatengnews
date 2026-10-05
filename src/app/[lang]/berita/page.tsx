@@ -298,8 +298,8 @@ export default async function BeritaPage({
                           <a href={`${langPrefix}/berita/show/${data.slug || data.id}`}>{data.judul}</a>
                         </h3>
                       </div>
-                      <div className="entry-meta">
-                        <ul>
+                      <div className="entry-meta berita-meta-compact">
+                        {/* <ul>
                           <li style={{ color: "black" }}>
                             <i className="icon-calendar3"></i>
                             {formatDate(data.waktu, lang)}
@@ -308,7 +308,8 @@ export default async function BeritaPage({
                             <i className="icon-eye"></i>
                             {data.open ?? 0}
                           </li>
-                        </ul>
+                        </ul> */}
+                        {getKategoriName(data, lang)} | <i className="icon-calendar3" /> {formatDate(data.waktu, lang)} | <i className="icon-eye" /> {data.open ?? 0}
                       </div>
                       <div className="entry-content clearfix line-clamp-1">
                         <p className="line-clamp-2">{data.deskripsi}</p>
@@ -343,8 +344,8 @@ export default async function BeritaPage({
                                 </a>
                               </h4>
                             </div>
-                            <div className="entry-meta">
-                              <ul>
+                            <div className="entry-meta berita-meta-compact">
+                              {/* <ul>
                                 <li style={{ color: "black" }}>
                                   <i className="icon-calendar3"></i>
                                   {formatDate(item.waktu, lang)}
@@ -353,7 +354,8 @@ export default async function BeritaPage({
                                   <i className="icon-eye"></i>
                                   {item.open ?? 0}
                                 </li>
-                              </ul>
+                              </ul> */}
+                              {getKategoriName(item, lang)} | <i className="icon-calendar3" /> {formatDate(item.waktu, lang)} | <i className="icon-eye" /> {item.open ?? 0}
                             </div>
                           </div>
                         </div>
@@ -393,8 +395,8 @@ export default async function BeritaPage({
                             </a>
                           </h3>
                         </div>
-                        <div className="entry-meta">
-                          <ul>
+                        <div className="entry-meta berita-meta-compact">
+                          {/* <ul>
                             <li style={{ color: "black" }}>
                               <i className="icon-calendar3"></i>
                               {formatDate(item.waktu, lang)}
@@ -403,7 +405,8 @@ export default async function BeritaPage({
                               <i className="icon-eye"></i>
                               {item.open ?? 0}
                             </li>
-                          </ul>
+                          </ul> */}
+                          {getKategoriName(item, lang)} | <i className="icon-calendar3" /> {formatDate(item.waktu, lang)} | <i className="icon-eye" /> {item.open ?? 0}
                         </div>
                         <div className="entry-content clearfix">
                           <p className="line-clamp-2 mb-0">
@@ -439,8 +442,8 @@ export default async function BeritaPage({
                             </a>
                           </h4>
                         </div>
-                        <div className="entry-meta">
-                          <ul>
+                        <div className="entry-meta berita-meta-compact">
+                          {/* <ul>
                             <li style={{ color: "black" }}>
                               <i className="icon-calendar3"></i>
                               {formatDate(item.waktu, lang)}
@@ -449,7 +452,8 @@ export default async function BeritaPage({
                               <i className="icon-eye"></i>
                               {item.open ?? 0}
                             </li>
-                          </ul>
+                          </ul> */}
+                          {getKategoriName(item, lang)} | <i className="icon-calendar3" /> {formatDate(item.waktu, lang)} | <i className="icon-eye" /> {item.open ?? 0}
                         </div>
                       </div>
                     </div>
