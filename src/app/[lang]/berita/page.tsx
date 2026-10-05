@@ -514,8 +514,8 @@ export default async function BeritaPage({
                             </a>
                           </h3>
                         </div>
-                        <div className="entry-meta">
-                          <ul>
+                        <div className="entry-meta berita-meta-compact">
+                          {/* <ul>
                             <li style={{ color: "black" }}>
                               <i className="icon-calendar3" />{" "}
                               {new Date(item.waktu || item.waktu_publish).toLocaleDateString(
@@ -530,7 +530,8 @@ export default async function BeritaPage({
                             <li style={{ color: "black" }}>
                               <i className="icon-eye" /> {item.open ?? 0}
                             </li>
-                          </ul>
+                          </ul> */}
+                          <i className="icon-calendar3" /> {formatDate(item.waktu, lang)} | <i className="icon-eye" /> {item.open ?? 0}
                         </div>
                         <div className="entry-content">
                           <p className="mb-0 line-clamp-3">{item.deskripsi}</p>
