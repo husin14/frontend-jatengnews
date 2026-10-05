@@ -44,8 +44,7 @@ export default async function BeritaPage({
   let error: string | null = null;
 
   try {
-    const beritaUrl =
-      lang === "en" ? `/berita-translations?language_code=en` : `/berita-public`;
+    const beritaUrl = lang === "en" ? `/berita-translations` : `/berita-public`;
 
     const featureUrl =
       lang === "en"
@@ -54,15 +53,26 @@ export default async function BeritaPage({
 
     const perKategoriUrl = `/berita-latest-per-kategori`;
 
+    // Jumlah berita yang dipakai section hero (1 utama + 5 sidebar).
+    // Nilai ini juga diteruskan ke API sebagai jumlah berita yang harus
+    // dikeluarkan dari daftar latest news supaya tidak ada yang kembar.
+    const heroLimit = 6;
+
     const [beritaResponse, featureResponse, kategoriResponse, dictionaryResponse, perKategoriResponse] =
       await Promise.all([
-        apiClient.get(beritaUrl),
+        apiClient.get(beritaUrl, {
+          params: {
+            per_page: 5,
+            exclude_latest_per_kategori: heroLimit,
+            ...(lang === "en" ? { language_code: "en" } : {}),
+          },
+        }),
         apiClient.get(featureUrl),
         apiClient.get(`/kategori`),
         getDictionary(lang),
         apiClient.get(perKategoriUrl, {
           params: {
-            limit: 6,
+            limit: heroLimit,
             ...(lang === "en" ? { language_code: "en" } : {}),
           },
         }),
