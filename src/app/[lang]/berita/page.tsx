@@ -274,14 +274,14 @@ export default async function BeritaPage({
                             style={{ width: "416px", height: "233px" }}
                           />
                         </a>
-                        <div className="entry-categories">
+                        {/* <div className="entry-categories">
                           <a
                             href={`${langPrefix}/berita/show/${data.slug || data.id}`}
                             className="bg-travel"
                           >
                             {getKategoriName(data, lang)}
                           </a>
-                        </div>
+                        </div> */}
                       </div>
                       <div className="entry-title nott">
                         <h3 className="mb-2">
