@@ -12,6 +12,27 @@ import PopupIklan from "@/app/components/popupIklan";
 import YtPreview from "@/app/components/yt-preview";
 import { formatDate } from "@/app/utils/dateFormatter";
 import useBannerImpression from "@/app/hooks/useBannerImpression";
+import { kategori } from "@/app/types";
+
+function getKategori(item: berita): kategori | undefined {
+  return item.berita?.kategori ?? item.kategori;
+}
+
+function getKategoriName(item: berita, lang: "id" | "en"): string {
+  const kategoriItem = getKategori(item);
+
+  if (!kategoriItem) return "Uncategorized";
+
+  if (lang === "en") {
+    const translated = kategoriItem.translations?.find(
+      (item) => item.translation?.code === "en" && item.nama
+    );
+
+    if (translated?.nama) return translated.nama;
+  }
+
+  return kategoriItem.nama || "Uncategorized";
+}
 
 export default function BeritaDetailPage() {
   const params = useParams();
@@ -193,20 +214,21 @@ export default function BeritaDetailPage() {
             {berita.judul}
           </h2>
 
-          <div className="d-flex align-items-center mb-3 ms-2 small" style={{ color: "#000" }}>
+          {/* <div className="d-flex align-items-center mb-3 ms-2 small" style={{ color: "#000" }}>
             <div className="me-2 d-flex flex-column justify-content-center align-items-center">
-              {/* Decorative dots */}
               <div className="rounded-circle bg-secondary" style={{ width: "2px", height: "2px", margin: "1px 0" }}></div>
               <div className="rounded-circle bg-secondary" style={{ width: "2px", height: "2px", margin: "1px 0" }}></div>
               <div className="rounded-circle bg-secondary" style={{ width: "2px", height: "2px", margin: "1px 0" }}></div>
             </div>
             <div className="d-flex align-items-center">
               <i className="icon-calendar3 me-2"></i>
-              {/* Format tanggal sesuai bahasa */}
               {formatDate(berita.waktu || berita.waktu_publish, lang)}
               <i className="icon-eye ms-3 me-2"></i>
               {berita.open ?? 0}
             </div>
+          </div> */}
+          <div className="entry-meta berita-meta-compact mb-3">
+            {getKategoriName(berita, lang)} | <i className="icon-calendar3" /> {formatDate(berita.waktu || berita.waktu_publish, lang)} | <i className="icon-eye" /> {berita.open ?? 0}
           </div>
 
           <div className="entry">
