@@ -36,6 +36,19 @@ export default async function BeritaPage({
   const { lang: langParam } = await params;
   const lang = (langParam === "id" || langParam === "en" ? langParam : "id") as Locale;
 
+  const fetchVariable = async (name: string): Promise<string | null> => {
+    try {
+      const res = await apiClient.get(`/variables/${name}`, {
+        params: lang === "en" ? { language_code: "en" } : {},
+      });
+
+      return res?.data?.data?.value ?? null;
+    } catch (err) {
+      console.error(`Failed to fetch variable ${name}:`, err);
+      return null;
+    }
+  };
+
   let kategoriData: kategori[] = [];
   let beritaTerbaru: berita[] = [];
   let beritaEnam: berita[] = [];
@@ -126,6 +139,7 @@ export default async function BeritaPage({
   const data = beritaTerbaru[0];
   const beritaUtama = beritaEnam[0];
   const langPrefix = lang === "id" ? "" : `/${lang}`;
+  const more = await fetchVariable("berita_page.more");
 
   return (
     <>
@@ -247,7 +261,7 @@ export default async function BeritaPage({
             <h4 className="mb-0 pe-2 ls1 text-uppercase fw-bold">
               {dictionary.berita_page.latest_news}
             </h4>
-            | <a href={`${langPrefix}/berita/beritaterbaru`}>more..</a>
+            | <a href={`${langPrefix}/berita/beritaterbaru`}> {more || dictionary.berita_page.more || "Selengkapnya.."}</a>
             <button
               className="navbar-toggler"
               style={{ visibility: "hidden" }}
