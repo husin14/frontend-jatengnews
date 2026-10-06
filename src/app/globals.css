@@ -80,3 +80,19 @@ a {
 .device-xs #primary-menu-trigger {
     margin-left: 0px !important;
 }
+
+/*
+ * Berita: cover 16:9 yang fluid mengikuti lebar kolom.
+ * Selector (0,2,1) ini sengaja lebih spesifik daripada rule theme:
+ *   - .entry-image img { width: 100%; height: auto; }  (0,1,1)
+ *   - img { max-width: 100%; }                        (0,0,1)
+ * sehingga urutan load CSS tidak berpengaruh.
+ * Dipakai menggantikan hardcode style width/height fixed.
+ */
+.entry-image img.img-16x9 {
+    width: 100%;
+    height: auto;
+    aspect-ratio: 16 / 9;
+    object-fit: cover;
+    object-position: center;
+}

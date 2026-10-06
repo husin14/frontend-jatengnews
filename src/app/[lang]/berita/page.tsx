@@ -295,7 +295,7 @@ export default async function BeritaPage({
                             alt={data.judul}
                             width={400}
                             height={200}
-                            style={{ width: "416px", height: "233px" }}
+                            className="img-16x9"
                           />
                         </a>
                         {/* <div className="entry-categories">
@@ -390,7 +390,7 @@ export default async function BeritaPage({
                               alt={item.judul}
                               width={400}
                               height={200}
-                              style={{ width: "416px", height: "233px" }}
+                              className="img-16x9"
                             />
                           </a>
                           <div className="entry-categories">
