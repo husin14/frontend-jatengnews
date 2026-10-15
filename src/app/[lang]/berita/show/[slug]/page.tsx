@@ -264,7 +264,7 @@ export default function BeritaDetailPage() {
           <DisqusComment
             url={pageUrl}
             identifier={String(berita.id)}
-            shortname="tvku"
+            shortname="tvkutv"
           />
 
           {relatedBerita.length > 0 && (

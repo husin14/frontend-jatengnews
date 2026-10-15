@@ -11,6 +11,7 @@ interface DisqusProps {
 declare global {
     interface Window {
         DISQUS?: any; // eslint-disable-line
+        disqus_config?: any; // eslint-disable-line
     }
 }
 
@@ -20,7 +21,10 @@ const DisqusComment = ({ url, identifier, shortname }: DisqusProps) => {
         const disqus_config = function (this: any) {
             this.page.url = url;
             this.page.identifier = identifier;
+            this.language = 'id';
         };
+
+        window.disqus_config = disqus_config;
 
         if (window.DISQUS) {
             window.DISQUS.reset({
