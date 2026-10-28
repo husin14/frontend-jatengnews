@@ -38,7 +38,7 @@ export default async function Home({
       ? `/home/our-expertise2-translations`
       : `/home/our-expertise2`;
 
-  let slider, beritaTerbaru, jadwalTayang, ourProgram, whoweare, ourExpertise1, ourExpertise2;
+  let slider, beritaTerbaru, jadwalTayang, ourProgram, whoweare, ourExpertise1, ourExpertise2, kerjasama;
 
   try {
     const [
@@ -49,6 +49,7 @@ export default async function Home({
       whoweareRes,
       ourExpertise1Res,
       ourExpertise2Res,
+      kerjasamaRes,
     ] = await Promise.all([
       apiClient.get(sliderUrl),
       apiClient.get(beritaUrl),
@@ -57,6 +58,10 @@ export default async function Home({
       apiClient.get(`/home/who-we-are`),
       apiClient.get(ourExpertise1Url),
       apiClient.get(ourExpertise2Url),
+      apiClient.get(`/kerjasama-public`).catch((error) => {
+        console.error("Failed to fetch kerjasama data:", error);
+        return null;
+      }),
     ]);
 
     slider = sliderRes.data;
@@ -66,6 +71,7 @@ export default async function Home({
     whoweare = whoweareRes.data;
     ourExpertise1 = ourExpertise1Res.data;
     ourExpertise2 = ourExpertise2Res.data;
+    kerjasama = kerjasamaRes?.data?.data;
   } catch (error) {
     console.error("Failed to fetch data for Home page. Check your NEXT_PUBLIC_BASE_URL and API health.");
     // In a real app, you might want to redirect to an error page or show a fallback UI
@@ -150,7 +156,7 @@ export default async function Home({
           {/* Our Program */}
           <OurProgramSection list_program={ourProgram?.data} activelang={lang} />
           {/* Kerjasama */}
-          <KerjasamaSection />
+          <KerjasamaSection data={kerjasama} />
           {/* Who We Are */}
           {whoweare?.data && whoweare.data.length > 0 && (
             <WhoWeAre data={whoweare.data[0]} />

@@ -126,6 +126,16 @@ export interface expertise2 {
   judul: string;
 }
 
+export interface kerjasama {
+  id: number;
+  nama: string;
+  caption: string | null;
+  link: string | null;
+  gambar: string;
+  urutan: number;
+  is_active: boolean;
+}
+
 export interface SeputarUdinusSlide {
   id: number;
   id_slides_title: number;

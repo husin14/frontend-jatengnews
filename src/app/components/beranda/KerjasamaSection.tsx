@@ -1,157 +1,99 @@
 "use client"
-import React, { useEffect, useRef } from "react";
+import React, { useEffect, useMemo, useRef } from "react";
 import Image from "next/image";
+import { kerjasama } from "@/app/types";
 
-const images = [
-  {
-    src: "/images/kerjasamaygterjalin/bapenda.png",
-    alt: "Logo of BAPENDA",
-    caption: "Collaboration with BAPENDA (Regional Revenue Agency).",
-  },
-  {
-    src: "/images/kerjasamaygterjalin/bjateng.png",
-    alt: "Logo of Bank Jateng",
-    caption: "Partnership with Bank Jateng.",
-  },
-  {
-    src: "/images/kerjasamaygterjalin/bnn.png",
-    alt: "Logo of BNN",
-    caption: "Cooperation with BNN (National Narcotics Agency).",
-  },
-  {
-    src: "/images/kerjasamaygterjalin/esport.png",
-    alt: "Logo of Esports organization",
-    caption: "Support for the local Esports community.",
-  },
-  {
-    src: "/images/kerjasamaygterjalin/halal.png",
-    alt: "Halal certification logo",
-    caption: "Promoting Halal industry standards.",
-  },
-  {
-    src: "/images/kerjasamaygterjalin/kemenkumham.png",
-    alt: "Logo of Kemenkumham",
-    caption:
-      "Collaboration with Kemenkumham ",
-  },
-  {
-    src: "/images/kerjasamaygterjalin/kominfo.png",
-    alt: "Logo of Kominfo",
-    caption:
-      "Partnership with Kominfo ",
-  },
-  {
-    src: "/images/kerjasamaygterjalin/komnasanak.png",
-    alt: "Logo of Komnas Anak",
-    caption:
-      "Supporting Komnas Anak ",
-  },
-  {
-    src: "/images/kerjasamaygterjalin/komnasham.png",
-    alt: "Logo of Komnas HAM",
-    caption:
-      "Partnership with Komnas HAM",
-  },
-  {
-    src: "/images/kerjasamaygterjalin/majt.png",
-    alt: "Logo of MAJT",
-    caption: "Cooperation with MAJT",
-  },
-  {
-    src: "/images/kerjasamaygterjalin/perhimpunandokter.png",
-    alt: "Logo of Perhimpunan Dokter (Medical Association)",
-    caption: "Collaboration with Medical Professionals Association.",
-  },
-  {
-    src: "/images/kerjasamaygterjalin/uin.png",
-    alt: "Logo of UIN (State Islamic University)",
-    caption: "Partnership with UIN (State Islamic University).",
-  },
-  {
-    src: "/images/kerjasamaygterjalin/ypkpi_mrb.png",
-    alt: "Logo of YPKPI-MRB",
-    caption: "Collaboration with YPKPI-MRB.",
-  },
-];
+type KerjasamaSectionProps = {
+  data?: kerjasama[];
+};
 
-export const KerjasamaSection = () => {
+export const KerjasamaSection = ({ data }: KerjasamaSectionProps) => {
   const sliderRef = useRef<HTMLDivElement>(null);
+  const slides = useMemo(
+    () => (data ?? []).filter((item) => Boolean(item.gambar)),
+    [data]
+  );
 
   useEffect(() => {
-    if (typeof window !== "undefined" && window.jQuery) {
-      const $ = window.jQuery;
-      const $slider = $(sliderRef.current);
-
-      if ($slider.length > 0) {
-        if ($slider.hasClass('slick-initialized')) {
-          $slider.slick('unslick');
-        }
-
-        $slider.slick({
-          infinite: true,
-          autoplay: true,
-          autoplaySpeed: 2000,
-          slidesToShow: 6,
-          slidesToScroll: 1,
-          prevArrow: "",
-          nextArrow: "",
-          responsive: [{
-            breakpoint: 1600,
-            settings: {
-              slidesToShow: 6,
-              slidesToScroll: 1
-            }
-          },
-          {
-            breakpoint: 1400,
-            settings: {
-              slidesToShow: 5,
-              slidesToScroll: 1
-            }
-          },
-          {
-            breakpoint: 1200,
-            settings: {
-              slidesToShow: 4,
-              slidesToScroll: 1
-            }
-          },
-          {
-            breakpoint: 992,
-            settings: {
-              slidesToShow: 3,
-              slidesToScroll: 3
-            }
-          },
-          {
-            breakpoint: 768,
-            settings: {
-              slidesToShow: 2,
-              slidesToScroll: 2
-            }
-          },
-          {
-            breakpoint: 576,
-            settings: {
-              slidesToShow: 1,
-              slidesToScroll: 1
-            }
-          }
-          ]
-        });
-      }
+    if (typeof window === "undefined" || !window.jQuery || !sliderRef.current) {
+      return;
     }
+
+    if (slides.length === 0) return;
+
+    const sliderElement = sliderRef.current;
+    const $ = window.jQuery;
+    const $slider = $(sliderElement);
+
+    if ($slider.hasClass('slick-initialized')) {
+      $slider.slick('unslick');
+    }
+
+    $slider.slick({
+      infinite: true,
+      autoplay: true,
+      autoplaySpeed: 2000,
+      slidesToShow: 6,
+      slidesToScroll: 1,
+      prevArrow: "",
+      nextArrow: "",
+      responsive: [{
+        breakpoint: 1600,
+        settings: {
+          slidesToShow: 6,
+          slidesToScroll: 1
+        }
+      },
+      {
+        breakpoint: 1400,
+        settings: {
+          slidesToShow: 5,
+          slidesToScroll: 1
+        }
+      },
+      {
+        breakpoint: 1200,
+        settings: {
+          slidesToShow: 4,
+          slidesToScroll: 1
+        }
+      },
+      {
+        breakpoint: 992,
+        settings: {
+          slidesToShow: 3,
+          slidesToScroll: 3
+        }
+      },
+      {
+        breakpoint: 768,
+        settings: {
+          slidesToShow: 2,
+          slidesToScroll: 2
+        }
+      },
+      {
+        breakpoint: 576,
+        settings: {
+          slidesToShow: 1,
+          slidesToScroll: 1
+        }
+      }
+      ]
+    });
 
     return () => {
       if (typeof window !== "undefined" && window.jQuery) {
         const $ = window.jQuery;
-        const $slider = $(sliderRef.current);
+        const $slider = $(sliderElement);
         if ($slider.hasClass('slick-initialized')) {
           $slider.slick('unslick');
         }
       }
     };
-  }, []);
+  }, [slides]);
+
+  if (slides.length === 0) return null;
 
   return (
     <div className="section nobottommargin" style={{ paddingTop: 0 }}>
@@ -163,22 +105,37 @@ export const KerjasamaSection = () => {
         </div>
         <div className="row">
           <div ref={sliderRef} className="kerjasamaterjalin">
-            {images.map((img, i) => (
-              <a href="" key={i}>
+            {slides.map((item) => {
+              const slide = (
                 <div>
                   <Image
                     width={400}
                     height={200}
                     className="kerjasamaterjalin-item-img"
-                    src={img.src}
-                    alt={img.alt}
+                    src={item.gambar}
+                    alt={item.nama || "Logo mitra"}
                   />
-                  <div className="kerjasamaterjalin-item-caption">
-                    {img.caption}
-                  </div>
+                  {item.caption && (
+                    <div className="kerjasamaterjalin-item-caption">
+                      {item.caption}
+                    </div>
+                  )}
                 </div>
-              </a>
-            ))}
+              );
+
+              return item.link ? (
+                <a
+                  href={item.link}
+                  key={item.id}
+                  target="_blank"
+                  rel="noopener noreferrer"
+                >
+                  {slide}
+                </a>
+              ) : (
+                <div key={item.id}>{slide}</div>
+              );
+            })}
           </div>
         </div>
       </div>
