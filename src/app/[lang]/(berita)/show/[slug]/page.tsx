@@ -1,7 +1,7 @@
 "use client";
 
 import React, { useEffect, useState } from "react";
-import { useParams, usePathname } from "next/navigation";
+import { useParams } from "next/navigation";
 import Image from "next/image";
 import apiClient from "@/app/utils/apiClient";
 
@@ -36,7 +36,6 @@ function getKategoriName(item: berita, lang: "id" | "en"): string {
 
 export default function BeritaDetailPage() {
   const params = useParams();
-  const pathname = usePathname();
   const slug = params.slug as string;
   const lang = (params.lang as "id" | "en") || "id";
 
@@ -51,9 +50,6 @@ export default function BeritaDetailPage() {
 
   const frontendUrl = process.env.NEXT_PUBLIC_FRONTEND_URL || "https://tvku.tv";
   const langPrefix = lang === "id" ? "" : `/${lang}`;
-
-  // Automatically get the path for news links (e.g., /berita/show/ or /en/berita/show/)
-  const pathBerita = pathname.substring(0, pathname.lastIndexOf('/') + 1);
 
   useEffect(() => {
     setShowIklan(true);
@@ -73,6 +69,8 @@ export default function BeritaDetailPage() {
       setError(null);
 
       try {
+        const pathBerita = `${lang === "en" ? "/en" : ""}/show/`;
+
         const beritaDetailUrl =
           lang === "en"
             ? `/berita-translations`
@@ -185,7 +183,7 @@ export default function BeritaDetailPage() {
   }
 
   // URL kanonis untuk Disqus dan social share
-  const pageUrl = `${frontendUrl}${langPrefix}/berita/show/${slug}`;
+  const pageUrl = `${frontendUrl}${langPrefix}/show/${slug}`;
 
   return (
     <>
@@ -195,7 +193,7 @@ export default function BeritaDetailPage() {
         <div className="col-lg-8">
           {berita.kategori && !berita.cover && (
             <div className="mb-3 ms-2">
-              <a href={`${langPrefix}/berita/${berita.kategori.id_kategori}`} className="badge bg-secondary text-white p-2">
+              <a href={`${langPrefix}/${berita.kategori.id_kategori}`} className="badge bg-secondary text-white p-2">
                 {berita.kategori.nama}
               </a>
             </div>
@@ -244,7 +242,7 @@ export default function BeritaDetailPage() {
                 />
                 {berita.kategori && (
                   <div className="entry-categories">
-                    <a href={`${langPrefix}/berita/${berita.kategori.id_kategori}`} className="bg-travel">
+                    <a href={`${langPrefix}/${berita.kategori.id_kategori}`} className="bg-travel">
                       {berita.kategori.nama}
                     </a>
                   </div>
@@ -276,7 +274,7 @@ export default function BeritaDetailPage() {
                     <div className="grid-inner row align-items-start gutter-20">
                       <div className="col-4">
                         <div className="entry-image mb-0">
-                          <a href={`${langPrefix}/berita/show/${item.slug || item.id}`}>
+                          <a href={`${langPrefix}/show/${item.slug || item.id}`}>
                             <Image
                               src={item.cover}
                               alt={item.judul}
@@ -291,7 +289,7 @@ export default function BeritaDetailPage() {
                       <div className="col-8">
                         <div className="entry-title title-xs mb-2">
                           <h3 className="mb-0">
-                            <a href={`${langPrefix}/berita/show/${item.slug || item.id}`}>
+                            <a href={`${langPrefix}/show/${item.slug || item.id}`}>
                               {item.judul}
                             </a>
                           </h3>

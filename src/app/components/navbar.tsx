@@ -202,12 +202,15 @@ const Navbar = ({
 
   const handleLanguageChange = (newLang: "id" | "en") => {
     const newPrefix = newLang === "id" ? "" : `/${newLang}`;
-    if (pathname.startsWith(`/${activeLang}/berita`)) {
-      const newPathname = pathname.replace(`/${activeLang}/`, `${newPrefix}/`);
-      window.location.href = newPathname;
-    } else {
-      window.location.href = `${newPrefix}/berita`;
-    }
+    const pathnameWithoutLocale =
+      pathname.replace(/^\/(id|en)(?=\/|$)/, "") || "/";
+    const newPathname =
+      newPrefix === ""
+        ? pathnameWithoutLocale
+        : `${newPrefix}${
+            pathnameWithoutLocale === "/" ? "" : pathnameWithoutLocale
+          }`;
+    window.location.href = newPathname;
   };
 
   return (
@@ -235,7 +238,7 @@ const Navbar = ({
             <nav className="primary-menu style-6">
               <ul className="menu-container">
                 <li className="menu-item menu-color-home">
-                  <a className="menu-link" href={`${langPrefix}/berita`}>
+                  <a className="menu-link" href={`${langPrefix}/`}>
                     <div>Beranda</div>
                   </a>
                 </li>
@@ -243,7 +246,7 @@ const Navbar = ({
                   <li key={idx} className="menu-item menu-color-home">
                     <a
                       className="menu-link"
-                      href={`${langPrefix}/berita/${item.id_kategori}`}
+                      href={`${langPrefix}/${item.id_kategori}`}
                     >
                       <div>{item.nama}</div>
                     </a>
@@ -295,7 +298,7 @@ const Navbar = ({
                                       item.id_kategori
                                     )
                                   }
-                                  href={`${langPrefix}/berita/${item.id_kategori}`}
+                                  href={`${langPrefix}/${item.id_kategori}`}
                                 >
                                   {item.nama}
                                 </a>
@@ -321,7 +324,7 @@ const Navbar = ({
                                       <div className="entry">
                                         <div className="entry-image mb-3">
                                           <a
-                                            href={`${langPrefix}/berita/show/${item.slug || item.id}`}
+                                            href={`${langPrefix}/show/${item.slug || item.id}`}
                                           >
                                             <Image
                                               src={item.cover}
@@ -333,7 +336,7 @@ const Navbar = ({
                                           </a>
                                           <div className="entry-categories">
                                             <a
-                                              href={`${langPrefix}/berita/${item.kategori?.id_kategori}`}
+                                              href={`${langPrefix}/${item.kategori?.id_kategori}`}
                                               className="bg-lifestyle"
                                             >
                                               {item.kategori?.nama}
@@ -343,7 +346,7 @@ const Navbar = ({
                                         <div className="entry-title title-xs nott">
                                           <h3 className="mb-1">
                                             <a
-                                              href={`${langPrefix}/berita/show/${item.slug || item.id}`}
+                                              href={`${langPrefix}/show/${item.slug || item.id}`}
                                             >
                                               {item.judul}
                                             </a>
@@ -426,7 +429,7 @@ const Navbar = ({
                 const query = formData.get("search") as string;
                 if (query && query.trim()) {
                   const langPrefix = activeLang === "id" ? "" : `/${activeLang}`;
-                  window.location.href = `${langPrefix}/berita/search?search=${encodeURIComponent(query.trim())}`;
+                  window.location.href = `${langPrefix}/search?search=${encodeURIComponent(query.trim())}`;
                   if (typeof window !== "undefined" && window.jQuery) {
                     window.jQuery("body").removeClass("top-search-open");
                   }

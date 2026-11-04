@@ -150,13 +150,13 @@ const Carousel = () => {
                   <div className="bg-overlay-content text-overlay-mask dark desc-sm align-items-end justify-content-start p-4">
                     <div className="position-relative w-100">
                       <div className="entry-categories">
-                        <a href={`/berita/show/${item.slug || item.id}`} className="bg-fashion">
+                        <a href={`/show/${item.slug || item.id}`} className="bg-fashion">
                           {item.kategori.nama}
                         </a>
                       </div>
                       <div className="entry-title nott">
                         <h3 className="fw-semibold mb-2">
-                          <a href={`/berita/show/${item.slug || item.id}`} className="text-light">
+                          <a href={`/show/${item.slug || item.id}`} className="text-light">
                             {item.judul}
                           </a>
                         </h3>
@@ -165,7 +165,7 @@ const Carousel = () => {
                         <ul>
                           <li style={{ color: "white" }}>
                             <i className="icon-time" />
-                            {/* <a href={`/berita/show/${item.slug || item.id}`}>{new Date().toLocaleDateString()}</a> */}
+                            {/* <a href={`/show/${item.slug || item.id}`}>{new Date().toLocaleDateString()}</a> */}
                             {new Date().toLocaleDateString()}
                           </li>
                           <li style={{ color: "white" }}>

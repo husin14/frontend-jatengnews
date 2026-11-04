@@ -10,13 +10,12 @@ import NewsLayout from "@/app/components/NewsLayout";
 import NewsList from "@/app/components/NewsList";
 import Pagination from "@/app/components/Pagination";
 
-export default function BeritaSearchPage() {
+export default function BeritaTerbaruPage() {
   const params = useParams();
   const searchParams = useSearchParams();
 
   const lang = (params.lang as "id" | "en") || "id";
   const currentPage = parseInt(searchParams.get("page") || "1", 10);
-  const searchQuery = searchParams.get("search") || searchParams.get("q") || "";
 
   const [beritaApiResponse, setBeritaApiResponse] = useState<apiResponse | null>(null);
   const [dictionary, setDictionary] = useState<any>(null); // eslint-disable-line
@@ -31,17 +30,21 @@ export default function BeritaSearchPage() {
       setError(null);
 
       try {
-        const beritaUrl = `/berita-public?search=${encodeURIComponent(searchQuery)}&current_page=${currentPage}`;
+        const beritaUrl =
+          lang === "en"
+            ? `/berita-translations?language_code=en&current_page=${currentPage}`
+            : `/berita-public?current_page=${currentPage}`;
+        
         const dictionaryUrl = `/dictionaries/${lang}.json`;
 
         const [beritaResponse, dictionaryResponse] = await Promise.all([
           apiClient.get(beritaUrl),
-          fetch(dictionaryUrl).then((res) => res.json()),
+          fetch(dictionaryUrl).then(res => res.json()),
         ]);
 
         const processedBerita: apiResponse = {
           ...beritaResponse.data,
-          data: (beritaResponse.data.data || []).map((item: berita) => ({
+          data: beritaResponse.data.data.map((item: berita) => ({
             ...item,
             deskripsi: convert(item.deskripsi, {
               selectors: [{ selector: "img", format: "skip" }],
@@ -51,20 +54,17 @@ export default function BeritaSearchPage() {
 
         setBeritaApiResponse(processedBerita);
         setDictionary(dictionaryResponse);
+
       } catch (err) {
-        console.error("Failed to fetch search data:", err);
-        setError(
-          lang === "en"
-            ? "Failed to load search results. Please try again later."
-            : "Gagal memuat hasil pencarian. Silakan coba lagi nanti."
-        );
+        console.error("Failed to fetch data:", err);
+        setError("Gagal memuat data. Silakan coba lagi nanti.");
       } finally {
         setLoading(false);
       }
     };
 
     fetchData();
-  }, [lang, currentPage, searchQuery]);
+  }, [lang, currentPage]);
 
   if (loading || !dictionary) {
     return <div className="text-center p-5">Loading...</div>;
@@ -73,39 +73,32 @@ export default function BeritaSearchPage() {
   if (error) {
     return <div className="text-center p-5 text-red-500">{error}</div>;
   }
+  
+  if (!beritaApiResponse || beritaApiResponse.data.length === 0) {
+    return (
+      <div className="text-center p-5">
+        {dictionary?.berita_page?.no_news || "Tidak ada berita."}
+      </div>
+    );
+  }
 
   const langPrefix = lang === "id" ? "" : `/${lang}`;
-  const total_no_of_pages = beritaApiResponse?.last_page || 0;
-  const baseUrlLink = `${langPrefix}/berita/search`;
-
-  const titleText =
-    lang === "en"
-      ? `Search Results for "${searchQuery}"`
-      : `Hasil Pencarian untuk "${searchQuery}"`;
+  const total_no_of_pages = beritaApiResponse.last_page;
+  const baseUrlLink = `${langPrefix}/beritaterbaru`;
 
   return (
     <NewsLayout
-      title={titleText}
+      title={dictionary.berita_page.latest_news}
       lang={lang}
       pagination={
         <Pagination
           currentPage={currentPage}
           lastPage={total_no_of_pages}
-          getPageUrl={(page) =>
-            `${baseUrlLink}?search=${encodeURIComponent(searchQuery)}&page=${page}`
-          }
+          getPageUrl={(page) => `${baseUrlLink}?page=${page}`}
         />
       }
     >
-      {!beritaApiResponse || beritaApiResponse.data.length === 0 ? (
-        <div className="text-center p-5">
-          {lang === "en"
-            ? "No news found matching your query."
-            : "Tidak ada berita yang cocok dengan pencarian Anda."}
-        </div>
-      ) : (
-        <NewsList news={beritaApiResponse.data} lang={lang} />
-      )}
+      <NewsList news={beritaApiResponse.data} lang={lang} />
     </NewsLayout>
   );
 }
