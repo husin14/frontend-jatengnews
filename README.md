@@ -4,10 +4,17 @@ npm run dev -- -p 3000
 
 # docker single
 ## linux:
+{ docker rm -f frontend-tvku-public-berita-1 >/dev/null 2>&1 || true; } && { docker build -t frontend-tvku-public-berita:1 -f DockerfileSingle .; } && { docker run -d --add-host=host.docker.internal:host-gateway --env-file .env --name frontend-tvku-public-berita-1 --restart unless-stopped -p 3013:8080 frontend-tvku-public-berita:1; }
+
+## cmd
+(docker rm -f frontend-tvku-public-berita-1 >NUL 2>&1 || ver >NUL) && (docker build -t frontend-tvku-public-berita:1 -f DockerfileSingle .) && (docker run -d --add-host=host.docker.internal:host-gateway --env-file .env --name frontend-tvku-public-berita-1 --restart unless-stopped -p 3013:8080 frontend-tvku-public-berita:1)
+
+<!-- # docker single
+## linux:
 { docker rm -f frontend-tvku-public-1 >/dev/null 2>&1 || true; } && { docker build -t frontend-tvku-public:1 -f DockerfileSingle .; } && { docker run -d --add-host=host.docker.internal:host-gateway --env-file .env --name frontend-tvku-public-1 --restart unless-stopped -p 3012:8080 frontend-tvku-public:1; }
 
 ## cmd
-(docker rm -f frontend-tvku-public-1 >NUL 2>&1 || ver >NUL) && (docker build -t frontend-tvku-public:1 -f DockerfileSingle .) && (docker run -d --add-host=host.docker.internal:host-gateway --env-file .env --name frontend-tvku-public-1 --restart unless-stopped -p 3012:8080 frontend-tvku-public:1)
+(docker rm -f frontend-tvku-public-1 >NUL 2>&1 || ver >NUL) && (docker build -t frontend-tvku-public:1 -f DockerfileSingle .) && (docker run -d --add-host=host.docker.internal:host-gateway --env-file .env --name frontend-tvku-public-1 --restart unless-stopped -p 3012:8080 frontend-tvku-public:1) -->
 
 
 
