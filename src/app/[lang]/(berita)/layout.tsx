@@ -7,7 +7,7 @@ import Footer from "@/app/components/footer";
 import { getDictionary, type Locale } from "@/app/dictionaries";
 
 export const metadata: Metadata = {
-  title: "Berita TVKU Semarang",
+  title: "Jateng News",
   description:
     "THE BEST LOCAL TELEVISION IN CENTRAL JAVA. Education-based television that has been on the air since 2003. Committed to providing the best programs for viewers.",
 };

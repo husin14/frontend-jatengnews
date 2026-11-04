@@ -11,13 +11,14 @@ const Header = () => {
       <div className="header-row justify-content-between">
         {/* Logo */}
         <div id="logo" className="col-auto ms-auto ms-mb-0 me-mb-0 order-md-2">
-          <a href="/">
+          <a href="/" style={{ display: "inline-block", marginTop: "10px" }}>
             <Image
               className="mx-auto"
-              src="/images/tvkublue2x.png"
+              src="/images/jatengnews2.png"
               alt="Logo tvku"
-              height={100}
-              width={125}
+              height={51}
+              width={120}
+              style={{ width: "125px", height: "auto" }}
             />
           </a>
           {/* <a href="" className="standard-logo"></a> */}
