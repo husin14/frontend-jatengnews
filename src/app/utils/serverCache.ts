@@ -51,3 +51,12 @@ export async function withServerCache<T>(
   inFlight.set(key, promise);
   return promise;
 }
+
+/**
+ * Hapus entri cache. Dipakai ketika response berhasil secara HTTP tetapi
+ * bentuk datanya tidak valid, supaya response buruk tidak tersimpan sampai TTL.
+ */
+export function deleteServerCache(key: string): void {
+  cache.delete(key);
+  inFlight.delete(key);
+}

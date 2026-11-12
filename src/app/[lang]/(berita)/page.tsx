@@ -7,7 +7,7 @@ import Sidebar from "@/app/components/sideBar";
 import Carousel from "@/app/components/carousel";
 import { formatDate } from "@/app/utils/dateFormatter";
 import { getDictionary, Locale } from "@/app/dictionaries";
-import { withServerCache } from "@/app/utils/serverCache";
+import { withServerCache, deleteServerCache } from "@/app/utils/serverCache";
 
 type Dictionary = Awaited<ReturnType<typeof getDictionary>>;
 
@@ -18,6 +18,36 @@ const CACHE_TTL_MS = {
   latestPerKategori: 60_000,
   variable: 300_000,
 };
+
+// Ambil array dari response API yang bisa berbentuk:
+// - { data: [...] }  (paginated)
+// - [...]            (array langsung)
+// Mengembalikan null jika bentuk response tidak dikenali, supaya pemanggil
+// bisa memperlakukannya sebagai kegagalan (bukan crash `.map`).
+function extractList<T>(response: unknown): T[] | null {
+  const body = (response as { data?: unknown } | null | undefined)?.data;
+
+  if (Array.isArray(body)) {
+    return body as T[];
+  }
+
+  const nested = (body as { data?: unknown } | null | undefined)?.data;
+
+  if (Array.isArray(nested)) {
+    return nested as T[];
+  }
+
+  return null;
+}
+
+function toPlainDeskripsi(items: berita[]): berita[] {
+  return items.map((item) => ({
+    ...item,
+    deskripsi: convert(item.deskripsi, {
+      selectors: [{ selector: "img", format: "skip" }],
+    }),
+  }));
+}
 
 function getKategori(item: berita): kategori | undefined {
   return item.berita?.kategori ?? item.kategori;
@@ -119,31 +149,42 @@ export default async function BeritaPage({
     ]);
 
   if (beritaResult.status === "fulfilled") {
-    beritaTerbaru = beritaResult.value.data.data.map((item: berita) => ({
-      ...item,
-      deskripsi: convert(item.deskripsi, {
-        selectors: [{ selector: "img", format: "skip" }],
-      }),
-    }));
+    const list = extractList<berita>(beritaResult.value);
+    if (list) {
+      beritaTerbaru = toPlainDeskripsi(list);
+    } else {
+      hadFailure = true;
+      deleteServerCache(`berita:${lang}`);
+      console.error("Unexpected berita response shape:", beritaResult.value);
+    }
   } else {
     hadFailure = true;
     console.error("Failed to fetch berita terbaru:", beritaResult.reason);
   }
 
   if (featureResult.status === "fulfilled") {
-    featureData = featureResult.value.data.data.map((item: berita) => ({
-      ...item,
-      deskripsi: convert(item.deskripsi, {
-        selectors: [{ selector: "img", format: "skip" }],
-      }),
-    }));
+    const list = extractList<berita>(featureResult.value);
+    if (list) {
+      featureData = toPlainDeskripsi(list);
+    } else {
+      hadFailure = true;
+      deleteServerCache(`feature:${lang}`);
+      console.error("Unexpected feature response shape:", featureResult.value);
+    }
   } else {
     hadFailure = true;
     console.error("Failed to fetch feature:", featureResult.reason);
   }
 
   if (kategoriResult.status === "fulfilled") {
-    kategoriData = kategoriResult.value.data.data;
+    const list = extractList<kategori>(kategoriResult.value);
+    if (list) {
+      kategoriData = list;
+    } else {
+      hadFailure = true;
+      deleteServerCache(`kategori:${lang}`);
+      console.error("Unexpected kategori response shape:", kategoriResult.value);
+    }
   } else {
     hadFailure = true;
     console.error("Failed to fetch kategori:", kategoriResult.reason);
@@ -158,12 +199,14 @@ export default async function BeritaPage({
 
   if (perKategoriResult.status === "fulfilled") {
     // API sudah mengembalikan 1 berita terbaru per kategori, ready tampil.
-    beritaEnam = perKategoriResult.value.data.data.map((item: berita) => ({
-      ...item,
-      deskripsi: convert(item.deskripsi, {
-        selectors: [{ selector: "img", format: "skip" }],
-      }),
-    }));
+    const list = extractList<berita>(perKategoriResult.value);
+    if (list) {
+      beritaEnam = toPlainDeskripsi(list);
+    } else {
+      hadFailure = true;
+      deleteServerCache(`per-kategori:${lang}`);
+      console.error("Unexpected berita per kategori response shape:", perKategoriResult.value);
+    }
   } else {
     hadFailure = true;
     console.error("Failed to fetch berita per kategori:", perKategoriResult.reason);
