@@ -1,10 +1,10 @@
 import type { Metadata } from "next";
 import "../../globals.css";
 import Script from "next/script";
-import Header from "@/app/components/header";
-import Navbar from "@/app/components/navbar";
-import Footer from "@/app/components/footer";
-import { getDictionary, type Locale } from "@/app/dictionaries";
+import "@/app/components/jn/jatengnews.css";
+import SiteHeader from "@/app/components/jn/SiteHeader";
+import SiteFooter from "@/app/components/jn/SiteFooter";
+import { type Locale } from "@/app/dictionaries";
 
 export const metadata: Metadata = {
   title: "Iklan TVKU Semarang",
@@ -25,8 +25,6 @@ export default async function RootLayout({
     langParam === "id" || langParam === "en"
       ? langParam
       : "id";
-
-  const dictionary = await getDictionary(lang);
 
   return (
     <html lang={lang}>
@@ -80,20 +78,13 @@ export default async function RootLayout({
       </head>
       <body className="stretched">
         <div id="wrapper" className="clearfix">
-          <header
-            id="header"
-            className="header-size-sm"
-            data-sticky-shrink="false"
-          >
-            <Header />
-            <Navbar lang={lang} dictionary={dictionary} />
-          </header>
+          <SiteHeader lang={lang} />
           <section id="content" className="berita-content">
             <div className="content-wrap pt-0">
               <div className="container clearfix">{children}</div>
             </div>
           </section>
-          <Footer />
+          <SiteFooter />
         </div>
 
         {/* Load jQuery and plugins first */}

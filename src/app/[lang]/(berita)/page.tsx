@@ -1,13 +1,12 @@
 import React from "react";
-import Image from "next/image";
 import apiClient from "@/app/utils/apiClient";
 import { convert } from "html-to-text";
 import { berita, kategori } from "@/app/types";
-import Sidebar from "@/app/components/sideBar";
-import Carousel from "@/app/components/carousel";
 import { formatDate } from "@/app/utils/dateFormatter";
 import { getDictionary, Locale } from "@/app/dictionaries";
 import { withServerCache, deleteServerCache } from "@/app/utils/serverCache";
+import { beritaHref, getKategoriName, kategoriHref } from "@/app/components/jn/newsUtils";
+import { Cover, NewsCard, SideItem } from "@/app/components/jn/NewsCard";
 
 type Dictionary = Awaited<ReturnType<typeof getDictionary>>;
 
@@ -40,33 +39,13 @@ function extractList<T>(response: unknown): T[] | null {
   return null;
 }
 
-function toPlainDeskripsi(items: berita[]): berita[] {
-  return items.map((item) => ({
+function toPlainText(list: berita[]): berita[] {
+  return list.map((item) => ({
     ...item,
-    deskripsi: convert(item.deskripsi, {
+    deskripsi: convert(item.deskripsi || "", {
       selectors: [{ selector: "img", format: "skip" }],
     }),
   }));
-}
-
-function getKategori(item: berita): kategori | undefined {
-  return item.berita?.kategori ?? item.kategori;
-}
-
-function getKategoriName(item: berita, lang: Locale): string {
-  const kategoriItem = getKategori(item);
-
-  if (!kategoriItem) return "Uncategorized";
-
-  if (lang === "en") {
-    const translated = kategoriItem.translations?.find(
-      (item) => item.translation?.code === "en" && item.nama
-    );
-
-    if (translated?.nama) return translated.nama;
-  }
-
-  return kategoriItem.nama || "Uncategorized";
 }
 
 export default async function BeritaPage({
@@ -112,7 +91,7 @@ export default async function BeritaPage({
 
   const perKategoriUrl = `/berita-latest-per-kategori`;
 
-  // Jumlah berita yang dipakai section hero (1 utama + 5 sidebar).
+  // Jumlah berita yang dipakai section utama (1 besar + 5 samping).
   // Nilai ini juga diteruskan ke API sebagai jumlah berita yang harus
   // dikeluarkan dari daftar latest news supaya tidak ada yang kembar.
   const heroLimit = 6;
@@ -125,7 +104,7 @@ export default async function BeritaPage({
       withServerCache(`berita:${lang}`, CACHE_TTL_MS.latestNews, () =>
         apiClient.get(beritaUrl, {
           params: {
-            per_page: 5,
+            per_page: 6,
             exclude_latest_per_kategori: heroLimit,
             ...(lang === "en" ? { language_code: "en" } : {}),
           },
@@ -151,7 +130,7 @@ export default async function BeritaPage({
   if (beritaResult.status === "fulfilled") {
     const list = extractList<berita>(beritaResult.value);
     if (list) {
-      beritaTerbaru = toPlainDeskripsi(list);
+      beritaTerbaru = toPlainText(list);
     } else {
       hadFailure = true;
       deleteServerCache(`berita:${lang}`);
@@ -165,7 +144,7 @@ export default async function BeritaPage({
   if (featureResult.status === "fulfilled") {
     const list = extractList<berita>(featureResult.value);
     if (list) {
-      featureData = toPlainDeskripsi(list);
+      featureData = toPlainText(list);
     } else {
       hadFailure = true;
       deleteServerCache(`feature:${lang}`);
@@ -198,10 +177,10 @@ export default async function BeritaPage({
   }
 
   if (perKategoriResult.status === "fulfilled") {
-    // API sudah mengembalikan 1 berita terbaru per kategori, ready tampil.
+    // API sudah mengembalikan 1 berita terbaru per kategori, siap tampil.
     const list = extractList<berita>(perKategoriResult.value);
     if (list) {
-      beritaEnam = toPlainDeskripsi(list);
+      beritaEnam = toPlainText(list);
     } else {
       hadFailure = true;
       deleteServerCache(`per-kategori:${lang}`);
@@ -212,525 +191,119 @@ export default async function BeritaPage({
     console.error("Failed to fetch berita per kategori:", perKategoriResult.reason);
   }
 
-  if (hadFailure && beritaTerbaru.length === 0) {
+  const langPrefix = lang === "id" ? "" : `/${lang}`;
+  const t = (id: string, en: string) => (lang === "en" ? en : id);
+
+  if (hadFailure && beritaTerbaru.length === 0 && beritaEnam.length === 0) {
     error = "Gagal memuat data. Silakan coba lagi nanti.";
   }
 
   if (error) {
     return (
-      <div className="text-center p-5 text-red-500">
-        {error}{" "}
-        <a
-          href={lang === "id" ? "/" : `/${lang}`}
-          className="text-red-500 underline"
-        >
+      <div className="col-12 jn-empty">
+        <p>{error}</p>
+        <a href={langPrefix || "/"} className="jn-btn">
           Coba lagi
         </a>
       </div>
     );
   }
 
-  if (!dictionary) {
-    return <div className="text-center p-5">Loading...</div>;
+  if (beritaTerbaru.length === 0 && beritaEnam.length === 0) {
+    return <div className="col-12 jn-empty">{t("Tidak ada berita", "No news available")}</div>;
   }
 
-  if (!beritaTerbaru || beritaTerbaru.length === 0) {
-    return (
-      <div className="text-center p-5">
-        {lang === "en" ? "No news available" : "Tidak ada berita"}
-      </div>
-    );
-  }
-
-  const data = beritaTerbaru[0];
-  const beritaUtama = beritaEnam[0];
-  const langPrefix = lang === "id" ? "" : `/${lang}`;
   const more = await fetchVariable("berita_page.more");
+  const beritaUtama = beritaEnam[0];
+  // eslint-disable-next-line @typescript-eslint/no-explicit-any
+  const dict = dictionary as any;
 
   return (
-    <>
-      <div className="row col-mb-50 mb-0">
-        <div className="col-lg-8 berita-main-column">
-          <div className="posts-md">
-            {beritaUtama && (
-              <div className="entry">
-                <div className="entry-image">
-                  <a
-                    href={`${langPrefix}/show/${beritaUtama.slug || beritaUtama.id
-                      }`}
-                  >
-                    <Image
-                      src={
-                        beritaUtama.cover ||
-                        `https://apidev.tvku.tv/storage/${beritaUtama.cover}`
-                      }
-                      alt={beritaUtama.judul}
-                      width={600}
-                      height={300}
-                      priority
-                    />
+    <div className="col-12">
+      <div className="jn-home">
+        {beritaUtama && (
+          <section aria-labelledby="sec-utama" className="jn-sec">
+            <div className="jn-sec-head">
+              <h2 id="sec-utama">{t("Berita Utama", "Top Stories")}</h2>
+            </div>
+            <div className="jn-hero">
+              <article className="jn-hero-main">
+                <a href={beritaHref(beritaUtama, lang)} className="jn-media jn-media-16x9" tabIndex={-1} aria-hidden="true">
+                  <Cover item={beritaUtama} sizes="(max-width: 991px) 100vw, 800px" priority />
+                  <span className="jn-badge">{getKategoriName(beritaUtama, lang)}</span>
+                </a>
+                <h3 className="jn-hero-title">
+                  <a href={beritaHref(beritaUtama, lang)}>{beritaUtama.judul}</a>
+                </h3>
+                <p className="jn-meta">
+                  <b>{getKategoriName(beritaUtama, lang)}</b> · {formatDate(beritaUtama.waktu, lang)}
+                </p>
+                {beritaUtama.deskripsi && <p className="jn-lede">{beritaUtama.deskripsi}</p>}
+              </article>
+              <div className="jn-hero-side">
+                {beritaEnam.slice(1, 6).map((item) => (
+                  <SideItem key={item.id} item={item} lang={lang} />
+                ))}
+              </div>
+            </div>
+          </section>
+        )}
+
+        <div className="jn-split">
+          <div className="jn-split-main">
+            {beritaTerbaru.length > 0 && (
+              <section aria-labelledby="sec-terbaru" className="jn-sec">
+                <div className="jn-sec-head">
+                  <h2 id="sec-terbaru">{dict?.berita_page?.latest_news || t("Berita Terbaru", "Latest News")}</h2>
+                  <a href={`${langPrefix}/beritaterbaru`}>
+                    {more || dict?.berita_page?.more || t("Selengkapnya", "More")} →
                   </a>
                 </div>
-                <div className="entry-title title-sm">
-                  <h3 style={{ marginBottom: '0px' }}>
-                    <a
-                      href={`${langPrefix}/show/${beritaUtama.slug || beritaUtama.id
-                        }`}
-                    >
-                      {beritaUtama.judul}
-                    </a>
-                  </h3>
+                <div className="jn-grid">
+                  {beritaTerbaru.slice(0, 6).map((item) => (
+                    <NewsCard key={item.id} item={item} lang={lang} />
+                  ))}
                 </div>
-                <div className="entry-meta berita-meta-compact">
-                  {/* <ul>
-                    <li style={{ color: "black" }}>
-                      {getKategoriName(beritaUtama, lang)}
-                    </li>
-                    <li style={{ color: "black" }}>
-                      <i className="icon-calendar3" /> {formatDate(beritaUtama.waktu, lang)}
-                    </li>
-                    <li style={{ color: "black" }}>
-                      <i className="icon-eye" /> {beritaUtama.open ?? 0}
-                    </li>
-                  </ul> */}
-                  {getKategoriName(beritaUtama, lang)} | <i className="icon-calendar3" /> {formatDate(beritaUtama.waktu, lang)} | <i className="icon-eye" /> {beritaUtama.open ?? 0}
-                </div>
+              </section>
+            )}
 
-                <div className="entry-content" style={{ marginTop: '0px' }}>
-                  <p className="line-clamp-2 mb-0">
-                    {beritaUtama.deskripsi}
-                  </p>
+            {featureData.length > 0 && (
+              <section aria-labelledby="sec-feature" className="jn-sec">
+                <div className="jn-sec-head">
+                  <h2 id="sec-feature">Feature</h2>
+                  <a href={kategoriHref(19, lang)}>{t("Selengkapnya", "More")} →</a>
                 </div>
-              </div>
+                <div className="jn-grid">
+                  {featureData.slice(0, 6).map((item) => (
+                    <NewsCard key={item.id} item={item} lang={lang} />
+                  ))}
+                </div>
+              </section>
             )}
           </div>
-        </div>
-        <div className="col-lg-4 berita-sidebar-column">
-          <div className="posts-sm row col-mb-30">
-            {beritaEnam.slice(1, 6).map((item) => (
-              <div key={item.id} className="entry col-12 berita-sidebar-entry">
-                <div className="grid-inner row g-0">
-                  <div className="col-auto">
-                    <div className="entry-image">
-                      <a href={`${langPrefix}/show/${item.slug || item.id}`}>
-                        <Image
-                          src={
-                            item.cover ||
-                            `https://apidev.tvku.tv/storage/${item.cover}`
-                          }
-                          alt={item.judul}
-                          width={100}
-                          height={100}
-                        />
-                      </a>
-                    </div>
-                  </div>
-                  <div className="col ps-3">
-                    <div className="entry-title">
-                      <h4 className="berita-sidebar-title">
-                        <a
-                          href={`${langPrefix}/show/${item.slug || item.id}`}
-                        >
-                          {item.judul}
-                        </a>
-                      </h4>
-                    </div>
 
-                    <div className="entry-meta berita-meta-compact">
-                      {/* <ul>
-                        <li style={{ color: "black" }}>
-                          {getKategoriName(item, lang)}
-                        </li>
-                        <li style={{ color: "black" }}>
-                          <i className="icon-calendar3" /> {formatDate(item.waktu, lang)}
-                        </li>
-                        <li style={{ color: "black" }}>
-                          <i className="icon-eye" /> {item.open ?? 0}
-                        </li>
-                      </ul> */}
-                      {getKategoriName(item, lang)} | <i className="icon-calendar3" /> {formatDate(item.waktu, lang)} | <i className="icon-eye" /> {item.open ?? 0}
-                    </div>
-                  </div>
-                </div>
+          {kategoriData.length > 0 && (
+            <aside aria-labelledby="sec-kategori" className="jn-split-aside jn-sec">
+              <div className="jn-sec-head">
+                <h2 id="sec-kategori">{t("Kategori Berita", "News Categories")}</h2>
               </div>
-            ))}
-          </div>
+              <nav aria-label={t("Daftar kategori", "Category list")} className="jn-katlist">
+                {kategoriData.map((item) => (
+                  <a key={item.id_kategori} href={kategoriHref(item.id_kategori, lang)}>
+                    <span>{item.nama}</span>
+                    <span>
+                      {item.berita_count ?? ""}
+                      <svg aria-hidden="true" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="#185FA5" strokeWidth="2.4" strokeLinecap="round" strokeLinejoin="round">
+                        <path d="M9 6l6 6-6 6" />
+                      </svg>
+                    </span>
+                  </a>
+                ))}
+              </nav>
+            </aside>
+          )}
         </div>
       </div>
-      {/* latest news */}
-      <div className="row clearfix">
-        <div className="col-lg-8">
-          <nav
-            className="navbar navbar-expand-lg navbar-light p-0"
-            style={{ justifyContent: "flex-start" }}
-          >
-            <h4 className="mb-0 pe-2 ls1 text-uppercase fw-bold">
-              {dictionary.berita_page.latest_news}
-            </h4>
-            | <a href={`${langPrefix}/beritaterbaru`}> {more || dictionary.berita_page.more || "Selengkapnya.."}</a>
-            <button
-              className="navbar-toggler"
-              style={{ visibility: "hidden" }}
-              type="button"
-              data-bs-toggle="collapse"
-              data-bs-target="#navbarToggler1"
-              aria-controls="navbarToggler1"
-              aria-expanded="false"
-              aria-label="Toggle navigation"
-            >
-              <i className="icon-line-menu"></i>
-            </button>
-          </nav>
-          <div className="line line-xs line-dark"></div>
-
-          <div className="tab-content" id="nav-tabContent">
-            <div
-              className="tab-pane fade show active"
-              id="nav-outdoor"
-              role="tabpanel"
-              aria-labelledby="nav-outdoor-tab"
-            >
-              <div className="row col-mb-30 mb-0">
-                <div className="col-lg-6 beritaterbaru">
-                  <div className="posts-md">
-                    <div className="entry">
-                      <div className="entry-image">
-                        <a href={`${langPrefix}/show/${data.slug || data.id}`}>
-                          <Image
-                            src={data.cover}
-                            alt={data.judul}
-                            width={400}
-                            height={200}
-                            className="img-16x9"
-                          />
-                        </a>
-                        {/* <div className="entry-categories">
-                          <a
-                            href={`${langPrefix}/show/${data.slug || data.id}`}
-                            className="bg-travel"
-                          >
-                            {getKategoriName(data, lang)}
-                          </a>
-                        </div> */}
-                      </div>
-                      <div className="entry-title nott">
-                        <h3 className="mb-2">
-                          <a href={`${langPrefix}/show/${data.slug || data.id}`}>{data.judul}</a>
-                        </h3>
-                      </div>
-                      <div className="entry-meta berita-meta-compact">
-                        {/* <ul>
-                          <li style={{ color: "black" }}>
-                            <i className="icon-calendar3"></i>
-                            {formatDate(data.waktu, lang)}
-                          </li>
-                          <li style={{ color: "black" }}>
-                            <i className="icon-eye"></i>
-                            {data.open ?? 0}
-                          </li>
-                        </ul> */}
-                        {getKategoriName(data, lang)} | <i className="icon-calendar3" /> {formatDate(data.waktu, lang)} | <i className="icon-eye" /> {data.open ?? 0}
-                      </div>
-                      <div className="entry-content clearfix line-clamp-1">
-                        <p className="line-clamp-2">{data.deskripsi}</p>
-                      </div>
-                    </div>
-                  </div>
-                </div>
-                <div className="col-lg-6">
-                  <div className="posts-sm row col-mb-30">
-                    {beritaTerbaru.slice(1, 5).map((item) => (
-                      <div key={item.id} className="entry col-12">
-                        <div className="grid-inner row align-items-start g-0">
-                          <div className="col-auto">
-                            <div className="entry-image">
-                              <a href={`${langPrefix}/show/${item.slug || item.id}`}>
-                                <Image
-                                  src={item.cover}
-                                  alt={item.judul}
-                                  width={400}
-                                  height={200}
-                                />
-                              </a>
-                            </div>
-                          </div>
-                          <div className="col ps-3">
-                            <div className="entry-title">
-                              <h4 style={{ marginTop: '-5px' }}>
-                                <a
-                                  href={`${langPrefix}/show/${item.slug || item.id}`}
-                                >
-                                  {item.judul}
-                                </a>
-                              </h4>
-                            </div>
-                            <div className="entry-meta berita-meta-compact">
-                              {/* <ul>
-                                <li style={{ color: "black" }}>
-                                  <i className="icon-calendar3"></i>
-                                  {formatDate(item.waktu, lang)}
-                                </li>
-                                <li style={{ color: "black" }}>
-                                  <i className="icon-eye"></i>
-                                  {item.open ?? 0}
-                                </li>
-                              </ul> */}
-                              {getKategoriName(item, lang)} | <i className="icon-calendar3" /> {formatDate(item.waktu, lang)} | <i className="icon-eye" /> {item.open ?? 0}
-                            </div>
-                          </div>
-                        </div>
-                      </div>
-                    ))}
-                  </div>
-                </div>
-              </div>
-              <div className="row justify-content-center col-mb-50 mb-0">
-                {beritaTerbaru.slice(5, 7).map((item) => (
-                  <div key={item.id} className="col-md-6 mt-4 beritaterbaru2 d-flex justify-content-center">
-                    <div className="posts-md">
-                      <div className="entry">
-                        <div className="entry-image">
-                          <a href={`${langPrefix}/show/${item.slug || item.id}`}>
-                            <Image
-                              src={item.cover}
-                              alt={item.judul}
-                              width={400}
-                              height={200}
-                              className="img-16x9"
-                            />
-                          </a>
-                          <div className="entry-categories">
-                            <a
-                              href={`${langPrefix}/show/${item.slug || item.id}`}
-                              className="bg-lifestyle"
-                            >
-                              {getKategoriName(item, lang)}
-                            </a>
-                          </div>
-                        </div>
-                        <div className="entry-title title-sm nott">
-                          <h3 className="mb-2">
-                            <a href={`${langPrefix}/show/${item.slug || item.id}`}>
-                              {item.judul}
-                            </a>
-                          </h3>
-                        </div>
-                        <div className="entry-meta berita-meta-compact">
-                          {/* <ul>
-                            <li style={{ color: "black" }}>
-                              <i className="icon-calendar3"></i>
-                              {formatDate(item.waktu, lang)}
-                            </li>
-                            <li style={{ color: "black" }}>
-                              <i className="icon-eye"></i>
-                              {item.open ?? 0}
-                            </li>
-                          </ul> */}
-                          {getKategoriName(item, lang)} | <i className="icon-calendar3" /> {formatDate(item.waktu, lang)} | <i className="icon-eye" /> {item.open ?? 0}
-                        </div>
-                        <div className="entry-content clearfix">
-                          <p className="line-clamp-2 mb-0">
-                            {item.deskripsi}
-                          </p>
-                        </div>
-                      </div>
-                    </div>
-                  </div>
-                ))}
-              </div>
-              <div className="posts-sm row col-mb-30">
-                {beritaTerbaru.slice(7, 11).map((item) => (
-                  <div key={item.id} className="entry col-md-6">
-                    <div className="grid-inner row align-items-start no-gutter">
-                      <div className="col-auto">
-                        <div className="entry-image">
-                          <a href={`${langPrefix}/show/${item.slug || item.id}`}>
-                            <Image
-                              src={item.cover}
-                              alt={item.judul}
-                              width={400}
-                              height={200}
-                            />
-                          </a>
-                        </div>
-                      </div>
-                      <div className="col ps-3">
-                        <div className="entry-title">
-                          <h4 className="fw-medium">
-                            <a href={`${langPrefix}/show/${item.slug || item.id}`}>
-                              {item.judul}
-                            </a>
-                          </h4>
-                        </div>
-                        <div className="entry-meta berita-meta-compact">
-                          {/* <ul>
-                            <li style={{ color: "black" }}>
-                              <i className="icon-calendar3"></i>
-                              {formatDate(item.waktu, lang)}
-                            </li>
-                            <li style={{ color: "black" }}>
-                              <i className="icon-eye"></i>
-                              {item.open ?? 0}
-                            </li>
-                          </ul> */}
-                          {getKategoriName(item, lang)} | <i className="icon-calendar3" /> {formatDate(item.waktu, lang)} | <i className="icon-eye" /> {item.open ?? 0}
-                        </div>
-                      </div>
-                    </div>
-                  </div>
-                ))}
-              </div>
-            </div>
-          </div>
-        </div>
-        <Sidebar />
-      </div>
-
-      <Carousel />
-
-      <div className="container clearfix">
-        <div className="row clearfix">
-          <div className="col-lg-8">
-            <div className="mt-0">
-              <h4 className="mb-2 ls1 text-uppercase fw-bold">Feature</h4>
-              <div className="line line-xs line-sports"></div>
-
-              <div className="row col-mb-50 mb-0">
-                {featureData.map((item) => (
-                  <div key={item.id} className="posts-md">
-                    <div className="entry row mb-5">
-                      <div className="col-md-6">
-                        <div className="entry-image">
-                          <a href={`${langPrefix}/show/${item.slug || item.id}`}>
-                            <Image
-                              src={item.cover}
-                              alt={item.judul}
-                              width={600}
-                              height={300}
-                              className="rounded"
-                            />
-                          </a>
-                        </div>
-                      </div>
-                      <div className="col-md-6 mt-3 mt-md-0">
-                        <div className="entry-title title-sm nott">
-                          <h3>
-                            <a href={`${langPrefix}/show/${item.slug || item.id}`}>
-                              {item.judul}
-                            </a>
-                          </h3>
-                        </div>
-                        <div className="entry-meta berita-meta-compact">
-                          {/* <ul>
-                            <li style={{ color: "black" }}>
-                              <i className="icon-calendar3" />{" "}
-                              {new Date(item.waktu || item.waktu_publish).toLocaleDateString(
-                                "id-ID",
-                                {
-                                  year: "numeric",
-                                  month: "long",
-                                  day: "numeric",
-                                }
-                              )}
-                            </li>
-                            <li style={{ color: "black" }}>
-                              <i className="icon-eye" /> {item.open ?? 0}
-                            </li>
-                          </ul> */}
-                          <i className="icon-calendar3" /> {formatDate(item.waktu, lang)} | <i className="icon-eye" /> {item.open ?? 0}
-                        </div>
-                        <div className="entry-content">
-                          <p className="mb-0 line-clamp-3">{item.deskripsi}</p>
-                        </div>
-                      </div>
-                    </div>
-                  </div>
-                ))}
-              </div>
-            </div>
-          </div>
-          <div className="col-lg-4 sticky-sidebar-wrap kategoriberita">
-            <div className="sticky-sidebar">
-              <div className="widget widget_links clearfix">
-                <h4 className="mb-2 ls1 text-uppercase fw-bold">
-                  Kategori Berita
-                </h4>
-                <div className="line line-xs line-sports"></div>
-                <ul>
-                  {kategoriData.map((item) => (
-                    <li
-                      key={item.id_kategori}
-                      className="d-flex align-items-center"
-                    >
-                      <a
-                        href={`${langPrefix}/${item.id_kategori}`}
-                        className="flex-fill text-black"
-                      >
-                        {item.nama}
-                      </a>
-                      <span className="badge text-light bg-sports">
-                        {item.berita_count || 0}
-                      </span>
-                    </li>
-                  ))}
-                </ul>
-              </div>
-              <div className="widget clearfix">
-                <h4 className="mb-2 ls1 text-uppercase fw-bold">
-                  Recent Posts
-                </h4>
-                <div className="line line-xs line-home"></div>
-                <div className="posts-sm row col-mb-30">
-                  {beritaTerbaru.slice(0, 4).map((item) => (
-                    <div key={item.id} className="entry col-12">
-                      <div className="grid-inner row align-items-start g-0">
-                        <div className="col-auto">
-                          <div className="entry-image">
-                            <a href={`${langPrefix}/show/${item.slug || item.id}`}>
-                              <Image
-                                src={item.cover}
-                                alt={item.judul}
-                                width={400}
-                                height={200}
-                              />
-                            </a>
-                          </div>
-                        </div>
-                        <div className="col ps-3">
-                          <div className="entry-title">
-                            <h4 className="fw-semibold berita-sidebar-title">
-                              <a href={`${langPrefix}/show/${item.slug || item.id}`}>
-                                {item.judul}
-                              </a>
-                            </h4>
-                          </div>
-                          <div className="entry-meta">
-                            <ul>
-                              <li style={{ color: "black" }}>
-                                <i className="icon-calendar3"></i>
-                                <a
-                                  href={`${langPrefix}/show/${item.slug || item.id}`}
-                                  style={{ color: "black" }}
-                                >
-                                  {formatDate(item.waktu, lang)}
-                                </a>
-                              </li>
-                              <li style={{ color: "black" }}>
-                                <i className="icon-eye"></i>
-                                {item.open ?? 0}
-                              </li>
-                            </ul>
-                          </div>
-                        </div>
-                      </div>
-                    </div>
-                  ))}
-                </div>
-              </div>
-            </div>
-          </div>
-        </div>
-      </div>
-    </>
+    </div>
   );
 }

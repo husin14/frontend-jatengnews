@@ -29,6 +29,6 @@ export function middleware(request: NextRequest) {
 export const config = {
   matcher: [
     // Skip all internal paths (_next) and static assets
-    '/((?!api|_next/static|_next/image|beranda_assets|canvas_theme|favicon.ico|images|assets|dictionaries|theme|file.svg|globe.svg|next.svg|vercel.svg|window.svg).*)',
+    '/((?!api|_next/static|_next/image|canvas_theme|favicon.ico|images|assets|dictionaries|theme|file.svg|globe.svg|next.svg|vercel.svg|window.svg).*)',
   ],
 };
