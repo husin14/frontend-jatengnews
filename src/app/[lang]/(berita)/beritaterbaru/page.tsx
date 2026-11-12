@@ -2,7 +2,7 @@
 
 import React, { useEffect, useState } from "react";
 import { useParams, useSearchParams } from "next/navigation";
-import apiClient from "@/app/utils/apiClient";
+import apiClient, { getApiErrorMessage } from "@/app/utils/apiClient";
 import { convert } from "html-to-text";
 
 import { berita, apiResponse } from "@/app/types";
@@ -57,7 +57,7 @@ export default function BeritaTerbaruPage() {
 
       } catch (err) {
         console.error("Failed to fetch data:", err);
-        setError("Gagal memuat data. Silakan coba lagi nanti.");
+        setError(getApiErrorMessage(err));
       } finally {
         setLoading(false);
       }
@@ -66,12 +66,12 @@ export default function BeritaTerbaruPage() {
     fetchData();
   }, [lang, currentPage]);
 
-  if (loading || !dictionary) {
-    return <div className="text-center p-5">Loading...</div>;
-  }
-
   if (error) {
     return <div className="text-center p-5 text-red-500">{error}</div>;
+  }
+
+  if (loading || !dictionary) {
+    return <div className="text-center p-5">Loading...</div>;
   }
   
   if (!beritaApiResponse || beritaApiResponse.data.length === 0) {

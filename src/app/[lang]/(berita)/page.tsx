@@ -7,6 +7,17 @@ import Sidebar from "@/app/components/sideBar";
 import Carousel from "@/app/components/carousel";
 import { formatDate } from "@/app/utils/dateFormatter";
 import { getDictionary, Locale } from "@/app/dictionaries";
+import { withServerCache } from "@/app/utils/serverCache";
+
+type Dictionary = Awaited<ReturnType<typeof getDictionary>>;
+
+const CACHE_TTL_MS = {
+  latestNews: 60_000,
+  feature: 60_000,
+  kategori: 300_000,
+  latestPerKategori: 60_000,
+  variable: 300_000,
+};
 
 function getKategori(item: berita): kategori | undefined {
   return item.berita?.kategori ?? item.kategori;
@@ -38,9 +49,14 @@ export default async function BeritaPage({
 
   const fetchVariable = async (name: string): Promise<string | null> => {
     try {
-      const res = await apiClient.get(`/variables/${name}`, {
-        params: lang === "en" ? { language_code: "en" } : {},
-      });
+      const res = await withServerCache(
+        `variable:${name}:${lang}`,
+        CACHE_TTL_MS.variable,
+        () =>
+          apiClient.get(`/variables/${name}`, {
+            params: lang === "en" ? { language_code: "en" } : {},
+          })
+      );
 
       return res?.data?.data?.value ?? null;
     } catch (err) {
@@ -53,75 +69,122 @@ export default async function BeritaPage({
   let beritaTerbaru: berita[] = [];
   let beritaEnam: berita[] = [];
   let featureData: berita[] = [];
-  let dictionary: any = null;
+  let dictionary: Dictionary | null = null;
   let error: string | null = null;
+  let hadFailure = false;
 
-  try {
-    const beritaUrl = lang === "en" ? `/berita-translations` : `/berita-public`;
+  const beritaUrl = lang === "en" ? `/berita-translations` : `/berita-public`;
 
-    const featureUrl =
-      lang === "en"
-        ? `/berita-translations?language_code=en&id_kategori=19`
-        : `/berita-public?id_kategori=19`;
+  const featureUrl =
+    lang === "en"
+      ? `/berita-translations?language_code=en&id_kategori=19`
+      : `/berita-public?id_kategori=19`;
 
-    const perKategoriUrl = `/berita-latest-per-kategori`;
+  const perKategoriUrl = `/berita-latest-per-kategori`;
 
-    // Jumlah berita yang dipakai section hero (1 utama + 5 sidebar).
-    // Nilai ini juga diteruskan ke API sebagai jumlah berita yang harus
-    // dikeluarkan dari daftar latest news supaya tidak ada yang kembar.
-    const heroLimit = 6;
+  // Jumlah berita yang dipakai section hero (1 utama + 5 sidebar).
+  // Nilai ini juga diteruskan ke API sebagai jumlah berita yang harus
+  // dikeluarkan dari daftar latest news supaya tidak ada yang kembar.
+  const heroLimit = 6;
 
-    const [beritaResponse, featureResponse, kategoriResponse, dictionaryResponse, perKategoriResponse] =
-      await Promise.all([
+  // Promise.allSettled dipakai supaya kegagalan satu endpoint (mis. 429)
+  // tidak mengosongkan seluruh halaman. Data di-cache agar jumlah request
+  // ke API tidak membengkak dan tidak cepat kena rate limit.
+  const [beritaResult, featureResult, kategoriResult, dictionaryResult, perKategoriResult] =
+    await Promise.allSettled([
+      withServerCache(`berita:${lang}`, CACHE_TTL_MS.latestNews, () =>
         apiClient.get(beritaUrl, {
           params: {
             per_page: 5,
             exclude_latest_per_kategori: heroLimit,
             ...(lang === "en" ? { language_code: "en" } : {}),
           },
-        }),
-        apiClient.get(featureUrl),
-        apiClient.get(`/kategori`),
-        getDictionary(lang),
+        })
+      ),
+      withServerCache(`feature:${lang}`, CACHE_TTL_MS.feature, () =>
+        apiClient.get(featureUrl)
+      ),
+      withServerCache(`kategori:${lang}`, CACHE_TTL_MS.kategori, () =>
+        apiClient.get(`/kategori`)
+      ),
+      getDictionary(lang),
+      withServerCache(`per-kategori:${lang}`, CACHE_TTL_MS.latestPerKategori, () =>
         apiClient.get(perKategoriUrl, {
           params: {
             limit: heroLimit,
             ...(lang === "en" ? { language_code: "en" } : {}),
           },
-        }),
-      ]);
+        })
+      ),
+    ]);
 
-    beritaTerbaru = beritaResponse.data.data.map((item: berita) => ({
+  if (beritaResult.status === "fulfilled") {
+    beritaTerbaru = beritaResult.value.data.data.map((item: berita) => ({
       ...item,
       deskripsi: convert(item.deskripsi, {
         selectors: [{ selector: "img", format: "skip" }],
       }),
     }));
+  } else {
+    hadFailure = true;
+    console.error("Failed to fetch berita terbaru:", beritaResult.reason);
+  }
 
-    featureData = featureResponse.data.data.map((item: berita) => ({
+  if (featureResult.status === "fulfilled") {
+    featureData = featureResult.value.data.data.map((item: berita) => ({
       ...item,
       deskripsi: convert(item.deskripsi, {
         selectors: [{ selector: "img", format: "skip" }],
       }),
     }));
+  } else {
+    hadFailure = true;
+    console.error("Failed to fetch feature:", featureResult.reason);
+  }
 
-    kategoriData = kategoriResponse.data.data;
-    dictionary = dictionaryResponse;
+  if (kategoriResult.status === "fulfilled") {
+    kategoriData = kategoriResult.value.data.data;
+  } else {
+    hadFailure = true;
+    console.error("Failed to fetch kategori:", kategoriResult.reason);
+  }
 
+  if (dictionaryResult.status === "fulfilled") {
+    dictionary = dictionaryResult.value;
+  } else {
+    hadFailure = true;
+    console.error("Failed to fetch dictionary:", dictionaryResult.reason);
+  }
+
+  if (perKategoriResult.status === "fulfilled") {
     // API sudah mengembalikan 1 berita terbaru per kategori, ready tampil.
-    beritaEnam = perKategoriResponse.data.data.map((item: berita) => ({
+    beritaEnam = perKategoriResult.value.data.data.map((item: berita) => ({
       ...item,
       deskripsi: convert(item.deskripsi, {
         selectors: [{ selector: "img", format: "skip" }],
       }),
     }));
-  } catch (err) {
-    console.error("Failed to fetch data:", err);
+  } else {
+    hadFailure = true;
+    console.error("Failed to fetch berita per kategori:", perKategoriResult.reason);
+  }
+
+  if (hadFailure && beritaTerbaru.length === 0) {
     error = "Gagal memuat data. Silakan coba lagi nanti.";
   }
 
   if (error) {
-    return <div className="text-center p-5 text-red-500">{error}</div>;
+    return (
+      <div className="text-center p-5 text-red-500">
+        {error}{" "}
+        <a
+          href={lang === "id" ? "/" : `/${lang}`}
+          className="text-red-500 underline"
+        >
+          Coba lagi
+        </a>
+      </div>
+    );
   }
 
   if (!dictionary) {
@@ -131,7 +194,7 @@ export default async function BeritaPage({
   if (!beritaTerbaru || beritaTerbaru.length === 0) {
     return (
       <div className="text-center p-5">
-        {dictionary?.berita_page?.no_news || "Tidak ada berita"}
+        {lang === "en" ? "No news available" : "Tidak ada berita"}
       </div>
     );
   }

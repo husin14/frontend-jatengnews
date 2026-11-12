@@ -2,7 +2,7 @@
 
 import React, { useEffect, useState } from "react";
 import { useParams, useSearchParams } from "next/navigation";
-import apiClient from "@/app/utils/apiClient";
+import apiClient, { getApiErrorMessage } from "@/app/utils/apiClient";
 import { convert } from "html-to-text";
 
 import { berita, kategori, apiResponse } from "@/app/types";
@@ -76,7 +76,7 @@ export default function KategoriBeritaClient() {
         console.log("Kategori:", kategoriResponse.data);
       } catch (err) {
         console.error("Failed to fetch data:", err);
-        setError("Gagal memuat data. Silakan coba lagi nanti.");
+        setError(getApiErrorMessage(err));
       } finally {
         setLoading(false);
       }
@@ -85,12 +85,12 @@ export default function KategoriBeritaClient() {
     fetchData();
   }, [lang, id_kategori, currentPage]);
 
-  if (loading || !dictionary) {
-    return <div className="text-center p-5">Loading...</div>;
-  }
-
   if (error) {
     return <div className="text-center p-5 text-red-500">{error}</div>;
+  }
+
+  if (loading || !dictionary) {
+    return <div className="text-center p-5">Loading...</div>;
   }
 
   if (!kategori) {
