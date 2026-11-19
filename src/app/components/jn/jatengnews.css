@@ -367,6 +367,30 @@
 @keyframes jnShimmer { from { background-position: 200% 0; } to { background-position: -200% 0; } }
 @media (prefers-reduced-motion: reduce) { .jn-skel { animation: none; } }
 
+/* ---------- Popup iklan YouTube ---------- */
+.jn-popup-iklan-small {
+  position: fixed; right: 20px; bottom: 20px; z-index: 9999;
+  width: 320px; max-width: calc(100vw - 32px); box-sizing: border-box;
+  background: #FFFFFF; border: 1px solid var(--jn-line); border-top: 3px solid var(--jn-accent);
+  border-radius: 8px; box-shadow: 0 12px 32px rgba(12, 45, 87, .25); overflow: hidden;
+  font-family: Poppins, system-ui, sans-serif;
+}
+.jn-popup-iklan-small-head {
+  display: flex; align-items: center; justify-content: space-between;
+  padding: 6px 8px 6px 12px; background: var(--jn-navy); color: #FFFFFF;
+}
+.jn-popup-iklan-label { font-size: 11px; font-weight: 700; letter-spacing: .8px; text-transform: uppercase; }
+.jn-popup-iklan-close {
+  all: unset; cursor: pointer; display: inline-flex; align-items: center; justify-content: center;
+  width: 28px; height: 28px; color: #FFFFFF; box-sizing: border-box;
+}
+.jn-popup-iklan-close:focus-visible { outline: 2px solid #FFFFFF; outline-offset: -2px; }
+.jn-popup-iklan-video { position: relative; width: 100%; aspect-ratio: 16 / 9; background: #000000; }
+.jn-popup-iklan-video iframe { position: absolute; inset: 0; width: 100%; height: 100%; border: 0; display: block; }
+/* Bootstrap `.row > *` memaksa width:100% jika popup masih berada di dalam grid. */
+.row > .jn-popup-iklan-small { width: 320px; max-width: calc(100vw - 32px); }
+.jn-popup-iklan-large .video-wrapper { width: 80vw; max-width: 900px; }
+
 /* ---------- Responsif ---------- */
 @media (max-width: 991px) {
   .jn-topbar-info span:nth-child(n+2) { display: none; }
@@ -396,4 +420,6 @@
   .jn-detail { gap: 32px; }
   .jn-detail-main, .jn-detail-aside { flex-basis: 100%; }
   .jn-article-body { font-size: 17px; }
+  .jn-popup-iklan-small { right: 12px; bottom: 12px; width: 260px; }
+  .row > .jn-popup-iklan-small { width: 260px; }
 }

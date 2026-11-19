@@ -2,7 +2,7 @@
 
 // Versi lama halaman ini disimpan di ../_backup/page.lama.tsx
 
-import React, { useEffect, useState } from "react";
+import React, { useEffect, useRef, useState } from "react";
 import { useParams } from "next/navigation";
 import Image from "next/image";
 import apiClient from "@/app/utils/apiClient";
@@ -12,6 +12,10 @@ import PopupIklan from "@/app/components/popupIklan";
 import YtPreview from "@/app/components/yt-preview";
 import { formatDate } from "@/app/utils/dateFormatter";
 import useBannerImpression from "@/app/hooks/useBannerImpression";
+import {
+  isLargePopupIklanShownToday,
+  markLargePopupIklanShown,
+} from "@/app/utils/adsCounterStorage";
 import { getKategori, getKategoriName, Lang } from "@/app/components/jn/newsUtils";
 import { NewsCard, SideItem } from "@/app/components/jn/NewsCard";
 
@@ -115,6 +119,8 @@ export default function BeritaDetailPage() {
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState<string | null>(null);
   const [showIklan, setShowIklan] = useState(false);
+  const [iklanVariant, setIklanVariant] = useState<"large" | "small">("large");
+  const iklanDecided = useRef(false);
 
   const frontendUrl = process.env.NEXT_PUBLIC_FRONTEND_URL || "https://tvku.tv";
   const langPrefix = lang === "id" ? "" : `/${lang}`;
@@ -123,7 +129,13 @@ export default function BeritaDetailPage() {
   // Path berita (/show/ atau /en/show/) untuk pencatatan di API.
   const pathBerita = `${langPrefix}/show/`;
 
+  // Popup besar 1x per hari (reset 00.00); artikel berikutnya memakai popup kecil.
   useEffect(() => {
+    if (iklanDecided.current) return;
+    iklanDecided.current = true;
+
+    setIklanVariant(isLargePopupIklanShownToday() ? "small" : "large");
+    markLargePopupIklanShown();
     setShowIklan(true);
   }, []);
 
@@ -234,7 +246,9 @@ export default function BeritaDetailPage() {
 
   return (
     <>
-      {showIklan && <PopupIklan onClose={() => setShowIklan(false)} />}
+      {showIklan && (
+        <PopupIklan variant={iklanVariant} onClose={() => setShowIklan(false)} />
+      )}
 
       <div className="col-12">
         <div className="jn-detail">
