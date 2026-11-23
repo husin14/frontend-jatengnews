@@ -9,9 +9,14 @@ export const metadata: Metadata = {
   description:
     "THE BEST LOCAL TELEVISION IN CENTRAL JAVA. Education-based television that has been on the air since 2003. Committed to providing the best programs for viewers.",
   icons: {
-    icon: "/images/logo_new_jateng_news_Photoroom.webp",
-    shortcut: "/images/logo_new_jateng_news_Photoroom.webp",
-    apple: "/images/logo_new_jateng_news_Photoroom.webp",
+    icon: [
+      { url: "/favicon.ico", sizes: "any" },
+      { url: "/images/favicon/favicon-32.png", type: "image/png", sizes: "32x32" },
+      { url: "/images/favicon/favicon-192.png", type: "image/png", sizes: "192x192" },
+      { url: "/images/favicon/favicon-512.png", type: "image/png", sizes: "512x512" },
+    ],
+    shortcut: "/favicon.ico",
+    apple: { url: "/images/favicon/apple-touch-icon.png", sizes: "180x180" },
   },
 };
 
