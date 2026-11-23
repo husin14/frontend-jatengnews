@@ -3,6 +3,10 @@
 // Struktur tampilan ada di src/app/[lang]/redaksi/page.tsx dan tidak perlu diubah
 // untuk sekadar mengganti nama, menambah orang, atau menambah peran.
 
+// Saklar halaman Redaksi. false = halaman /redaksi tampil 404, dan teks "Redaksi"
+// di header/footer tetap tampil tapi tidak bisa diklik. Ubah ke true setelah data lengkap.
+export const redaksiAktif = false;
+
 export interface RedaksiPerson {
   role: string;
   name: string;

@@ -47,6 +47,10 @@
 .jn-topbar-link:hover, .jn-topbar-link.is-active { text-decoration: underline !important; text-underline-offset: 3px; }
 .jn-topbar-sep { width: 1px; height: 16px; background: #34507A; }
 .jn-mobile-menu a.jn-mobile-extra { grid-column: 1 / -1; color: var(--jn-blue); }
+/* Teks "Redaksi" saat halamannya belum dibuka: tampil, tapi bukan tautan. */
+.jn-social .jn-topbar-link.is-static { display: flex; color: var(--jn-topbar-text); cursor: default; }
+.jn-mobile-menu .jn-mobile-extra.is-static { grid-column: 1 / -1; padding: 12px 4px; border-bottom: 1px solid var(--jn-line-soft); font-size: 14px; font-weight: 600; color: var(--jn-blue); cursor: default; }
+.jn-footer-links .is-static { color: #FFFFFF; min-height: 44px; display: inline-flex; align-items: center; cursor: default; }
 
 .jn-brand .jn-wrap {
   padding-top: 18px; padding-bottom: 18px; display: flex; flex-wrap: wrap;

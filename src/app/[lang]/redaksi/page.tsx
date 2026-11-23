@@ -1,10 +1,12 @@
 import React from "react";
+import { notFound } from "next/navigation";
 import {
   hakJawab,
   kontak,
   manajemen,
   penerbit,
   pimpinan,
+  redaksiAktif,
   redaksiIntro,
   timRedaksi,
 } from "@/app/components/jn/redaksiData";
@@ -45,6 +47,8 @@ export default async function RedaksiPage({
 }: {
   params: Promise<{ lang: string }>;
 }) {
+  if (!redaksiAktif) notFound();
+
   const { lang: langParam } = await params;
   const langPrefix = langParam === "en" ? "/en" : "";
   const isEmail = (v: string) => /^[^\s@\[\]]+@[^\s@]+\.[^\s@]+$/.test(v);

@@ -4,6 +4,7 @@ import React, { useCallback, useEffect, useMemo, useRef, useState } from "react"
 import { usePathname } from "next/navigation";
 import apiClient from "@/app/utils/apiClient";
 import { berita, kategori } from "@/app/types";
+import { redaksiAktif } from "@/app/components/jn/redaksiData";
 
 // Konten iklan header. Ganti di sini bila materi iklan berubah.
 const headerAd = {
@@ -324,9 +325,13 @@ export default function SiteHeader({ lang: propLang }: SiteHeaderProps) {
             </span>
           </div>
           <nav aria-label={t("Tautan redaksi dan media sosial", "Newsroom and social links")} className="jn-social">
-            <a href={`${langPrefix}/redaksi`} className={`jn-topbar-link ${pathname.endsWith("/redaksi") ? "is-active" : ""}`}>
-              {t("Redaksi", "Newsroom")}
-            </a>
+            {redaksiAktif ? (
+              <a href={`${langPrefix}/redaksi`} className={`jn-topbar-link ${pathname.endsWith("/redaksi") ? "is-active" : ""}`}>
+                {t("Redaksi", "Newsroom")}
+              </a>
+            ) : (
+              <span className="jn-topbar-link is-static">{t("Redaksi", "Newsroom")}</span>
+            )}
             <span aria-hidden="true" className="jn-topbar-sep" />
             {socialIcons
               .map((s) => ({ ...s, url: socialLinks.find((l) => l.platform === s.key)?.url }))
@@ -461,9 +466,13 @@ export default function SiteHeader({ lang: propLang }: SiteHeaderProps) {
               {item.nama}
             </a>
           ))}
-          <a href={`${langPrefix}/redaksi`} className="jn-mobile-extra">
-            {t("Redaksi", "Newsroom")}
-          </a>
+          {redaksiAktif ? (
+            <a href={`${langPrefix}/redaksi`} className="jn-mobile-extra">
+              {t("Redaksi", "Newsroom")}
+            </a>
+          ) : (
+            <span className="jn-mobile-extra is-static">{t("Redaksi", "Newsroom")}</span>
+          )}
         </div>
       </div>
 
